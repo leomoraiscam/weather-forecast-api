@@ -1,6 +1,6 @@
 {
   "env": {
-    "es2021": true,
+    "es2020": true,
     "node": true,
     "jest": true
   },
@@ -17,16 +17,29 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "eslint-plugin-import-helpers"
+    "eslint-plugin-import-helpers",
+    "prettier"
   ],
   "rules": {
     "prettier/prettier": "error",
     "camelcase": "off",
     "import/no-unresolved": "error",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ],
     "class-methods-use-this": "off",
-    "@typescript-eslint/ban-types": "warn",
+    "import/prefer-default-export": "off",
     "no-console": "error",
     "no-empty-function": "warn",
+    "lines-between-class-members": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -42,11 +55,16 @@
         "alphabetize": { "order": "asc", "ignoreCase": true }
       }
     ],
-    "import/prefer-default-export": "off",
-    "no-use-before-define": "warn",
-    "max-classes-per-file": "warn",
-    "@typescript-eslint/no-explicit-any": "warn",
-    "consistent-return": "off"
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*.spec.js"] }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "_"
+      }
+    ]
   },
   "settings": {
     "import/resolver": {
