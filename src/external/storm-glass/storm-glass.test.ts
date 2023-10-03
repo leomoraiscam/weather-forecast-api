@@ -6,6 +6,7 @@ import * as HTTPUtil from "@src/utils/request"
 jest.mock('@src/utils/request');
 
 describe('Storm Glass Client', () => {
+  const MockedRequestClass = HTTPUtil.Request as jest.Mocked<typeof HTTPUtil.Request>;
   const mockedRequest = new HTTPUtil.Request() as jest.Mocked<HTTPUtil.Request>;
 
   afterAll(() => {
@@ -67,6 +68,8 @@ describe('Storm Glass Client', () => {
     const lat = -33.792726;
     const lng = 151.289824;
 
+    MockedRequestClass.isRequestError.mockReturnValue(true);
+    
     mockedRequest.get.mockRejectedValue({
       response: {
         status: 429,
