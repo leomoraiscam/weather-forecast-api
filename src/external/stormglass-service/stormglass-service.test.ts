@@ -1,11 +1,11 @@
-import { StormGlass } from './storm-glass';
+import { StormGlassService } from './stormglass-service';
 import stormGlassWeather3HoursFixture  from "@test/fixtures/storm-glass-weather-3-hours.json";
 import stormGlassNormalizedResponse3Hours  from "@test/fixtures/storm-glass-normalized-response-3-hours.json";
 import * as HTTPUtil from "@src/utils/request"
 
 jest.mock('@src/utils/request');
 
-describe('Storm Glass Client', () => {
+describe('StormGlass Client Service', () => {
   const MockedRequestClass = HTTPUtil.Request as jest.Mocked<typeof HTTPUtil.Request>;
   const mockedRequest = new HTTPUtil.Request() as jest.Mocked<HTTPUtil.Request>;
 
@@ -19,9 +19,9 @@ describe('Storm Glass Client', () => {
 
     mockedRequest.get.mockResolvedValue({data: stormGlassWeather3HoursFixture} as HTTPUtil.Response);
 
-    const stormGlass = new StormGlass(mockedRequest);
+    const stormGlassService = new StormGlassService(mockedRequest);
 
-    const response = await stormGlass.fetchPoints(lat, long);
+    const response = await stormGlassService.fetchPoints(lat, long);
 
     expect(response).toEqual(stormGlassNormalizedResponse3Hours);
   });

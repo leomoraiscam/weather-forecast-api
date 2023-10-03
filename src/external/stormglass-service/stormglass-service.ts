@@ -1,5 +1,4 @@
 import { InternalError } from "@src/utils/errors/internal-server-error";
-import { AxiosStatic } from "axios";
 import * as HTTPUtil from "@src/utils/request"
 
 interface StormGlassPointSource {
@@ -47,7 +46,7 @@ export class StormGlassResponseError extends InternalError {
   }
 }
 
-export class StormGlass {
+export class StormGlassService {
   constructor(protected request = new HTTPUtil.Request()) {}
  
   readonly stormGlassAPIParams =
