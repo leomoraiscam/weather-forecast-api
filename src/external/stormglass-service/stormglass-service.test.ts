@@ -21,7 +21,7 @@ describe('StormGlass Client Service', () => {
 
     const stormGlassService = new StormGlassService(mockedRequest);
 
-    const response = await stormGlassService.fetchPoints(lat, long);
+    const response = await stormGlassService.fetchPoints({lat, long});
 
     expect(response).toEqual(stormGlassNormalizedResponse3Hours);
   });
@@ -45,27 +45,27 @@ describe('StormGlass Client Service', () => {
 
     const stormGlassService = new StormGlassService(mockedRequest);
 
-    const response = await stormGlassService.fetchPoints(lat, long);
+    const response = await stormGlassService.fetchPoints({lat, long});
 
     expect(response).toEqual([]);
   })
 
   it('should be able to get a generic error from stormGlass service when the request fail before reaching the service', async () => {
     const lat = -33.792726;
-    const lng = 151.289824;
+    const long = 151.289824;
 
     mockedRequest.get.mockRejectedValue({message: 'Network Error'});
 
     const stormGlassService = new StormGlassService(mockedRequest);
 
-    await expect(stormGlassService.fetchPoints(lat, lng)).rejects.toThrow(
+    await expect(stormGlassService.fetchPoints({lat, long})).rejects.toThrow(
       'Unexpected error when trying to communicate to StormGlass: Network Error'
     );
   });
 
   it('should be able to get an StormGlassResponseError when the StormGlass service responds with error', async () => {
     const lat = -33.792726;
-    const lng = 151.289824;
+    const long = 151.289824;
 
     MockedRequestClass.isRequestError.mockReturnValue(true);
     
@@ -80,7 +80,7 @@ describe('StormGlass Client Service', () => {
 
     const stormGlassService = new StormGlassService(mockedRequest);
 
-    await expect(stormGlassService.fetchPoints(lat, lng)).rejects.toThrow(
+    await expect(stormGlassService.fetchPoints({lat, long})).rejects.toThrow(
       'Unexpected error returned by the StormGlass service: Error: {"errors":["Rate Limit reached"]} Code: 429'
     );
   });
