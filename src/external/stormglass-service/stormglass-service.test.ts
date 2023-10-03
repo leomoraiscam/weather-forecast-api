@@ -13,7 +13,7 @@ describe('StormGlass Client Service', () => {
     jest.clearAllMocks()
   })
 
-  it('should return the normalize forecast from the stormGlass service external API', async () => {
+  it('should be able to return the normalize forecast data from the stormGlass service', async () => {
     const lat = -33.792726;
     const long = 151.289824;
 
@@ -26,7 +26,7 @@ describe('StormGlass Client Service', () => {
     expect(response).toEqual(stormGlassNormalizedResponse3Hours);
   });
 
-  it('should exclude incomplete data points', async () => {
+  it('should be able to exclude incomplete data points received from stormGlass service', async () => {
     const lat = -33.792726;
     const long = 151.289824;
 
@@ -43,9 +43,9 @@ describe('StormGlass Client Service', () => {
 
     mockedRequest.get.mockResolvedValue({data: incompleteResponse} as HTTPUtil.Response);
 
-    const stormGlass = new StormGlass(mockedRequest);
+    const stormGlassService = new StormGlassService(mockedRequest);
 
-    const response = await stormGlass.fetchPoints(lat, long);
+    const response = await stormGlassService.fetchPoints(lat, long);
 
     expect(response).toEqual([]);
   })
@@ -56,15 +56,14 @@ describe('StormGlass Client Service', () => {
 
     mockedRequest.get.mockRejectedValue({message: 'Network Error'});
 
+    const stormGlassService = new StormGlassService(mockedRequest);
 
-    const stormGlass = new StormGlass(mockedRequest);
-
-    await expect(stormGlass.fetchPoints(lat, lng)).rejects.toThrow(
+    await expect(stormGlassService.fetchPoints(lat, lng)).rejects.toThrow(
       'Unexpected error when trying to communicate to StormGlass: Network Error'
     );
   });
 
-  it('should get an StormGlassResponseError when the StormGlass service responds with error', async () => {
+  it('should be able to get an StormGlassResponseError when the StormGlass service responds with error', async () => {
     const lat = -33.792726;
     const lng = 151.289824;
 
@@ -79,9 +78,9 @@ describe('StormGlass Client Service', () => {
       }
     });
 
-    const stormGlass = new StormGlass(mockedRequest);
+    const stormGlassService = new StormGlassService(mockedRequest);
 
-    await expect(stormGlass.fetchPoints(lat, lng)).rejects.toThrow(
+    await expect(stormGlassService.fetchPoints(lat, lng)).rejects.toThrow(
       'Unexpected error returned by the StormGlass service: Error: {"errors":["Rate Limit reached"]} Code: 429'
     );
   });
