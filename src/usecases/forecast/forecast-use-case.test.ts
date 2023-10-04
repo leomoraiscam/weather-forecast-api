@@ -1,14 +1,15 @@
 import { StormGlassService } from "@src/external/stormglass-service/stormglass-service"
 import stormGlassNormalizedResponse3Hours  from "@test/fixtures/storm-glass-normalized-response-3-hours.json";
-import { Beach, BeachPosition, ForecastUseCase } from "./forecast-use-case";
+import { Beach, BeachPosition, ForecastProcessingInternalError, ForecastUseCase } from "./forecast-use-case";
 
 jest.mock("@src/external/stormglass-service/stormglass-service.ts")
 
 describe('Forecast Service', () => {
+  const mockedStormGlassService = new StormGlassService() as jest.Mocked<StormGlassService>;
+
   it('should be able return the forecast for a list of beaches', async () => {
-    const stormGlassService = new StormGlassService();
     
-    jest.spyOn(stormGlassService, 'fetchPoints').mockResolvedValueOnce(stormGlassNormalizedResponse3Hours);
+    mockedStormGlassService.fetchPoints.mockResolvedValueOnce(stormGlassNormalizedResponse3Hours);
     
     const beach: Beach[] = [ 
       {
@@ -78,10 +79,38 @@ describe('Forecast Service', () => {
       }
     ]
 
-    const forecast = new ForecastUseCase(stormGlassService);
+    const forecast = new ForecastUseCase(mockedStormGlassService);
 
     const beachesWithRating = await forecast.processForecastForBeaches(beach);
 
     expect(beachesWithRating).toEqual(expectedResponse)
+  })
+
+  it('should be able to return an empty list the beaches array is empty', async() => {
+    const forecast = new ForecastUseCase();
+
+    const response = await forecast.processForecastForBeaches([]);
+
+    expect(response).toEqual([]);
+  })
+
+  it('should be able to throw internal processing error when something goes wrong during the rating process', async () => {
+    const beaches: Beach[] = [
+      {
+        lat: -33.792726,
+        lng: 151.289824,
+        name: 'Manly',
+        position: BeachPosition.E,
+        user: 'fake-id',
+      }
+    ];
+
+    mockedStormGlassService.fetchPoints.mockRejectedValue('Error fetching data');
+
+    const forecast = new ForecastUseCase(mockedStormGlassService);
+
+    await expect(
+      forecast.processForecastForBeaches(beaches)
+    ).rejects.toThrow(ForecastProcessingInternalError)
   })
 })
