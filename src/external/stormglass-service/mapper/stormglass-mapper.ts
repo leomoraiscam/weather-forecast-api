@@ -1,8 +1,8 @@
-import { ForecastPoint } from "../ports/dtos/forecast-point";
+import { FetchPointNormalize } from "../ports/dtos/fetch-point-normalize";
 import { StormGlassForecastResponse } from "../ports/dtos/stormglass-response";
 
 export class StormGlassMapper {
-  static toNormalize(data: StormGlassForecastResponse): ForecastPoint[] {
+  static toNormalize(data: StormGlassForecastResponse): FetchPointNormalize[] {
     return data.hours.filter((point) => (
       !!(
         point.time && 
