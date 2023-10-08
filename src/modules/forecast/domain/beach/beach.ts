@@ -1,4 +1,6 @@
+import { v4 as uuidV4 } from "uuid";
 import { IBeachProps } from "./dtos/beach-props";
+
 
 export class Beach {
   public readonly _id?: string;
@@ -6,7 +8,7 @@ export class Beach {
 
   constructor(props: IBeachProps, id?: string) {
     this.props = props;
-    this._id = id || 'generic-id'
+    this._id = id || uuidV4()
   }
 
   static create( props: IBeachProps, id?: string): Beach {
