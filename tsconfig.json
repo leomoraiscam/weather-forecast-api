@@ -16,6 +16,7 @@
     "esModuleInterop": true,
     "useUnknownInCatchVariables":false,
     "paths": {
+      "@config/*": ["./src/config/*"],
       "@src/*": ["./src/*"],
       "@test/*": ["./test/*"]
     }
