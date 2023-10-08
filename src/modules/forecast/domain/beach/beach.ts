@@ -1,14 +1,4 @@
-import { Name } from "./name";
-import { Position } from "./position";
-import { Latitude } from "./latitude";
-import { Longitude } from "./longitude";
-
-interface IBeachProps {
-  name: Name;
-  position: Position;
-  lat: Latitude;
-  lng: Longitude;
-}
+import { IBeachProps } from "./dtos/beach-props";
 
 export class Beach {
   public readonly _id?: string;
