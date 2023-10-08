@@ -1,11 +1,11 @@
-import { StormGlassService } from './stormglass-service';
+import { FetchPointService } from './fetch-point-service';
 import stormGlassWeather3HoursFixture  from "@test/fixtures/storm-glass-weather-3-hours.json";
 import stormGlassNormalizedResponse3Hours  from "@test/fixtures/storm-glass-normalized-response-3-hours.json";
 import * as HTTPUtil from "@src/utils/request"
 
 jest.mock('@src/utils/request');
 
-describe('StormGlass Client Service', () => {
+describe('Fetch Point Client Service', () => {
   const MockedRequestClass = HTTPUtil.Request as jest.Mocked<typeof HTTPUtil.Request>;
   const mockedRequest = new HTTPUtil.Request() as jest.Mocked<HTTPUtil.Request>;
 
@@ -19,9 +19,9 @@ describe('StormGlass Client Service', () => {
 
     mockedRequest.get.mockResolvedValue({data: stormGlassWeather3HoursFixture} as HTTPUtil.Response);
 
-    const stormGlassService = new StormGlassService(mockedRequest);
+    const fetchPointService = new FetchPointService(mockedRequest);
 
-    const response = await stormGlassService.fetchPoints({lat, long});
+    const response = await fetchPointService.execute({lat, long});
 
     expect(response).toEqual(stormGlassNormalizedResponse3Hours);
   });
@@ -43,9 +43,9 @@ describe('StormGlass Client Service', () => {
 
     mockedRequest.get.mockResolvedValue({data: incompleteResponse} as HTTPUtil.Response);
 
-    const stormGlassService = new StormGlassService(mockedRequest);
+    const fetchPointService = new FetchPointService(mockedRequest);
 
-    const response = await stormGlassService.fetchPoints({lat, long});
+    const response = await fetchPointService.execute({lat, long});
 
     expect(response).toEqual([]);
   })
@@ -56,9 +56,9 @@ describe('StormGlass Client Service', () => {
 
     mockedRequest.get.mockRejectedValue({message: 'Network Error'});
 
-    const stormGlassService = new StormGlassService(mockedRequest);
+    const fetchPointService = new FetchPointService(mockedRequest);
 
-    await expect(stormGlassService.fetchPoints({lat, long})).rejects.toThrow(
+    await expect(fetchPointService.execute({lat, long})).rejects.toThrow(
       'Unexpected error when trying to communicate to StormGlass: Network Error'
     );
   });
@@ -78,9 +78,9 @@ describe('StormGlass Client Service', () => {
       }
     });
 
-    const stormGlassService = new StormGlassService(mockedRequest);
+    const fetchPointService = new FetchPointService(mockedRequest);
 
-    await expect(stormGlassService.fetchPoints({lat, long})).rejects.toThrow(
+    await expect(fetchPointService.execute({lat, long})).rejects.toThrow(
       'Unexpected error returned by the StormGlass service: Error: {"errors":["Rate Limit reached"]} Code: 429'
     );
   });

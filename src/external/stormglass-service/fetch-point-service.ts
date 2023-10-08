@@ -1,20 +1,20 @@
 import * as HTTPUtil from "@src/utils/request"
-import { ForecastPoint } from "./ports/dtos/forecast-point";
+import { FetchPointNormalize } from "./ports/dtos/fetch-point-normalize";
 import { StormGlassForecastResponse } from "./ports/dtos/stormglass-response";
-import {StormGlassMapper  } from "./mapper/stormglass-mapper"
-import { ForecastCoordinates } from "./ports/dtos/forecast-coordinates";
-import { ForecastService } from "./ports/forecast-service";
-import { StormGlassResponseError } from "./errors/storm-glass-error";
+import { StormGlassMapper } from "./mapper/stormglass-mapper"
+import { FetchPointCoordinate } from "./ports/dtos/fetch-point-coordinate";
+import { StormGlassService } from "./ports/stormglass-service";
+import { StormGlassResponseError } from "./errors/stormglass-response-error";
 import { ClientRequestError } from "./errors/client-request-error";
 
-export class StormGlassService implements ForecastService {
+export class FetchPointService implements StormGlassService {
   constructor(protected request = new HTTPUtil.Request()) {}
  
   readonly stormGlassAPIParams =
     'swellDirection,swellHeight,swellPeriod,waveDirection,waveHeight,windDirection,windSpeed';
   readonly stormGlassAPISource = 'noaa';
 
-  public async fetchPoints({ lat, long }: ForecastCoordinates): Promise<ForecastPoint[]> {
+  public async execute({ lat, long }: FetchPointCoordinate): Promise<FetchPointNormalize[]> {
     try {
       const response = await this.request.get<StormGlassForecastResponse>(`https://api.stormglass.io/v2/weather/point?params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&lat=${lat}&lng=${long}`,
       {
