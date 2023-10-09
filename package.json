@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "commit": "cz",
-    "test:unit": "jest"
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^1.5.1",

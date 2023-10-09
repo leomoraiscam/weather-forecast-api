@@ -1,15 +1,17 @@
-import { StormGlassService } from "@src/external/stormglass-service/stormglass-service"
+import { FetchPointService } from "@src/external/stormglass-service/fetch-point-service"
 import stormGlassNormalizedResponse3Hours  from "@test/fixtures/storm-glass-normalized-response-3-hours.json";
-import { Beach, BeachPosition, ForecastProcessingInternalError, ForecastUseCase } from "./forecast-use-case";
+import { ForecastUseCase } from "./process-forecast-for-beaches-use-case";
+import { Beach } from "../../dtos/beach-forecast";
+import { BeachPosition } from "@config/constants/beach-position-enum"
+import { ForecastProcessingInternalError } from "../errors/forecast-processing-error"
 
-jest.mock("@src/external/stormglass-service/stormglass-service.ts")
+jest.mock("@src/external/stormglass-service/fetch-point-service")
 
 describe('Forecast Service', () => {
-  const mockedStormGlassService = new StormGlassService() as jest.Mocked<StormGlassService>;
+  const mockedStormGlassService = new FetchPointService() as jest.Mocked<FetchPointService>;
 
   it('should be able return the forecast for a list of beaches', async () => {
-    
-    mockedStormGlassService.fetchPoints.mockResolvedValueOnce(stormGlassNormalizedResponse3Hours);
+    mockedStormGlassService.execute.mockResolvedValueOnce(stormGlassNormalizedResponse3Hours);
     
     const beach: Beach[] = [ 
       {
@@ -34,12 +36,17 @@ describe('Forecast Service', () => {
             swellDirection: 64.26,
             swellHeight: 0.15,
             swellPeriod: 3.89,
+            time: "2020-04-26T00:00:00+00:00",
             waveDirection: 231.38,
             waveHeight: 0.47,
             windDirection: 299.45,
-            windSpeed: 100,
-            time: '2020-04-26T00:00:00+00:00'
-          },
+            windSpeed: 100
+          } 
+        ],
+      },
+      {
+        time: '2020-04-26T01:00:00+00:00',
+        forecast: [
           {
             lat: -33.792726,
             lng: 141.289824,
@@ -49,13 +56,13 @@ describe('Forecast Service', () => {
             swellDirection: 123.41,
             swellHeight: 0.21,
             swellPeriod: 3.67,
-            time: '2020-04-26T00:00:00+00:00',
+            time: "2020-04-26T01:00:00+00:00",
             waveDirection: 232.12,
             waveHeight: 0.46,
             windDirection: 310.48,
             windSpeed: 100
-          },   
-        ],
+          }
+        ]
       },
       {
         time: '2020-04-26T02:00:00+00:00',
@@ -69,10 +76,10 @@ describe('Forecast Service', () => {
             swellDirection: 182.56,
             swellHeight: 0.28,
             swellPeriod: 3.44,
+            time: "2020-04-26T02:00:00+00:00",
             waveDirection: 232.86,
             waveHeight: 0.46,
             windDirection: 321.5,
-            time: '2020-04-26T02:00:00+00:00',
             windSpeed: 100
           }
         ]
@@ -105,7 +112,7 @@ describe('Forecast Service', () => {
       }
     ];
 
-    mockedStormGlassService.fetchPoints.mockRejectedValue('Error fetching data');
+    mockedStormGlassService.execute.mockRejectedValue('Error fetching data');
 
     const forecast = new ForecastUseCase(mockedStormGlassService);
 
