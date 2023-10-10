@@ -1,27 +1,49 @@
 import { FetchPointService } from "@src/external/stormglass-service/fetch-point-service"
 import stormGlassNormalizedResponse3Hours  from "@test/fixtures/storm-glass-normalized-response-3-hours.json";
-import { ForecastUseCase } from "./process-forecast-for-beaches-use-case";
-import { Beach } from "../../dtos/beach-forecast";
+import { ProcessForecastBeachesUseCase } from "./process-forecast-for-beaches-use-case";
+import { Beach as IBeach} from "../../dtos/beach-forecast";
 import { BeachPosition } from "@config/constants/beach-position-enum"
 import { ForecastProcessingInternalError } from "../errors/forecast-processing-error"
+import { Beach } from "@src/modules/forecast/domain/beach/beach"
+import { Name } from "@src/modules/forecast/domain/beach/name"
+import { Longitude } from "@src/modules/forecast/domain/beach/longitude"
+import { Latitude } from "@src/modules/forecast/domain/beach/latitude"
+import { Position } from "@src/modules/forecast/domain/beach/position"
 
 jest.mock("@src/external/stormglass-service/fetch-point-service")
 
 describe('Forecast Service', () => {
   const mockedStormGlassService = new FetchPointService() as jest.Mocked<FetchPointService>;
+  let beach: Beach;
+  let serializedBeach: IBeach[];
+
+  beforeEach(() => {
+    const name = Name.create('Dee Why') as Name;
+    const lat = Latitude.create( -33.792726) as Latitude;
+    const lng = Longitude.create(141.289824) as Longitude;
+    const position = Position.create(BeachPosition.E) as Position;
+    
+    beach = Beach.create({
+      name,
+      lat,
+      lng,
+      position,
+    });
+
+    const { props } = beach;
+
+    serializedBeach = [
+      {
+        lat: props.lat.value,
+        lng: props.lng.value,
+        name: props.name.value,
+        position: props.position.value as BeachPosition,
+      }
+    ];
+  })
 
   it('should be able return the forecast for a list of beaches', async () => {
     mockedStormGlassService.execute.mockResolvedValueOnce(stormGlassNormalizedResponse3Hours);
-    
-    const beach: Beach[] = [ 
-      {
-        lat: -33.792726,
-        lng: 141.289824,
-        name: 'Dee Why',
-        position: BeachPosition.E,
-        user: 'some-id'
-      }
-    ]
 
     const expectedResponse = [
       {
@@ -48,7 +70,7 @@ describe('Forecast Service', () => {
         time: '2020-04-26T01:00:00+00:00',
         forecast: [
           {
-            lat: -33.792726,
+                  lat: -33.792726,
             lng: 141.289824,
             name: 'Dee Why',
             position: 'E',
@@ -68,7 +90,7 @@ describe('Forecast Service', () => {
         time: '2020-04-26T02:00:00+00:00',
         forecast: [
           {
-            lat: -33.792726,
+                   lat: -33.792726,
             lng: 141.289824,
             name: 'Dee Why',
             position: 'E',
@@ -86,38 +108,28 @@ describe('Forecast Service', () => {
       }
     ]
 
-    const forecast = new ForecastUseCase(mockedStormGlassService);
+    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(mockedStormGlassService);
 
-    const beachesWithRating = await forecast.processForecastForBeaches(beach);
+    const beachesWithRating = await processForecastBeachesUseCase.execute(serializedBeach);
 
     expect(beachesWithRating).toEqual(expectedResponse)
   })
 
   it('should be able to return an empty list the beaches array is empty', async() => {
-    const forecast = new ForecastUseCase();
+    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase();
 
-    const response = await forecast.processForecastForBeaches([]);
+    const response = await processForecastBeachesUseCase.execute([]);
 
     expect(response).toEqual([]);
   })
 
   it('should be able to throw internal processing error when something goes wrong during the rating process', async () => {
-    const beaches: Beach[] = [
-      {
-        lat: -33.792726,
-        lng: 151.289824,
-        name: 'Manly',
-        position: BeachPosition.E,
-        user: 'fake-id',
-      }
-    ];
-
     mockedStormGlassService.execute.mockRejectedValue('Error fetching data');
 
-    const forecast = new ForecastUseCase(mockedStormGlassService);
+    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(mockedStormGlassService);
 
     await expect(
-      forecast.processForecastForBeaches(beaches)
+      processForecastBeachesUseCase.execute(serializedBeach)
     ).rejects.toThrow(ForecastProcessingInternalError)
   })
 })

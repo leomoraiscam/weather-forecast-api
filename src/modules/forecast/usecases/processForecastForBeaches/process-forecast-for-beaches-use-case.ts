@@ -4,23 +4,23 @@ import { Beach, BeachForecast } from "../../dtos/beach-forecast";
 import { TimeForecast } from "../../dtos/time-forecast";
 import { forecastByTime } from "../../utils/group-forecast-by-time"
 
-export class ForecastUseCase {
+export class ProcessForecastBeachesUseCase {
   constructor(protected stormGlassService = new FetchPointService()){}
 
-  public async processForecastForBeaches(beaches: Beach[]): Promise<TimeForecast[]> {
+  public async execute(beaches: Beach[]): Promise<TimeForecast[]> {
     try {
       const pointsWithCorrectSources: BeachForecast[] = [];
 
       for (const beach of beaches) {
         const points = await this.stormGlassService.execute({lat: beach.lat, long: beach.lng});
       
-        const enrichedBeachData = points.map((e) => ({
+        const enrichedBeachData = points.map((pointForecast) => ({
           lat: beach.lat,
           lng: beach.lng,
           name: beach.name,
           position: beach.position,
           rating: 1,
-          ...e
+          ...pointForecast
         }))
 
         pointsWithCorrectSources.push(...enrichedBeachData);
