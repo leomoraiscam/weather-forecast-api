@@ -14,7 +14,7 @@ jest.mock("@src/external/stormglass-service/fetch-point-service")
 
 describe('Forecast Service', () => {
   const mockedStormGlassService = new FetchPointService() as jest.Mocked<FetchPointService>;
-  let beach: Beach;
+  let beach;
   let serializedBeach: IBeach[];
 
   beforeEach(() => {
@@ -30,14 +30,14 @@ describe('Forecast Service', () => {
       position,
     });
 
-    const { props } = beach;
+    beach = beach.props;
 
     serializedBeach = [
       {
-        lat: props.lat.value,
-        lng: props.lng.value,
-        name: props.name.value,
-        position: props.position.value as BeachPosition,
+        lat: beach.lat.value,
+        lng: beach.lng.value,
+        name: beach.name.value,
+        position: beach.position.value as BeachPosition,
       }
     ];
   })
