@@ -1,7 +1,6 @@
 import { v4 as uuidV4 } from "uuid";
 import { IBeachProps } from "./dtos/beach-props";
 
-
 export class Beach {
   public readonly _id?: string;
   public readonly props: IBeachProps;

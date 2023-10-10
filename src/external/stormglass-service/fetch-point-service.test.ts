@@ -17,7 +17,7 @@ describe('Fetch Point Client Service', () => {
     const lat = -33.792726;
     const long = 151.289824;
 
-    mockedRequest.get.mockResolvedValue({data: stormGlassWeather3HoursFixture} as HTTPUtil.Response);
+    mockedRequest.get.mockResolvedValue({data: stormGlassWeather3HoursFixture } as HTTPUtil.Response);
 
     const fetchPointService = new FetchPointService(mockedRequest);
 
