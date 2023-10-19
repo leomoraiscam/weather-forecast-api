@@ -1,47 +1,77 @@
 import { FetchPointService } from './fetch-point-service';
 import stormGlassWeather3HoursFixture  from "@test/fixtures/storm-glass-weather-3-hours.json";
 import stormGlassNormalizedResponse3Hours  from "@test/fixtures/storm-glass-normalized-response-3-hours.json";
-import * as HTTPUtil from "@src/utils/request"
+import stormGlassIncompleteResponse from "@test/fixtures/storm-glass-incomplete-response.json";
+import stormGlassResponseError from "@test/fixtures/storm-glass-response-error.json";
+import { HttpResponse } from "./providers/models/request-provider"
+import { AxiosRequestProvider } from "@src/external/stormglass-service/providers/implementations/axios-request-provider"
 
-jest.mock('@src/utils/request');
+
+jest.mock('@src/external/stormglass-service/providers/implementations/axios-request-provider');
 
 describe('Fetch Point Client Service', () => {
-  const MockedRequestClass = HTTPUtil.Request as jest.Mocked<typeof HTTPUtil.Request>;
-  const mockedRequest = new HTTPUtil.Request() as jest.Mocked<HTTPUtil.Request>;
-
-  afterAll(() => {
-    jest.clearAllMocks()
-  })
+  const mockedRequest = new AxiosRequestProvider() as jest.Mocked<AxiosRequestProvider>;
 
   it('should be able to return the normalize forecast data from the stormGlass service', async () => {
-    const lat = -33.792726;
-    const long = 151.289824;
+    mockedRequest.get.mockResolvedValue({ data: stormGlassWeather3HoursFixture } as HttpResponse<{
+      hours: [
+        {
+          swellDirection: {
+            noaa: number
+          },
+          swellHeight: {
+            noaa: number
+          },
+          swellPeriod: {
+            noaa: number
+          },
+          time: Date,
+          waveDirection: {
+            noaa: number
+          },
+          waveHeight: {
+            noaa: number
+          },
+          windDirection: {
+            noaa: number
+          },
+          windSpeed: {
+            noaa: number
+          }
+        }
+      ],
+      meta: {
+        cost: number,
+        dailyQuota: number,
+        end: Date,
+        lat: number,
+        lng: number,
+        params: string[],
+        requestCount: number,
+        source: string[],
+        start: Date
+      }
+    }>);
 
-    mockedRequest.get.mockResolvedValue({data: stormGlassWeather3HoursFixture } as HTTPUtil.Response);
+    const { lat, long } = {
+      lat: -33.792726,
+      long: 151.289824
+    }
 
     const fetchPointService = new FetchPointService(mockedRequest);
 
-    const response = await fetchPointService.execute({lat, long});
+    const response = await fetchPointService.execute({ lat, long });
 
     expect(response).toEqual(stormGlassNormalizedResponse3Hours);
   });
 
   it('should be able to exclude incomplete data points received from stormGlass service', async () => {
-    const lat = -33.792726;
-    const long = 151.289824;
+    mockedRequest.get.mockResolvedValue({data: stormGlassIncompleteResponse} as HttpResponse<{}>);
 
-    const incompleteResponse = {
-      hours: [
-        {
-          windDirection: {
-            noaa: 300
-          },
-          time: "2020-04-26T02:00:00+00:00"
-        }
-      ]
+    const { lat, long } = {
+      lat: -33.792726,
+      long: 151.289824
     }
-
-    mockedRequest.get.mockResolvedValue({data: incompleteResponse} as HTTPUtil.Response);
 
     const fetchPointService = new FetchPointService(mockedRequest);
 
@@ -51,10 +81,12 @@ describe('Fetch Point Client Service', () => {
   })
 
   it('should be able to get a generic error from stormGlass service when the request fail before reaching the service', async () => {
-    const lat = -33.792726;
-    const long = 151.289824;
+    mockedRequest.get.mockRejectedValue({ message: 'Network Error' });
 
-    mockedRequest.get.mockRejectedValue({message: 'Network Error'});
+    const { lat, long } = {
+      lat: -33.792726,
+      long: 151.289824
+    }
 
     const fetchPointService = new FetchPointService(mockedRequest);
 
@@ -64,19 +96,12 @@ describe('Fetch Point Client Service', () => {
   });
 
   it('should be able to get an StormGlassResponseError when the StormGlass service responds with error', async () => {
-    const lat = -33.792726;
-    const long = 151.289824;
-
-    MockedRequestClass.isRequestError.mockReturnValue(true);
-    
-    mockedRequest.get.mockRejectedValue({
-      response: {
-        status: 429,
-        data: {
-          errors: ['Rate Limit reached']
-        }
-      }
-    });
+    mockedRequest.get.mockRejectedValue(stormGlassResponseError);
+   
+    const { lat, long } = {
+      lat: -33.792726,
+      long: 151.289824
+    }
 
     const fetchPointService = new FetchPointService(mockedRequest);
 
