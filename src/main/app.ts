@@ -1,4 +1,4 @@
-import '../utils/module-alias'
+import '../shared/module-alias'
 import express from 'express';
 import setupMiddleware from './middleware';
 import setupRoute from './config/routes';
