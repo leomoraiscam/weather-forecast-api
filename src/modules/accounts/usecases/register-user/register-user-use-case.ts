@@ -12,7 +12,11 @@ export class RegisterUserUseCase {
     name,
     email,
     password,
-  }: { name: string, email: string, password: string }): Promise<User> {
+  }: { name: string, email: string, password: string }): Promise<{
+    name: string,
+    email: string,
+    password: string
+  }> {
     const nameOrError = Name.create(name) as Name
     const emailOrError = Email.create(email) as Email
     const passwordOrError = Password.create(password) as Password
@@ -35,6 +39,10 @@ export class RegisterUserUseCase {
 
     await this.usersRepository.create(userOrError)
 
-    return userOrError
+    return {
+      name: user.name.value,
+      email: user.email.value,
+      password: user.password.value
+    }
   }
 }
