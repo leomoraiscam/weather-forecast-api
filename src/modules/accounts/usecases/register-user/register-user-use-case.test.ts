@@ -5,7 +5,7 @@ import { Password } from '../../domain/user/password';
 import { User } from '../../domain/user/user'
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository';
 import { IUsersRepository } from '../../repositories/users-repository';
-import { AccountAlreadyExistsError } from './errors/AccountAlreadyExistsError';
+import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 import { RegisterUserUseCase } from './register-user-use-case'
 
 let usersRepository: IUsersRepository

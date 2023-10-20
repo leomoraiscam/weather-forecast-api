@@ -3,7 +3,7 @@ import { Name } from "../../domain/user/name";
 import { Password } from "../../domain/user/password";
 import { User } from "../../domain/user/user";
 import { IUsersRepository } from "../../repositories/users-repository";
-import { AccountAlreadyExistsError } from "./errors/AccountAlreadyExistsError";
+import { AccountAlreadyExistsError } from "./errors/account-already-exists-error";
 
 export class RegisterUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
