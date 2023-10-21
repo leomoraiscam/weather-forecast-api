@@ -3,24 +3,25 @@ import { User } from '../../domain/user/user'
 import { IUsersRepository } from '../../repositories/users-repository'
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password-error'
 import { UserAuthenticate } from "../../dtos/authenticate-user"
-import { UserToken } from "../../dtos/user-token"
-
+import { UserToken } from "../../dtos/user-token";
 export class AuthenticateUser {
   constructor(private usersRepository: IUsersRepository) {}
 
   async execute({
     email,
     password,
-  }: UserAuthenticate): Promise<InvalidEmailOrPasswordError | UserToken> {
+  }: UserAuthenticate): Promise<UserToken> {
     const user = await this.usersRepository.findByEmail(email) as User
 
     if (!user) {
       throw new InvalidEmailOrPasswordError()
     }
 
-    const isPasswordValid = await user.props.password.comparePassword(password)
+    const { props } = user;
 
-    if (isPasswordValid === false) {
+    const isPasswordValid = await props.password.comparePassword(password)
+
+    if (!isPasswordValid) {
       throw new InvalidEmailOrPasswordError()
     }
 
