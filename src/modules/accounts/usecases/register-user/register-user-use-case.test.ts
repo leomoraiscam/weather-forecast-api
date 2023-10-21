@@ -25,7 +25,7 @@ describe('Register User Use Case', () => {
     })
 
     expect(await usersRepository.findByEmail('john@doe.com')).toBeTruthy()
-    expect(response.props.name.value).toBe('John Doe')
+    expect(response.name).toBe('John Doe')
   })
 
   it('should not be able to register new user with invalid data', async () => {
