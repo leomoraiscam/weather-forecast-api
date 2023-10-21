@@ -4,6 +4,7 @@ import { TimeForecast } from "../../dtos/time-forecast";
 import { normalizeForecastByTime } from "../helper/normalize-forecast-by-time-helper"
 import { BeachPosition } from "@config/constants/beach-position-enum";
 import { UseCase } from "../ports/use-case"
+import { FetchPointNormalize } from "@src/external/stormglass-service/ports/dtos/fetch-point-normalize"
 
 export class ProcessForecastBeachesUseCase {
   constructor(private stormGlassService: UseCase){}
@@ -22,13 +23,15 @@ export class ProcessForecastBeachesUseCase {
       ];
 
       for (const beach of beaches || mockedBeaches) {
-        const points = await this.stormGlassService.execute({lat: beach.lat, long: beach.lng});
+        const { lat, lng, name, position } = beach
+
+        const points = await this.stormGlassService.execute({lat, long: lng});
       
-        const enrichedBeachRating = points.map((pointForecast: any) => ({
-          lat: beach.lat,
-          lng: beach.lng,
-          name: beach.name,
-          position: beach.position,
+        const enrichedBeachRating = points.map((pointForecast: FetchPointNormalize) => ({
+          lat,
+          lng,
+          name,
+          position,
           rating: 1,
           ...pointForecast
         }))
