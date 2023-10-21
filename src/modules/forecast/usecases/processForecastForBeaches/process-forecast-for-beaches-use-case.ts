@@ -3,7 +3,7 @@ import { Beach, BeachForecast } from "../../dtos/beach-forecast";
 import { TimeForecast } from "../../dtos/time-forecast";
 import { normalizeForecastByTime } from "../helper/normalize-forecast-by-time-helper"
 import { BeachPosition } from "@config/constants/beach-position-enum";
-import { UseCase } from "../ports/use-case"
+import { UseCase } from "@src/shared/http/ports/use-case"
 import { FetchPointNormalize } from "@src/external/stormglass-service/ports/dtos/fetch-point-normalize"
 
 export class ProcessForecastBeachesUseCase {

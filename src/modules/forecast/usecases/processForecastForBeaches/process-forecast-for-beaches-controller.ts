@@ -1,10 +1,10 @@
-import { HttpResponse  } from "../ports/http/http-response";
-import { UseCase  } from "../ports/use-case";
+import { HttpResponse } from "@src/shared/http/dtos/http-response";
+import { UseCase  } from "@src/shared/http/ports/use-case";
 import { ControllerError } from "../errors/controller-error"
-import { badRequest, created, serverError } from "../helper/http-helper";
+import { badRequest, created, serverError } from "@src/shared/http/helpers/http-helper";
 import { MissingParamError } from "../errors/missing-param-error";
 import { EnrichedForecastBeachesRatings } from "../../dtos/enriched-forecast-beaches-ratings"
-import { HttpRequest } from "../ports/http/http-request"
+import { HttpRequest } from "@src/shared/http/dtos/http-request"
 import { BeachCoordinate } from "../../dtos/beach-cordinate";
 
 export class FetchPointsController {
