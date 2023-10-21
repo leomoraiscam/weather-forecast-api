@@ -5,6 +5,7 @@ import { badRequest, created, serverError } from "../helper/http-helper";
 import { MissingParamError } from "../errors/missing-param-error";
 import { EnrichedForecastBeachesRatings } from "../../dtos/enriched-forecast-beaches-ratings"
 import { HttpRequest } from "../ports/http/http-request"
+import { BeachCoordinate } from "../../dtos/beach-cordinate";
 
 export class FetchPointsController {
   private readonly usecase: UseCase;
@@ -14,11 +15,13 @@ export class FetchPointsController {
   }
 
   async handle(
-    request:HttpRequest<any>
+    request:HttpRequest<BeachCoordinate>
   ): Promise<HttpResponse<EnrichedForecastBeachesRatings | ControllerError>> {
     try {
-      const lat = request.params && !request.params.lat;
-      const lng = request.params && !request.params.lng;
+      const { params } = request
+
+      const lat = params && !params.lat;
+      const lng = params && !params.lng;
 
       if (lat || lng) {
         const missing = lat ? 'lat' : 'lng';
