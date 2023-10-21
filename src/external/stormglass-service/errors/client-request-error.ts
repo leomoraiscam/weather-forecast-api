@@ -1,4 +1,4 @@
-import { InternalError } from "@src/shared/errors/internal-server-error";
+import { InternalError } from "@src/shared/errors/exceptions/internal-server-error";
 
 export class ClientRequestError extends InternalError {
   constructor(message: string) {

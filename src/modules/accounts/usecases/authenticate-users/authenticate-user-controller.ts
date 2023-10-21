@@ -1,12 +1,11 @@
 import { HttpResponse } from "@src/shared/http/dtos/http-response"
 import { UseCase  } from "@src/shared/http/ports/use-case";
-import { ControllerError } from "../../../forecast/usecases/errors/controller-error"
+import { ControllerError } from "@src/shared/errors/ports/controller-error"
 import { badRequest, created, serverError } from "@src/shared/http/helpers/http-helper";
 import { HttpRequest } from "@src/shared/http/dtos/http-request"
 import { UserAuthenticate } from "../../dtos/authenticate-user";
-import { MissingParamError } from "@src/modules/forecast/usecases/errors/missing-param-error";
+import { MissingParamError } from "@src/shared/errors/exceptions/missing-param-error";
 import { UserToken } from "../../dtos/user-token";
-
 
 export class AuthenticateUserController {
   private readonly usecase: UseCase;

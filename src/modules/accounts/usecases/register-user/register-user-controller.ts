@@ -1,11 +1,11 @@
 import { HttpResponse } from "@src/shared/http/dtos/http-response"
 import { UseCase  } from "@src/shared/http/ports/use-case";
-import { ControllerError } from "../../../forecast/usecases/errors/controller-error"
+import { ControllerError } from "@src/shared/errors/ports/controller-error"
 import { badRequest, created, serverError } from "@src/shared/http/helpers/http-helper";
 import { HttpRequest } from "@src/shared/http/dtos/http-request"
 import { RegisterUserResponse } from "../../dtos/register-user-response";
 import { RegisterUserRequest } from "../../dtos/register-user";
-import { MissingParamError } from "@src/modules/forecast/usecases/errors/missing-param-error";
+import { MissingParamError } from "@src/shared/errors/exceptions/missing-param-error";
 
 export class RegisterUserController {
   private readonly usecase: UseCase;
