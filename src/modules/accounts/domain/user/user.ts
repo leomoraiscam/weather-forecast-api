@@ -5,7 +5,7 @@ import { InvalidPasswordLengthError } from './errors/invalid-password-length-err
 import { IUserProps } from "./dtos/user-props"
 
 export class User {
-  public readonly _id?: string;
+  public readonly _id: string;
   public readonly props: IUserProps;
 
   private constructor(props: IUserProps, id?: string) {
