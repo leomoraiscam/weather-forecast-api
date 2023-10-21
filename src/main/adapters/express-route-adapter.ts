@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
+import { Controller } from "../ports/controller";
 
-import { FetchPointsController } from '@src/modules/forecast/usecases/processForecastForBeaches/process-forecast-for-beaches-controller';
-
-export const adaptRoute = (controller: any) => {
+export const adaptRoute = (controller: Controller) => {
   return async (request: Request, response: Response): Promise<void> => {   
     const { params, body } = {
       body: request.body,
