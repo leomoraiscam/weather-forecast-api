@@ -1,11 +1,11 @@
 import { HttpResponse } from "@src/shared/http/dtos/http-response"
 import { UseCase  } from "@src/shared/http/ports/use-case";
-import { ControllerError } from "@src/shared/errors/ports/controller-error"
-import { badRequest, created, serverError } from "@src/shared/http/helpers/http-helper";
+import { badRequest, conflict, created, serverError } from "@src/shared/http/helpers/http-helper";
 import { HttpRequest } from "@src/shared/http/dtos/http-request"
-import { RegisterUserResponse } from "../../dtos/register-user-response";
+import { RegisterUser } from "../../dtos/register-user-response";
 import { RegisterUserRequest } from "../../dtos/register-user";
-import { MissingParamError } from "@src/shared/errors/exceptions/missing-param-error";
+import { AccountAlreadyExistsError } from "./errors/account-already-exists-error";
+import { ControllerError } from "@src/shared/errors/ports/controller-error";
 
 export class RegisterUserController {
   private readonly usecase: UseCase;
@@ -16,23 +16,36 @@ export class RegisterUserController {
 
   async handle(
     request:HttpRequest<RegisterUserRequest>
-  ): Promise<HttpResponse<RegisterUserResponse | ControllerError>> {
+  ): Promise<HttpResponse<RegisterUser | ControllerError>> {
     try {
       const { body } = request;
 
       if (!body?.name || !body?.email || !body?.password) {
         const missing = !body?.name ? 'name' : !body?.email ? 'email' : 'password';
 
-        return badRequest<ControllerError>(
-          new MissingParamError(missing.trim())
-        );
-      } 
+        return badRequest({
+          name: 'MissingError',
+          message: `Missing parameter from request: ${missing}.`
+        })
+      }
 
       const response = await this.usecase.execute(request.body);
 
-      return created<RegisterUserResponse>(response);
+      if (response.isLeft()) {
+        const error = response.value
+
+        switch (error.constructor) {
+          case AccountAlreadyExistsError:
+            return conflict(error)
+          default:
+            return badRequest(error)
+        }
+      } else {
+        return created<RegisterUser>(response);
+      }
     } catch (error) {
-      return serverError<ControllerError>(error);
+      return serverError(error);
     }
   }
 }
+
