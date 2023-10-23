@@ -5,7 +5,6 @@ import { User } from '../../domain/user/user'
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository'
 import { IUsersRepository } from '../../repositories/users-repository'
 import { AuthenticateUser } from './authenticate-user'
-import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password-error'
 
 let usersRepository: IUsersRepository
 let authenticateUser: AuthenticateUser
@@ -17,15 +16,15 @@ describe('Authenticate User', () => {
   })
 
   it('should be able to authenticate', async () => {
-    const name = Name.create('John Doe') as Name
-    const email = Email.create('johndoe@example.com') as Email
-    const password = Password.create('123456') as Password
+    const name = Name.create('John Doe').value as Name
+    const email = Email.create('johndoe@example.com').value as Email
+    const password = Password.create('123456').value as Password
 
     const userOrError = User.create({
       name,
       email,
       password,
-    }) as User
+    }).value as User
 
     usersRepository.create(userOrError);
 
@@ -34,32 +33,36 @@ describe('Authenticate User', () => {
       password: '123456',
     })
 
-    expect(response).toEqual(
+    expect(response.value).toEqual(
       expect.objectContaining({ token: expect.any(String) })
     )
   })
 
-  it.skip('should not be able to authenticate with invalid e-mail', async () => {
-    await expect(() => authenticateUser.execute({
+  it('should not be able to authenticate with invalid e-mail', async () => {
+    const response = await authenticateUser.execute({
       email: 'invalid@example.com',
       password: '123456',
-    })).toThrow(InvalidEmailOrPasswordError)
+    })
+
+    expect(response.isLeft).toBeTruthy()
   })
 
-  it.skip('should not be able to authenticate with invalid password', async () => {
-    const name = Name.create('John Doe') as Name
-    const email = Email.create('johndoe@example.com') as Email
-    const password = Password.create('123456') as Password
+  it('should not be able to authenticate with invalid password', async () => {
+    const name = Name.create('John Doe').value as Name
+    const email = Email.create('johndoe@example.com').value as Email
+    const password = Password.create('123456').value as Password
 
     User.create({
       name,
       email,
       password,
-    }) as User
+    }).value as User
 
-    await expect(()=>authenticateUser.execute({
-      email: 'john@doe.com',
+    const response = await authenticateUser.execute({
+      email: 'johndoe@example.com',
       password: '123456789',
-    })).toThrow(InvalidEmailOrPasswordError)
+    })
+
+    expect(response.isLeft).toBeTruthy()
   })
 })
