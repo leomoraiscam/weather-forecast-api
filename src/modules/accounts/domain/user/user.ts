@@ -3,6 +3,7 @@ import { InvalidEmailError } from './errors/invalid-email-error'
 import { InvalidNameError } from './errors/invalid-name-error'
 import { InvalidPasswordLengthError } from './errors/invalid-password-length-error'
 import { IUserProps } from "./dtos/user-props"
+import { Either, right } from "@src/shared/logic/Either";
 
 export class User {
   public readonly _id: string;
@@ -17,11 +18,13 @@ export class User {
     return this.props.name
   }
 
-
   static create(
     props: IUserProps,
     id?: string
-  ): User | InvalidNameError | InvalidEmailError | InvalidPasswordLengthError {
-    return new User(props, id)
+  ): Either<
+    InvalidNameError | InvalidEmailError | InvalidPasswordLengthError,
+    User
+  > {
+    return right(new User(props, id))
   }
 }
