@@ -1,20 +1,20 @@
 import { JWT } from '../../domain/user/jwt'
-import { User } from '../../domain/user/user'
 import { IUsersRepository } from '../../repositories/users-repository'
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password-error'
 import { UserAuthenticate } from "../../dtos/authenticate-user"
 import { UserToken } from "../../dtos/user-token";
+import { Either, left, right } from '@src/shared/logic/Either'
 export class AuthenticateUser {
   constructor(private usersRepository: IUsersRepository) {}
 
   async execute({
     email,
     password,
-  }: UserAuthenticate): Promise<UserToken> {
-    const user = await this.usersRepository.findByEmail(email) as User
+  }: UserAuthenticate): Promise<Either<InvalidEmailOrPasswordError, UserToken>> {
+    const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
-      throw new InvalidEmailOrPasswordError()
+      return left(new InvalidEmailOrPasswordError())
     }
 
     const { props } = user;
@@ -22,11 +22,11 @@ export class AuthenticateUser {
     const isPasswordValid = await props.password.comparePassword(password)
 
     if (!isPasswordValid) {
-      throw new InvalidEmailOrPasswordError()
+      return left(new InvalidEmailOrPasswordError())
     }
 
     const { token } = JWT.signUser(user)
 
-    return { token }
+    return right({ token })
   }
 }
