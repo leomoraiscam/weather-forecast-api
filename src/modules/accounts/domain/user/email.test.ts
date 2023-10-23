@@ -1,23 +1,28 @@
 import { Email } from './email'
-import { InvalidEmailError } from "./errors/invalid-email-error"
 
 describe('User email value object', () => {
   it('should accept valid email address', () => {
     const emailOrError = Email.create('johndoe@example.com')
 
-    expect(emailOrError).toHaveProperty('email')
+    expect(emailOrError.isRight).toBeTruthy();
   })
 
   it('should reject invalid email address', () => {
-    expect(() => Email.create('johndoe')).toThrow(InvalidEmailError)
-    expect(() => Email.create('johndoe@example')).toThrow(InvalidEmailError)
-    expect(() => Email.create('@example.com')).toThrow(InvalidEmailError)
-    expect(() => Email.create('johndoe@example.')).toThrow(InvalidEmailError)
+    const emailOrError1 = Email.create('johndoe')
+    const emailOrError2 = Email.create('johndoe@example')
+    const emailOrError3 = Email.create('@example.com')
+    const emailOrError4 = Email.create('johndoe@example.')
+
+    expect(emailOrError1.isLeft()).toBeTruthy()
+    expect(emailOrError2.isLeft()).toBeTruthy()
+    expect(emailOrError3.isLeft()).toBeTruthy()
+    expect(emailOrError4.isLeft()).toBeTruthy()
   })
 
   it('should reject emails with more than 255 characters', () => {
     const domain = 'c'.repeat(260)
-    
-    expect(() => Email.create(`johndoe@${domain}.com`)).toThrow(InvalidEmailError)
+    const emailOrError = Email.create(`johndoe@${domain}.com`)
+
+    expect(emailOrError.isLeft()).toBeTruthy()
   })
 })
