@@ -1,11 +1,9 @@
 import { Email } from '../../domain/user/email';
-import { InvalidEmailError } from '../../domain/user/errors/invalid-email-error';
 import { Name } from '../../domain/user/name';
 import { Password } from '../../domain/user/password';
 import { User } from '../../domain/user/user'
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository';
 import { IUsersRepository } from '../../repositories/users-repository';
-import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 import { RegisterUserUseCase } from './register-user-use-case'
 
 let usersRepository: IUsersRepository
@@ -25,34 +23,38 @@ describe('Register User Use Case', () => {
     })
 
     expect(await usersRepository.findByEmail('john@doe.com')).toBeTruthy()
-    expect(response.name).toBe('John Doe')
+    expect(response.isRight).toBeTruthy()  
   })
 
   it('should not be able to register new user with invalid data', async () => {
-    await expect(() => registerUserUseCase.execute({
+    const response = await registerUserUseCase.execute({
       name: 'John Doe',
       email: 'john',
       password: '123',
-    })).rejects.toThrow(InvalidEmailError)
+    })
+   
+    expect(response.isLeft).toBeTruthy()
   })
 
   it('should not be able to register new user with existing email', async () => {
-    const name = Name.create('John Doe') as Name
-    const email = Email.create('johndoe@example.com') as Email
-    const password = Password.create('123456') as Password
+    const name = Name.create('John Doe').value as Name
+    const email = Email.create('johndoe@example.com').value as Email
+    const password = Password.create('123456').value as Password
 
     const userOrError = User.create({
       name,
       email,
-      password,
-    }) as User
+      password
+    }).value as User
 
     usersRepository.create(userOrError);
 
-    await expect(() => registerUserUseCase.execute({
+    const response = await registerUserUseCase.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
-    })).rejects.toThrow(AccountAlreadyExistsError)
+    })
+
+    expect(response.isLeft).toBeTruthy();
   })
 })
