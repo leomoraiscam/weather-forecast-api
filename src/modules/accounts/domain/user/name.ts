@@ -1,3 +1,4 @@
+import { Either, left, right } from "@src/shared/logic/Either";
 import { InvalidNameError } from "./errors/invalid-name-error"
 
 export class Name {
@@ -23,11 +24,11 @@ export class Name {
     return true
   }
 
-  static create(name: string): Name | InvalidNameError {
+  static create(name: string): Either<InvalidNameError, Name> {
     if (!this.validate(name)) {
-      throw new InvalidNameError(name)
+      return left(new InvalidNameError(name))
     }
 
-    return new Name(name);
+    return right(new Name(name))
   }
 }

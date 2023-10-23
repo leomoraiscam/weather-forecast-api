@@ -1,3 +1,4 @@
+import { Either, left, right } from '@src/shared/logic/Either'
 import { InvalidEmailError } from './errors/invalid-email-error'
 
 export class Email {
@@ -26,17 +27,17 @@ export class Email {
     return true
   }
 
-  static format(email: string) {
+  static format(email: string): string {
     return email.trim().toLowerCase()
   }
 
-  static create(email: string): Email | InvalidEmailError {
+  static create(email: string): Either<InvalidEmailError, Email> {
     if (!this.validate(email)) {
-      throw new InvalidEmailError(email)
+      return left(new InvalidEmailError(email)) 
     }
 
     const formattedEmail = this.format(email)
 
-    return new Email(formattedEmail)
+    return right(new Email(formattedEmail))
   }
 }

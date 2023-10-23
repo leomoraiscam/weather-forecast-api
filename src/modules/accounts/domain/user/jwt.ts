@@ -2,6 +2,7 @@ import { sign, verify } from 'jsonwebtoken'
 
 import { InvalidJWTTokenError } from './errors/InvalidJWTTokenError'
 import { User } from './user'
+import { Either, left, right } from '@src/shared/logic/Either'
 
 interface JWTData {
   userId: string
@@ -24,26 +25,26 @@ export class JWT {
 
   static decodeToken(
     token: string
-  ): InvalidJWTTokenError | JWTTokenPayload {
+  ): Either<InvalidJWTTokenError, JWTTokenPayload> {
     try {
       const decoded = verify(token, 'secret-key') as JWTTokenPayload
 
-      return decoded
+      return right(decoded)
     } catch (err) {
-      throw new InvalidJWTTokenError()
+      return left(new InvalidJWTTokenError())
     }
   }
 
-  static createFromJWT(token: string): InvalidJWTTokenError | JWT {
+  static createFromJWT(token: string): Either<InvalidJWTTokenError, JWT> {
     const jwtPayloadOrError = this.decodeToken(token)
 
-    if (jwtPayloadOrError instanceof InvalidJWTTokenError) {
-      throw new InvalidJWTTokenError()
+    if (jwtPayloadOrError.isLeft()) {
+      return left(jwtPayloadOrError.value)
     }
 
-    const jwt = new JWT({ token, userId: jwtPayloadOrError.sub })
+    const jwt = new JWT({ token, userId: jwtPayloadOrError.value.sub })
 
-    return jwt
+    return right(jwt)
   }
 
   static signUser(user: User): JWT {
@@ -52,7 +53,7 @@ export class JWT {
       expiresIn: '1d',
     })
 
-    const jwt = new JWT({ userId: 'userId', token })
+    const jwt = new JWT({ userId: user._id, token })
 
     return jwt
   }

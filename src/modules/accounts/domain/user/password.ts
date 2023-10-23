@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
-
 import { InvalidPasswordLengthError } from './errors/invalid-password-length-error'
+import { Either, left, right } from '@src/shared/logic/Either'
 
 export class Password {
   private readonly password: string
@@ -11,7 +11,7 @@ export class Password {
     this.hashed = hashed
   }
 
-  get value() {
+  get value(): string {
     return this.password
   }
 
@@ -50,11 +50,11 @@ export class Password {
   static create(
     password: string,
     hashed: boolean = false
-  ): Password | InvalidPasswordLengthError  {
+  ): Either<InvalidPasswordLengthError, Password>  {
     if (!hashed && !this.validate(password)) {
-      throw new InvalidPasswordLengthError()
+      return left(new InvalidPasswordLengthError())
     }
 
-    return new Password(password, hashed)
+    return right(new Password(password, hashed))
   }
 }
