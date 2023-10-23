@@ -1,3 +1,4 @@
+import { ControllerError } from '@src/shared/errors/ports/controller-error';
 import { HttpResponse } from '../dtos/http-response';
 
 export function created<T>(data: T): HttpResponse<T> {
@@ -7,16 +8,32 @@ export function created<T>(data: T): HttpResponse<T> {
   };
 }
 
-export function badRequest<T>(data: T): HttpResponse<T> {
+export function badRequest(data: ControllerError): HttpResponse<ControllerError> {
   return {
     statusCode: 400,
-    body: data,
+    body: {
+      name: data.name,
+      message: data.message
+    }
   };
 }
 
-export function serverError<T>(data: T): HttpResponse<T> {
+export function conflict(data: ControllerError): HttpResponse<ControllerError> {
+  return {
+    statusCode: 409,
+    body: {
+      name: data.name,
+      message: data.message
+    }
+  }
+}
+
+export function serverError(data: ControllerError): HttpResponse<ControllerError> {
   return {
     statusCode: 500,
-    body: data,
+    body: {
+      name: 'Internal Server Error',
+      message: data.message
+    },
   };
 }
