@@ -33,7 +33,13 @@ export class FetchPointsController {
 
       const response = await this.usecase.execute({ lat, lng });
 
-      return created<EnrichedForecastBeachesRatings>(response);
+      if (response.isLeft()) {
+        const error = response.value
+
+        return badRequest(error)
+      } else {
+        return created<EnrichedForecastBeachesRatings>(response);
+      }
     } catch (error) {
       return serverError(error);
     }
