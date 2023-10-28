@@ -3,8 +3,8 @@ import { UseCase  } from "@src/shared/http/ports/use-case";
 import { ControllerError } from "@src/shared/errors/ports/controller-error"
 import { badRequest, created, serverError } from "@src/shared/http/helpers/http-helper";
 import { HttpRequest } from "@src/shared/http/dtos/http-request"
-import { UserAuthenticate } from "../../dtos/authenticate-user";
-import { UserToken } from "../../dtos/user-token";
+import { AuthenticateUserRequest } from "../../dtos/authenticate-user-request";
+import { AuthenticateUserResponse } from "../../dtos/authenticate-user-response";
 
 export class AuthenticateUserController {
   private readonly usecase: UseCase;
@@ -14,8 +14,8 @@ export class AuthenticateUserController {
   }
 
   async handle(
-    request:HttpRequest<UserAuthenticate>
-  ): Promise<HttpResponse<UserToken | ControllerError>> {
+    request:HttpRequest<AuthenticateUserRequest>
+  ): Promise<HttpResponse<AuthenticateUserResponse | ControllerError>> {
     try {
       const { body } = request;
 
@@ -30,7 +30,7 @@ export class AuthenticateUserController {
 
       const response = await this.usecase.execute(request.body);
 
-      return created<UserToken>(response);
+      return created<AuthenticateUserResponse>(response);
     } catch (error) {
       return serverError(error);
     }

@@ -2,10 +2,10 @@ import { User } from "../../domain/user/user";
 import { IUsersRepository } from "../users-repository";
 
 export class InMemoryUsersRepository implements IUsersRepository {
-  public items: User[] = []
+  users: User[] = []
 
   async findByEmail(email: string): Promise<User | null> {
-    const user =  this.items.find((user) => user.props.email.value === email);
+    const user =  this.users.find((user) => user.props.email.value === email);
 
     if(!user) {
       return null
@@ -15,7 +15,7 @@ export class InMemoryUsersRepository implements IUsersRepository {
   }
 
   async create(user: User): Promise<User> {
-    this.items.push(user);
+    this.users.push(user);
 
     return user;
   }

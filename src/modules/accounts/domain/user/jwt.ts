@@ -1,6 +1,6 @@
 import { sign, verify } from 'jsonwebtoken'
 
-import { InvalidJWTTokenError } from './errors/InvalidJWTTokenError'
+import { InvalidJWTTokenError } from './errors/invalid-jwt-token-error'
 import { User } from './user'
 import { Either, left, right } from '@src/shared/logic/Either'
 

@@ -14,6 +14,10 @@ export class User {
     this._id = id || uuidV4()
   }
 
+  get id() {
+    return this._id
+  }
+
   get name() {
     return this.props.name
   }

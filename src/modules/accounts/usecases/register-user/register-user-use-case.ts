@@ -6,7 +6,7 @@ import { RegisterUser } from "../../dtos/register-user-response";
 import { IUsersRepository } from "../../repositories/users-repository";
 import { AccountAlreadyExistsError } from "./errors/account-already-exists-error";
 import { UserMapper } from "../../mapper/user-mapper"
-import { RegisterUserRequest } from "../../dtos/register-user";
+import { RegisterUserRequest } from "../../dtos/register-user-request";
 import { Either, left, right } from "@src/shared/logic/Either";
 import { InvalidNameError } from "../../domain/user/errors/invalid-name-error";
 import { InvalidEmailError } from "../../domain/user/errors/invalid-email-error";

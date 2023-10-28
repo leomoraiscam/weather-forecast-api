@@ -2,11 +2,11 @@ import { User } from "../domain/user/user";
 import { RegisterUser } from "../dtos/register-user-response";
 
 export class UserMapper {
-  static toDomain({ _id ,props }: User): RegisterUser {
+  static toDomain({ id , props: { name, email } }: User): RegisterUser {
     return {
-      id: _id,
-      name: props.name.value,
-      email: props.email.value,
+      id,
+      name: name.value,
+      email: email.value,
     }
   }
 }

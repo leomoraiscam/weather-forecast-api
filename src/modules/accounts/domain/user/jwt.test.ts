@@ -1,5 +1,5 @@
 import { Email } from './email'
-import { InvalidJWTTokenError } from './errors/InvalidJWTTokenError'
+import { InvalidJWTTokenError } from './errors/invalid-jwt-token-error'
 import { JWT, JWTTokenPayload } from './jwt'
 import { Name } from './name'
 import { Password } from './password'
