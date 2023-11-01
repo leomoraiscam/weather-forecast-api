@@ -6,10 +6,12 @@ describe('Beach Position Object Value', () => {
   it('should accept valid position', () => {
     const positionOrError = Position.create(BeachPosition.E);
 
-    expect(positionOrError).toHaveProperty('position');
+    expect(positionOrError.isRight()).toBeTruthy()
   })
 
   it('should reject position when teh same not equal beach Position valid', () => {
-    expect(() => Position.create('G')).toThrow(InvalidPositionError);
+    const positionOrError = Position.create('G');
+    
+    expect(positionOrError.isLeft()).toBeTruthy()
   })
 })

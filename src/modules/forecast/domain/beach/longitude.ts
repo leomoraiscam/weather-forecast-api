@@ -1,3 +1,4 @@
+import { Either, left, right } from "@src/shared/logic/Either";
 import { InvalidLongitudeError } from "./errors/invalid-longitude-error";
 
 export class Longitude {
@@ -26,11 +27,11 @@ export class Longitude {
     return true
   }
 
-  static create(lng: number): Longitude | InvalidLongitudeError{
+  static create(lng: number): Either<InvalidLongitudeError, Longitude> {
     if (!this.validate(lng)) {
-      throw new InvalidLongitudeError(lng)
+      return left (new InvalidLongitudeError(lng))
     }
 
-    return new Longitude(lng);
+    return right(new Longitude(lng));
   }
 }

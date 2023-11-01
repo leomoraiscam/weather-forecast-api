@@ -1,6 +1,7 @@
-import { Beach, BeachForecast } from "../../dtos/beach-forecast";
+import { ForecastRatingBeach } from "../../dtos/forecast-rating-beach";
+import { Beach } from "../../dtos/beach"
 import { TimeForecast } from "../../dtos/time-forecast";
-import { normalizeForecastByTime } from "../helper/normalize-forecast-by-time-helper"
+import { normalizeForecastByTime } from "../utils/normalize-forecast-by-time"
 import { BeachPosition } from "@config/constants/beach-position-enum";
 import { UseCase } from "@src/shared/http/ports/use-case"
 import { FetchPointNormalize } from "@src/external/stormglass-service/ports/dtos/fetch-point-normalize"
@@ -11,15 +12,15 @@ export class ProcessForecastBeachesUseCase {
   constructor(private stormGlassService: UseCase){}
 
   public async execute(_: Beach[]): Promise<Either<
-    | StormGlassResponseError,
+    | StormGlassResponseError, 
     TimeForecast[]
   >> {
-      const beachForecastsSources: BeachForecast[] = [];
+      const beachForecastsSources: ForecastRatingBeach[] = [];
 
       const mockedBeaches: Beach[] = [
         {
           name: 'Dee Why',
-          lat: 151.289824,
+          lat: -33.792726,
           lng: 151.289824,
           position: BeachPosition.E,
         },
@@ -34,7 +35,7 @@ export class ProcessForecastBeachesUseCase {
           return left(points.value)
         }
 
-        const enrichedBeachRating = points.value.map((pointForecast: FetchPointNormalize) => ({
+        const enrichedBeachRating = points.value.map((pointForecast: FetchPointNormalize): ForecastRatingBeach => ({
           lat,
           lng,
           name,
@@ -45,7 +46,9 @@ export class ProcessForecastBeachesUseCase {
 
         beachForecastsSources.push(...enrichedBeachRating);
       }
+
+      const normalizeForecast = normalizeForecastByTime(beachForecastsSources)
       
-      return right(normalizeForecastByTime(beachForecastsSources))
+      return right(normalizeForecast)
     }
 }

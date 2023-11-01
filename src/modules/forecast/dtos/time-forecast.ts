@@ -1,6 +1,6 @@
-import { BeachForecast } from "./beach-forecast";
+import { ForecastRatingBeach } from "./forecast-rating-beach";
 
 export interface TimeForecast {
   time: string;
-  forecast: BeachForecast[]
+  forecast: ForecastRatingBeach[]
 }

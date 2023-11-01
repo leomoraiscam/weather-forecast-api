@@ -20,7 +20,7 @@ export class FetchPointService implements StormGlassService {
         url: `https://api.stormglass.io/v2/weather/point?params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&lat=${lat}&lng=${long}`,
         config:       {
           headers: {
-            Authorization: 'fake-token',
+            Authorization: '27922ca0-a5cd-11eb-9f40-0242ac130002-27922d2c-a5cd-11eb-9f40-0242ac130002',
           }
         }
       });

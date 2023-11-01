@@ -1,7 +1,7 @@
-import { BeachForecast } from "../../dtos/beach-forecast";
+import { ForecastRatingBeach } from "../../dtos/forecast-rating-beach";
 import { TimeForecast } from "../../dtos/time-forecast";
 
-export function normalizeForecastByTime (forecast: BeachForecast[]): TimeForecast[] {
+export function normalizeForecastByTime (forecast: ForecastRatingBeach[]): TimeForecast[] {
   const forecastByTime: TimeForecast[] = [];
 
   for(const point of forecast) {

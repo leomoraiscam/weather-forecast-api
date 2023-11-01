@@ -1,5 +1,6 @@
 import { BeachPosition } from "@config/constants/beach-position-enum";
 import { InvalidPositionError } from "./errors/invalid-position-error"
+import { Either, left, right } from "@src/shared/logic/Either";
 
 export class Position {
   private readonly position: string;
@@ -26,11 +27,11 @@ export class Position {
     return true
   }
 
-  static create(position: string): Position | InvalidPositionError{
+  static create(position: string): Either<InvalidPositionError, Position> {
     if (!this.validate(position)) {
-      throw new InvalidPositionError(position)
+      return left(new InvalidPositionError(position))
     }
 
-    return new Position(position);
+    return right(new Position(position));
   }
 }

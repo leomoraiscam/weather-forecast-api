@@ -2,7 +2,7 @@ import { HttpResponse } from "@src/shared/http/dtos/http-response";
 import { UseCase  } from "@src/shared/http/ports/use-case";
 import { ControllerError } from "@src/shared/errors/ports/controller-error"
 import { badRequest, created, serverError } from "@src/shared/http/helpers/http-helper";
-import { EnrichedForecastBeachesRatings } from "../../dtos/enriched-forecast-beaches-ratings"
+import { ForecastRatingBeach } from "../../dtos/forecast-rating-beach"
 import { HttpRequest } from "@src/shared/http/dtos/http-request"
 import { BeachCoordinate } from "../../dtos/beach-cordinate";
 
@@ -15,7 +15,7 @@ export class FetchPointsController {
 
   async handle(
     request:HttpRequest<BeachCoordinate>
-  ): Promise<HttpResponse<EnrichedForecastBeachesRatings | ControllerError>> {
+  ): Promise<HttpResponse<ForecastRatingBeach | ControllerError>> {
     try {
       const { params } = request
 
@@ -37,9 +37,9 @@ export class FetchPointsController {
         const error = response.value
 
         return badRequest(error)
-      } else {
-        return created<EnrichedForecastBeachesRatings>(response);
       }
+      
+      return created<ForecastRatingBeach>(response);
     } catch (error) {
       return serverError(error);
     }

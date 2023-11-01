@@ -7,10 +7,10 @@ import { Longitude } from "./longitude";
 
 describe('Domain Beach model', () => {
   it('should be able to create new beach', () => {
-    const name = Name.create('Dee Why') as Name;
-    const lat = Latitude.create( -33.792726) as Latitude;
-    const lng = Longitude.create(151.289824) as Longitude;
-    const position = Position.create(BeachPosition.S) as Position;
+    const name = Name.create('Dee Why').value as Name;
+    const lat = Latitude.create( -33.792726).value as Latitude;
+    const lng = Longitude.create(151.289824).value as Longitude;
+    const position = Position.create(BeachPosition.S).value as Position;
     
     const beach = Beach.create({
       name,
@@ -19,6 +19,6 @@ describe('Domain Beach model', () => {
       position,
     })
 
-    expect(beach).toHaveProperty('_id');
+    expect(beach.isRight).toBeTruthy()
   })
 })

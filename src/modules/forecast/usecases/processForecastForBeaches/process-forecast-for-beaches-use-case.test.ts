@@ -2,9 +2,8 @@ import { FetchPointService } from "@src/external/stormglass-service/fetch-point-
 import stormGlassNormalizedResponse3Hours  from "@test/fixtures/storm-glass-normalized-response-3-hours.json";
 import processForecastBeachesResponse  from "@test/fixtures/process-forecast-beaches-response.json";
 import { ProcessForecastBeachesUseCase } from "./process-forecast-for-beaches-use-case";
-import { Beach as IBeach} from "../../dtos/beach-forecast";
+import { Beach as IBeach} from "../../dtos/beach";
 import { BeachPosition } from "@config/constants/beach-position-enum"
-import { ForecastProcessingInternalError } from "../errors/forecast-processing-error"
 import { Beach } from "@src/modules/forecast/domain/beach/beach"
 import { Name } from "@src/modules/forecast/domain/beach/name"
 import { Longitude } from "@src/modules/forecast/domain/beach/longitude"
@@ -66,13 +65,13 @@ describe('Forecast Service', () => {
     expect(response).toEqual([]);
   })
 
-  it.skip('should be able to throw internal processing error when something goes wrong during the rating process', async () => {
-    mockedStormGlassService.execute.mockRejectedValueOnce('Error fetching data');
+  // it.skip('should be able to throw internal processing error when something goes wrong during the rating process', async () => {
+  //   mockedStormGlassService.execute.mockRejectedValueOnce('Error fetching data');
 
-    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(mockedStormGlassService);
+  //   const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(mockedStormGlassService);
 
-    await expect(
-      processForecastBeachesUseCase.execute(serializedBeach)
-    ).rejects.toThrow(ForecastProcessingInternalError)
-  })
+  //   await expect(
+  //     processForecastBeachesUseCase.execute(serializedBeach)
+  //   ).rejects.toThrow(ForecastProcessingInternalError)
+  // })
 })
