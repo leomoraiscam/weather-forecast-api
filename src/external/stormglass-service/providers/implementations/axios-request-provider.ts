@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { HttpRequest, HttpResponse } from "../models/request-provider"
+import { HttpRequest } from "../dtos/http-request";
+import { HttpResponse } from "../dtos/http-response";
 import { IRequestProvider } from "../models/request-provider"
 
 export class AxiosRequestProvider implements IRequestProvider{

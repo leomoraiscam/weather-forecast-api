@@ -1,10 +1,10 @@
-import { FetchPointNormalize } from "./ports/dtos/fetch-point-normalize";
-import { StormGlassForecastResponse } from "./ports/dtos/stormglass-response";
-import { StormGlassMapper } from "./mapper/stormglass-mapper"
-import { FetchPointCoordinate } from "./ports/dtos/fetch-point-coordinate";
-import { StormGlassService } from "./ports/stormglass-service";
-import { StormGlassResponseError } from "./errors/stormglass-response-error";
-import { IRequestProvider } from "./providers/models/request-provider"
+import { FetchPointNormalize } from "../dtos/fetch-point-normalize";
+import { StormGlassForecastResponse } from "../dtos/stormglass-response";
+import { StormGlassMapper } from "../mapper/stormglass-mapper"
+import { FetchPointCoordinate } from "../dtos/fetch-point-coordinate";
+import { StormGlassService } from "../ports/stormglass-service";
+import { StormGlassResponseError } from "@src/modules/forecast/usecases/errors/stormglass-response-error";
+import { IRequestProvider } from "../providers/models/request-provider"
 import { Either, left, right } from "@src/shared/logic/Either";
 
 export class FetchPointService implements StormGlassService {
@@ -20,7 +20,7 @@ export class FetchPointService implements StormGlassService {
         url: `https://api.stormglass.io/v2/weather/point?params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&lat=${lat}&lng=${long}`,
         config:       {
           headers: {
-            Authorization: '27922ca0-a5cd-11eb-9f40-0242ac130002-27922d2c-a5cd-11eb-9f40-0242ac130002',
+            Authorization: 'fake-token',
           }
         }
       });

@@ -3,9 +3,8 @@ import stormGlassWeather3HoursFixture  from "@test/fixtures/storm-glass-weather-
 import stormGlassNormalizedResponse3Hours  from "@test/fixtures/storm-glass-normalized-response-3-hours.json";
 import stormGlassIncompleteResponse from "@test/fixtures/storm-glass-incomplete-response.json";
 import stormGlassResponseError from "@test/fixtures/storm-glass-response-error.json";
-import { HttpResponse } from "./providers/models/request-provider"
+import { HttpResponse } from "../providers/dtos/http-response"
 import { AxiosRequestProvider } from "@src/external/stormglass-service/providers/implementations/axios-request-provider"
-
 
 jest.mock('@src/external/stormglass-service/providers/implementations/axios-request-provider');
 

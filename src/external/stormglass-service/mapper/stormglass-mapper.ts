@@ -1,5 +1,5 @@
-import { FetchPointNormalize } from "../ports/dtos/fetch-point-normalize";
-import { StormGlassForecastResponse } from "../ports/dtos/stormglass-response";
+import { FetchPointNormalize } from "../dtos/fetch-point-normalize";
+import { StormGlassForecastResponse } from "../dtos/stormglass-response";
 
 export class StormGlassMapper {
   static toNormalize(data: StormGlassForecastResponse): FetchPointNormalize[] {
