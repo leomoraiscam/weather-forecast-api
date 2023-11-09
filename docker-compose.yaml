@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  weather-forecast-database:
+    image: mongo
+    container_name: weather-forecast-database
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - MONGODB_USERNAME=docker
+      - MONGODB_PASSWORD=docker
+      - MONGODB_DATABASE=weather-forecast
+    ports:
+      - "16017:27017"
+    volumes:
+      -  weather-forecast-data:/data/db
+    # networks:
+    #   - weather-forecast-network
+
+volumes:
+  weather-forecast-data:
+    driver: local
+
+# networks:
+#   weather-forecast-network:
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: 172.16.57.0/24
