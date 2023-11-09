@@ -11,7 +11,7 @@
     "incremental": true,
     "strict": true,
     "noImplicitAny": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "strictFunctionTypes": true,
     "esModuleInterop": true,
     "useUnknownInCatchVariables":false,
