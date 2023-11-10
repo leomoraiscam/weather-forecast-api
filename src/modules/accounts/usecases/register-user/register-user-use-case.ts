@@ -5,7 +5,6 @@ import { User } from "../../domain/user/user";
 import { RegisterUser } from "../../dtos/register-user-response";
 import { IUsersRepository } from "../../repositories/users-repository";
 import { AccountAlreadyExistsError } from "./errors/account-already-exists-error";
-import { UserMapper } from "../../mapper/user-mapper"
 import { RegisterUserRequest } from "../../dtos/register-user-request";
 import { Either, left, right } from "@src/shared/logic/Either";
 import { InvalidNameError } from "../../domain/user/errors/invalid-name-error";
@@ -16,12 +15,12 @@ export class RegisterUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
   async execute({ name, email, password }: RegisterUserRequest): Promise<Either<
-    | AccountAlreadyExistsError
-    | InvalidNameError
-    | InvalidEmailError
-    | InvalidPasswordLengthError,
-    RegisterUser
-  >> {
+  | AccountAlreadyExistsError
+  | InvalidNameError
+  | InvalidEmailError
+  | InvalidPasswordLengthError,
+  RegisterUser
+>> {
     const nameOrError = Name.create(name);
     const emailOrError = Email.create(email)
     const passwordOrError = Password.create(password)
@@ -51,17 +50,19 @@ export class RegisterUserUseCase {
     const user = userOrError.value
 
     const userAlreadyExists = await this.usersRepository.findByEmail(
-      user.props.email.value
+      user.email.value
     )
 
     if (userAlreadyExists) {
-      return left(new AccountAlreadyExistsError(user.props.email.value))
+      return left(new AccountAlreadyExistsError(user.email.value))
     }
 
-    await this.usersRepository.create(userOrError.value)
+    await this.usersRepository.create(user)
 
-    const mappedUser = UserMapper.toDomain(user)
-
-    return right(mappedUser);
+    return right({
+      id: user.id,
+      name: user.name.value,
+      email: user.email.value,
+    })
   }
 }
