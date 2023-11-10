@@ -4,6 +4,7 @@ import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password-
 import { AuthenticateUserRequest } from "../../dtos/authenticate-user-request"
 import { AuthenticateUserResponse } from "../../dtos/authenticate-user-response";
 import { Either, left, right } from '@src/shared/logic/Either'
+
 export class AuthenticateUser {
   constructor(private usersRepository: IUsersRepository) {}
 
@@ -17,9 +18,7 @@ export class AuthenticateUser {
       return left(new InvalidEmailOrPasswordError())
     }
 
-    const { props } = user;
-
-    const isPasswordValid = await props.password.comparePassword(password)
+    const isPasswordValid = await user.password.comparePassword(password)
 
     if (!isPasswordValid) {
       return left(new InvalidEmailOrPasswordError())

@@ -6,7 +6,7 @@ import { IUsersRepository } from '../users-repository';
 import { mongoHelper } from '@src/external/repositories/mongodb/helpers/mongo-helper';
 
 export class UserRepository implements IUsersRepository {
-  async findByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<User | null> {
     const userCollection = mongoHelper.getCollection('users');
     const user = await userCollection.findOne<PersistenceUserModel>({ email });
 

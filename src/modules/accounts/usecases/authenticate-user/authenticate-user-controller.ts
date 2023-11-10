@@ -28,7 +28,7 @@ export class AuthenticateUserController {
         })
       } 
 
-      const response = await this.usecase.execute(request.body);
+      const response = await this.usecase.execute(body);
 
       return created<AuthenticateUserResponse>(response.value);
     } catch (error) {
