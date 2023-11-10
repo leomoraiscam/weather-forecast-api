@@ -1,4 +1,5 @@
 import { User } from '../../domain/user/user';
+import { UserMapper } from '../../mapper/user-mapper';
 import { IUsersRepository } from '../users-repository';
 
 import { mongoHelper } from '@src/external/repositories/mongodb/helpers/mongo-helper';
@@ -20,10 +21,9 @@ export class UserRepository implements IUsersRepository {
     const result = await this.findByEmail(user.email.value);
 
     if (!result) {
-      await userCollection.insertOne({
-        name: user.name.value,
-        email: user.email.value
-      });
+      const data = await UserMapper.toPersistence(user)
+
+      await userCollection.insertOne(data);
     }
 
     return result
