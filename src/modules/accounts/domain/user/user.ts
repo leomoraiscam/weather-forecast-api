@@ -9,9 +9,9 @@ export class User {
   public readonly _id: string;
   public readonly props: IUserProps;
 
-  private constructor(props: IUserProps, id?: string) {
-    this.props = props;
+  constructor(props: IUserProps, id?: string) {
     this._id = id || uuidV4()
+    this.props = props;
   }
 
   get id() {
@@ -22,6 +22,14 @@ export class User {
     return this.props.name
   }
 
+  get email() {
+    return this.props.email
+  }
+
+  get password() {
+    return this.props.password
+  }
+
   static create(
     props: IUserProps,
     id?: string
@@ -29,6 +37,8 @@ export class User {
     InvalidNameError | InvalidEmailError | InvalidPasswordLengthError,
     User
   > {
-    return right(new User(props, id))
+    const user = new User(props, id)
+
+    return right(user)
   }
 }
