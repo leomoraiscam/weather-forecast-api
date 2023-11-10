@@ -29,7 +29,7 @@ export class RegisterUserController {
         })
       }
 
-      const response = await this.usecase.execute(request.body);
+      const response = await this.usecase.execute(body);
 
       if (response.isLeft()) {
         const error = response.value
@@ -40,9 +40,9 @@ export class RegisterUserController {
           default:
             return badRequest(error)
         }
-      } else {
-        return created<RegisterUser>(response);
-      }
+      } 
+      
+      return created<RegisterUser>(response.value);
     } catch (error) {
       return serverError(error);
     }
