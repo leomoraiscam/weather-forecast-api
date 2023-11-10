@@ -30,7 +30,7 @@ export class AuthenticateUserController {
 
       const response = await this.usecase.execute(request.body);
 
-      return created<AuthenticateUserResponse>(response);
+      return created<AuthenticateUserResponse>(response.value);
     } catch (error) {
       return serverError(error);
     }
