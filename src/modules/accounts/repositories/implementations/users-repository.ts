@@ -1,4 +1,5 @@
 import { User } from '../../domain/user/user';
+import { PersistenceUserModel } from '../../mapper/dtos/users-model';
 import { UserMapper } from '../../mapper/user-mapper';
 import { IUsersRepository } from '../users-repository';
 
@@ -7,13 +8,13 @@ import { mongoHelper } from '@src/external/repositories/mongodb/helpers/mongo-he
 export class UserRepository implements IUsersRepository {
   async findByEmail(email: string): Promise<User> {
     const userCollection = mongoHelper.getCollection('users');
-    const user = await userCollection.findOne<User>({ email });
+    const user = await userCollection.findOne<PersistenceUserModel>({ email });
 
     if (!user) {
       return null
     }
 
-    return user
+    return UserMapper.toDomain(user)
   }
 
   async create(user: User): Promise<User> {
