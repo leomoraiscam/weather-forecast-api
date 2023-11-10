@@ -49,11 +49,11 @@ export class JWT {
 
   static signUser(user: User): JWT {
     const token = sign({}, 'secret-key', {
-      subject: user._id,
+      subject: user.id,
       expiresIn: '1d',
     })
 
-    const jwt = new JWT({ userId: user._id, token })
+    const jwt = new JWT({ userId: user.id, token })
 
     return jwt
   }
