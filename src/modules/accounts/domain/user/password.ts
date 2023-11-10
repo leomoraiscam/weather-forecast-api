@@ -11,10 +11,6 @@ export class Password {
     this.hashed = hashed
   }
 
-  get value(): string {
-    return this.password
-  }
-
   static validate(password: string): boolean {
     if (
       !password ||
