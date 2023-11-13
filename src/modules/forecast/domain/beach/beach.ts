@@ -11,17 +11,37 @@ export class Beach {
   public readonly props: IBeachProps;
 
   constructor(props: IBeachProps, id?: string) {
-    this.props = props;
     this._id = id || uuidV4()
+    this.props = props;
   }
 
-  static create( props: IBeachProps, id?: string): Either<
+  get id() {
+    return this._id
+  }
+
+  get name() {
+    return this.props.name
+  }
+
+  get lat() {
+    return this.props.lat
+  }
+
+  get lng() {
+    return this.props.lng
+  }
+
+  get position() {
+    return this.props.position
+  }
+
+  static create(props: IBeachProps, id?: string): Either<
     InvalidNameError | 
     InvalidPositionError | 
     InvalidLatitudeError | 
     InvalidLongitudeError,
     Beach
   >  {
-    return right (new Beach(props, id))
+    return right(new Beach(props, id))
   }
 }
