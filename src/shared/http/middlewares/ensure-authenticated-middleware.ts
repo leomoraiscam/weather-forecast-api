@@ -3,7 +3,7 @@ import { EnsureAuthenticatedMiddlewareRequest, DecodedJwt } from "../dtos/ensure
 import { HttpResponse } from "../dtos/http-response"
 import { ok, forbidden, serverError } from "../helpers/http-helper"
 import { ControllerError } from '@src/shared/errors/ports/controller-error';
-import { Middleware } from "../ports/middleware"
+import { Middleware } from "@src/main/adapters/ports/middleware"
 
 export class EnsureAuthenticatedMiddleware implements Middleware{
   constructor() {}

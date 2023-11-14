@@ -35,7 +35,6 @@ export function forbidden(data: ControllerError): HttpResponse<ControllerError> 
   }
 }
 
-
 export function conflict(data: ControllerError): HttpResponse<ControllerError> {
   return {
     statusCode: 409,

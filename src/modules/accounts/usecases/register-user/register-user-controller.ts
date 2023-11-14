@@ -1,5 +1,5 @@
 import { HttpResponse } from "@src/shared/http/dtos/http-response"
-import { UseCase  } from "@src/shared/http/ports/use-case";
+import { UseCase  } from "@src/main/adapters/ports/use-case";
 import { badRequest, conflict, created, serverError } from "@src/shared/http/helpers/http-helper";
 import { HttpRequest } from "@src/shared/http/dtos/http-request"
 import { RegisterUser } from "../../dtos/register-user-response";
