@@ -1,5 +1,5 @@
-import { ProcessForecastBeachesUseCase } from "@src/modules/forecast/usecases/process-forecast-for-beaches-use-case"
-import { FetchPointsController } from "@src/modules/forecast/usecases/process-forecast-for-beaches-controller";
+import { ProcessForecastBeachesUseCase } from "@src/modules/forecast/usecases/process-forecast-for-beaches/process-forecast-for-beaches-use-case"
+import { FetchPointsController } from "@src/modules/forecast/usecases/process-forecast-for-beaches/process-forecast-for-beaches-controller";
 import { AxiosRequestProvider } from "@src/external/stormglass-service/providers/implementations/axios-request-provider";
 import { FetchPointService } from  "@src/external/stormglass-service/services/fetch-point-service"
 import { Controller } from "../ports/controller";

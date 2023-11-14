@@ -6,7 +6,7 @@
   "scripts": {
     "commit": "cz",
     "test": "jest",
-    "dev:start": "ts-node -r tsconfig-paths/register src/main/app.ts"
+    "dev:start": "ts-node --files -r tsconfig-paths/register src/main/app.ts"
   },
   "dependencies": {
     "axios": "^1.5.1",
