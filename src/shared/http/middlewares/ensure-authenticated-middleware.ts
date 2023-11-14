@@ -1,6 +1,5 @@
 import { decode } from 'jsonwebtoken'
-import { EnsureAuthenticatedMiddlewareRequest } from "../dtos/ensure-authenticated-middleware-request";
-import { DecodedJwt } from "../dtos/ensure-decode-jwt";
+import { EnsureAuthenticatedMiddlewareRequest, DecodedJwt } from "../dtos/ensure-authenticated-middleware";
 import { HttpResponse } from "../dtos/http-response"
 import { ok, forbidden, serverError } from "../helpers/http-helper"
 import { ControllerError } from '@src/shared/errors/ports/controller-error';
@@ -13,9 +12,6 @@ export class EnsureAuthenticatedMiddleware implements Middleware{
     request: EnsureAuthenticatedMiddlewareRequest
   ): Promise<HttpResponse<{userId: string} | ControllerError>> {
     try {
-      console.log("Request", request)
-
-
       const { accesstoken } = request
 
       if (accesstoken) {
