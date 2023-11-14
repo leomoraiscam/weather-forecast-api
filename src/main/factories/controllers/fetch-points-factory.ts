@@ -2,7 +2,7 @@ import { ProcessForecastBeachesUseCase } from "@src/modules/forecast/usecases/pr
 import { FetchPointsController } from "@src/modules/forecast/usecases/process-forecast-for-beaches/process-forecast-for-beaches-controller";
 import { AxiosRequestProvider } from "@src/external/stormglass-service/providers/implementations/axios-request-provider";
 import { FetchPointService } from  "@src/external/stormglass-service/services/fetch-point-service"
-import { Controller } from "../ports/controller";
+import { Controller } from "../../adapters/ports/controller";
 
 export const makeFetchPointController = (): Controller => {
   const axiosRequestProvider = new AxiosRequestProvider();

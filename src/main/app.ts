@@ -2,14 +2,19 @@ import '../shared/module-alias'
 import express from 'express';
 import * as dotenv from 'dotenv';
 import { mongoHelper } from '@src/external/repositories/mongodb/helpers/mongo-helper';
-import setupMiddleware from './middleware';
+import { bodyParser } from './config/body-parser';
+import { contentType } from './config/content-type';
+import { cors } from './config/cors';
 import setupRoute from './config/routes';
 
 dotenv.config();
 
 const app = express();
 
-setupMiddleware(app);
+app.use(bodyParser);
+app.use(cors);
+app.use(contentType);
+
 setupRoute(app);
 
 mongoHelper

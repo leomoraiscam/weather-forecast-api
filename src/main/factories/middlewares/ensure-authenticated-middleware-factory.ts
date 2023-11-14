@@ -1,4 +1,4 @@
-import { Middleware } from '@src/shared/http/ports/middleware'
+import { Middleware } from '../../adapters/ports/middleware'
 import { EnsureAuthenticatedMiddleware } from '@src/shared/http/middlewares/ensure-authenticated-middleware'
 
 export function makeEnsureAuthenticatedMiddleware(): Middleware {
