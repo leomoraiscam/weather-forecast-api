@@ -3,13 +3,13 @@ import { Latitude } from "../../domain/beach/latitude";
 import { Longitude } from "../../domain/beach/longitude";
 import { Position } from "../../domain/beach/position";
 import { Beach } from "../../domain/beach/beach";
+import { Beach as RegisterBeachRequest } from "../../dtos/beach"
 import { Either, left, right } from "@src/shared/logic/Either";
 import { InvalidNameError } from "../../domain/beach/errors/invalid-name-error";
 import { InvalidLongitudeError } from "../../domain/beach/errors/invalid-longitude-error";
 import { InvalidLatitudeError } from "../../domain/beach/errors/invalid-latitude-error";
 import { InvalidPositionError } from "../../domain/beach/errors/invalid-position-error";
 import { IBeachRepository } from "../../repositories/beaches-repository";
-import { RegisterBeachRequest } from "../../dtos/register-beach-request";
 import { RegisterBeachResponse } from "../../dtos/register-beach-response";
 import { BeachAlreadyExistsError } from "./errors/beach-already-exists-error";
 

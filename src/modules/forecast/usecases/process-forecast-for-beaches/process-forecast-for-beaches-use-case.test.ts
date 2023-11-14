@@ -1,4 +1,4 @@
-import { FetchPointService } from "@src/external/stormglass-service/fetch-point-service"
+import { FetchPointService } from "@src/external/stormglass-service/services/fetch-point-service"
 import stormGlassNormalizedResponse3Hours  from "@test/fixtures/storm-glass-normalized-response-3-hours.json";
 import processForecastBeachesResponse  from "@test/fixtures/process-forecast-beaches-response.json";
 import { ProcessForecastBeachesUseCase } from "./process-forecast-for-beaches-use-case";
@@ -21,19 +21,17 @@ describe('Forecast Service', () => {
   const mockedStormGlassService = new FetchPointService(mockedRequest) as jest.Mocked<FetchPointService>;
 
   beforeEach(() => {
-    const name = Name.create('Dee Why') as Name;
-    const lat = Latitude.create( -33.792726) as Latitude;
-    const lng = Longitude.create(151.289824) as Longitude;
-    const position = Position.create(BeachPosition.E) as Position;
+    const name = Name.create('Dee Why').value as Name;
+    const lat = Latitude.create( -33.792726).value as Latitude;
+    const lng = Longitude.create(151.289824).value as Longitude;
+    const position = Position.create(BeachPosition.E).value as Position;
     
     beach = Beach.create({
       name,
       lat,
       lng,
       position,
-    });
-
-    beach = beach.props;
+    }).value as Beach;
 
     serializedBeach = [
       {

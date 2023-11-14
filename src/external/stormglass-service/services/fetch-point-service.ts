@@ -3,7 +3,7 @@ import { StormGlassForecastResponse } from "../dtos/stormglass-response";
 import { StormGlassMapper } from "../mapper/stormglass-mapper"
 import { FetchPointCoordinate } from "../dtos/fetch-point-coordinate";
 import { StormGlassService } from "../ports/stormglass-service";
-import { StormGlassResponseError } from "@src/modules/forecast/usecases/errors/stormglass-response-error";
+import { StormGlassResponseError } from "@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error";
 import { IRequestProvider } from "../providers/models/request-provider"
 import { Either, left, right } from "@src/shared/logic/Either";
 

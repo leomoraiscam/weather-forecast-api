@@ -1,12 +1,12 @@
-import { ForecastRatingBeach } from "../dtos/forecast-rating-beach";
-import { Beach } from "../dtos/beach"
-import { TimeForecast } from "../dtos/time-forecast";
-import { normalizeForecastByTime } from "../utils/normalize-forecast-by-time"
+import { ForecastRatingBeach } from "../../dtos/forecast-rating-beach";
+import { Beach } from "../../dtos/beach"
+import { TimeForecast } from "../../dtos/time-forecast";
+import { normalizeForecastByTime } from "../../utils/normalize-forecast-by-time"
 import { BeachPosition } from "@config/constants/beach-position-enum";
 import { UseCase } from "@src/shared/http/ports/use-case"
 import { FetchPointNormalize } from "@src/external/stormglass-service/dtos/fetch-point-normalize"
 import { Either, left, right } from "@src/shared/logic/Either";
-import { StormGlassResponseError } from "@src/modules/forecast/usecases/errors/stormglass-response-error";
+import { StormGlassResponseError } from "@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error";
 
 export class ProcessForecastBeachesUseCase {
   constructor(private stormGlassService: UseCase){}
