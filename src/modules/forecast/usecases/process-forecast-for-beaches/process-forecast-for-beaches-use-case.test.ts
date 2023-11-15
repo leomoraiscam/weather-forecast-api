@@ -1,4 +1,3 @@
-import { FetchPointService } from "@src/external/stormglass-service/services/fetch-point-service"
 import stormGlassNormalizedResponse3Hours  from "@test/fixtures/storm-glass-normalized-response-3-hours.json";
 import processForecastBeachesResponse  from "@test/fixtures/process-forecast-beaches-response.json";
 import { ProcessForecastBeachesUseCase } from "./process-forecast-for-beaches-use-case";
@@ -9,16 +8,37 @@ import { Name } from "@src/modules/forecast/domain/beach/name"
 import { Longitude } from "@src/modules/forecast/domain/beach/longitude"
 import { Latitude } from "@src/modules/forecast/domain/beach/latitude"
 import { Position } from "@src/modules/forecast/domain/beach/position"
-import { AxiosRequestProvider } from "@src/external/stormglass-service/providers/implementations/axios-request-provider";
+import { FetchPointNormalize } from "@src/external/stormglass-service/dtos/fetch-point-normalize";
+import { Either, left, right } from "@src/shared/logic/Either";
+import { StormGlassService } from "@src/external/stormglass-service/ports/stormglass-service";
+import { FetchPointCoordinate } from "@src/external/stormglass-service/dtos/fetch-point-coordinate";
+import { StormGlassResponseError } from "./errors/stormglass-response-error";
 
-jest.mock("@src/external/stormglass-service/fetch-point-service")
+export class FetchPointService implements StormGlassService {
+  public async execute(_: FetchPointCoordinate): Promise<Either<StormGlassResponseError, FetchPointNormalize[]>> {
+    return right(stormGlassNormalizedResponse3Hours)
+  }
+}
+
+export class FetchPointServiceEmpty implements StormGlassService {
+  public async execute(_: FetchPointCoordinate): Promise<Either<StormGlassResponseError, FetchPointNormalize[]>> {
+    return right([])
+  }
+}
+
+export class FetchPointServiceError implements StormGlassService {
+  public async execute(_: FetchPointCoordinate): Promise<Either<StormGlassResponseError, FetchPointNormalize[]>> {
+    return left(new StormGlassResponseError('Error fetching data'));
+  }
+}
 
 describe('Forecast Service', () => {
   let beach;
   let serializedBeach: IBeach[];
 
-  const mockedRequest = new AxiosRequestProvider() as jest.Mocked<AxiosRequestProvider>;
-  const mockedStormGlassService = new FetchPointService(mockedRequest) as jest.Mocked<FetchPointService>;
+  const mockedSuccessResponseStormGlassService = new FetchPointService()
+  const mockedSuccessEmptyResponseStormGlassService = new FetchPointServiceEmpty()
+  const mockedErrorResponseStormGlassService = new FetchPointServiceError()
 
   beforeEach(() => {
     const name = Name.create('Dee Why').value as Name;
@@ -44,32 +64,30 @@ describe('Forecast Service', () => {
   })
 
   it('should be able return the forecast for a list of beaches', async () => {
-    mockedStormGlassService.execute.mockResolvedValueOnce(stormGlassNormalizedResponse3Hours);
-
-    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(mockedStormGlassService);
+    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(mockedSuccessResponseStormGlassService);
 
     const beachesWithRating = await processForecastBeachesUseCase.execute(serializedBeach);
 
-    expect(beachesWithRating).toEqual(processForecastBeachesResponse)
+    expect(beachesWithRating).toEqual({
+      value: processForecastBeachesResponse
+    })
   })
 
   it('should be able to return an empty list the beaches array is empty', async() => {
-    mockedStormGlassService.execute.mockResolvedValueOnce([]);
-    
-    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(mockedStormGlassService);
+    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(mockedSuccessEmptyResponseStormGlassService);
 
     const response = await processForecastBeachesUseCase.execute([]);
 
-    expect(response).toEqual([]);
+    expect(response).toEqual({
+      value: []
+    });
   })
 
-  // it.skip('should be able to throw internal processing error when something goes wrong during the rating process', async () => {
-  //   mockedStormGlassService.execute.mockRejectedValueOnce('Error fetching data');
+  it('should be able to throw internal processing error when something goes wrong during the rating process', async () => {
+    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(mockedErrorResponseStormGlassService);
+   
+    const response = await processForecastBeachesUseCase.execute(serializedBeach)
 
-  //   const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(mockedStormGlassService);
-
-  //   await expect(
-  //     processForecastBeachesUseCase.execute(serializedBeach)
-  //   ).rejects.toThrow(ForecastProcessingInternalError)
-  // })
+    expect(response.isLeft()).toBeTruthy()
+  })
 })
