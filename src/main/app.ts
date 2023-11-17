@@ -1,7 +1,7 @@
 import '../shared/module-alias'
 import express from 'express';
 import * as dotenv from 'dotenv';
-import { mongoHelper } from '@src/external/repositories/mongodb/helpers/mongo-helper';
+import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
 import { bodyParser } from './config/body-parser';
 import { contentType } from './config/content-type';
 import { cors } from './config/cors';

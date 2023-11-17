@@ -3,7 +3,7 @@ import { PersistenceUserModel } from '../../mapper/dtos/users-model';
 import { UserMapper } from '../../mapper/user-mapper';
 import { IUsersRepository } from '../users-repository';
 
-import { mongoHelper } from '@src/external/repositories/mongodb/helpers/mongo-helper';
+import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
 
 export class UserRepository implements IUsersRepository {
   async findById(id: string): Promise<User | null> {

@@ -3,7 +3,7 @@ import { BeachCoordinate } from '../../dtos/beach-cordinate';
 import { BeachMapper } from '../../mapper/beach-mapper';
 import { IBeachRepository } from '../beaches-repository';
 
-import { mongoHelper } from '@src/external/repositories/mongodb/helpers/mongo-helper';
+import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
 
 export class BeachRepository implements IBeachRepository {
   async findByGeolocation({ lat, lng }: BeachCoordinate): Promise<Beach> {
