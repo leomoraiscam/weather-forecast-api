@@ -51,7 +51,8 @@ export class ProcessForecastBeachesUseCase {
           name: name.value,
           position: BeachPosition.N,
           rating: 1,
-          ...pointForecast
+          ...pointForecast,
+          userId
         }))
 
         beachForecastsSources.push(...enrichedBeachRating);

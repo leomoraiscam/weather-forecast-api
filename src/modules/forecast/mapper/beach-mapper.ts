@@ -34,7 +34,8 @@ export class BeachMapper {
           name: nameOrError.value,
           lat: latitudeOrError.value,
           lng: longitudeOrError.value,
-          position: positionOrError.value
+          position: positionOrError.value,
+          userId: data.userId
         },
         data.id
       )

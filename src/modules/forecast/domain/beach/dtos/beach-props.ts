@@ -8,4 +8,5 @@ export interface IBeachProps {
   lat: Latitude;
   lng: Longitude;
   position: Position;
+  userId: string
 }

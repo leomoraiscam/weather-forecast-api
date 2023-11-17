@@ -18,7 +18,7 @@ export class RegisterBeachController {
     request:HttpRequest<Beach>
   ): Promise<HttpResponse<Beach | ControllerError>> {
     try {
-      const { body } = request;
+      const { body, userId } = request;
 
       if (!body?.name || !body?.lat || !body?.lng || !body.position) {
         const missing = !body?.name ? 'name' : !body?.lat ? 'lat' : !body?.lng ? 'lng' : 'position';
@@ -29,7 +29,10 @@ export class RegisterBeachController {
         })
       }
 
-      const response = await this.usecase.execute(body);
+      const response = await this.usecase.execute({
+        ...body, 
+        userId
+      });
 
       if (response.isLeft()) {
         const error = response.value

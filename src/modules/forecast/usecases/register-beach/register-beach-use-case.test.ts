@@ -50,6 +50,7 @@ describe('Create Beach Use Case', () => {
       lat,
       lng,
       position,
+      userId: 'fake-user-id'
     }).value as Beach
 
     beachRepository.create(beachOrError);
@@ -58,7 +59,8 @@ describe('Create Beach Use Case', () => {
       name: 'John Doe',
       lat: -33.792726,
       lng: 151.289824,
-      position: BeachPosition.S
+      position: BeachPosition.S,
+      userId: 'fake-user-id'
     })
 
     expect(response.isLeft()).toBeTruthy();

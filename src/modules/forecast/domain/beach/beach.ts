@@ -35,6 +35,10 @@ export class Beach {
     return this.props.position
   }
 
+  get userId() {
+    return this.props.userId
+  }
+
   static create(props: IBeachProps, id?: string): Either<
     InvalidNameError | 
     InvalidPositionError | 

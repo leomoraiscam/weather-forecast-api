@@ -17,6 +17,7 @@ describe('Domain Beach model', () => {
       lat,
       lng,
       position,
+      userId: 'fake-user-id'
     })
 
     expect(beach.isRight).toBeTruthy()

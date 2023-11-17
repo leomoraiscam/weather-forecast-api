@@ -48,7 +48,8 @@ export class BeachRepository implements IBeachRepository {
         name: beach.name.value,
         lat: beach.lat.value,
         lng: beach.lng.value,
-        position: beach.position.value
+        position: beach.position.value,
+        userId: beach.userId
       });
     }
 

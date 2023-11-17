@@ -16,7 +16,7 @@ import { BeachAlreadyExistsError } from "./errors/beach-already-exists-error";
 export class RegisterBeachUseCase {
   constructor(private beachesRepository: IBeachRepository) {}
 
-  async execute({ name, lat, lng, position}: RegisterBeachRequest): Promise<Either<
+  async execute({ name, lat, lng, position, userId }: RegisterBeachRequest): Promise<Either<
   | InvalidNameError
   | InvalidLatitudeError
   | InvalidLongitudeError
@@ -48,7 +48,8 @@ export class RegisterBeachUseCase {
       name: nameOrError.value,
       lat: latitudeOrError.value,
       lng: longitudeOrError.value,
-      position: positionOrError.value
+      position: positionOrError.value,
+      userId
     })
     
     if (beachOrError.isLeft()) {
@@ -74,6 +75,7 @@ export class RegisterBeachUseCase {
       lat: beach.lat.value,
       lng: beach.lng.value,
       position: beach.position.value,
+      userId
     })
   }
 }
