@@ -4,4 +4,5 @@ import { BeachCoordinate } from "../dtos/beach-cordinate";
 export interface IBeachRepository {
   create(beach: Beach): Promise<Beach>
   findByGeolocation(data: BeachCoordinate): Promise<Beach>
+  findAllBeachesByUser(userId: string): Promise<Beach[]>
 }

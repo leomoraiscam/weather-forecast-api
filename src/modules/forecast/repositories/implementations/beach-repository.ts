@@ -1,5 +1,6 @@
 import { Beach } from '../../domain/beach/beach';
 import { BeachCoordinate } from '../../dtos/beach-cordinate';
+import { BeachMapper } from '../../mapper/beach-mapper';
 import { IBeachRepository } from '../beaches-repository';
 
 import { mongoHelper } from '@src/external/repositories/mongodb/helpers/mongo-helper';
@@ -17,6 +18,23 @@ export class BeachRepository implements IBeachRepository {
     return beach
   }
 
+  async findAllBeachesByUser(userId: string): Promise<Beach[]> {
+    const beachCollection = mongoHelper.getCollection('beaches');
+
+    const data = await beachCollection.find({userId}).toArray()
+
+    const serializerBeach = data.map((beach) => ({
+      id: beach.id,
+      name: beach.name,
+      lat: beach.lat,
+      lng: beach.lng,
+      position: beach.position,
+      userId: beach.userId
+    }))
+
+    return BeachMapper.toDomain(serializerBeach)
+  }
+
   async create(beach: Beach): Promise<Beach> {
     const userCollection = mongoHelper.getCollection('beaches');
     const result = await this.findByGeolocation({
@@ -27,7 +45,7 @@ export class BeachRepository implements IBeachRepository {
     if (!result) {
       await userCollection.insertOne({
         id: beach.id,
-        name: beach.name,
+        name: beach.name.value,
         lat: beach.lat.value,
         lng: beach.lng.value,
         position: beach.position.value
