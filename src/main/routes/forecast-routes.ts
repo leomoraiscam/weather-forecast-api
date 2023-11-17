@@ -8,6 +8,7 @@ import { adaptMiddleware } from '../adapters/express-middleware-adapter';
 export default (router: Router): void => {
   router.post(
     '/beaches',
+    adaptMiddleware(makeEnsureAuthenticatedMiddleware()),
     adaptRoute(makeRegisterBeachController())
   );
 

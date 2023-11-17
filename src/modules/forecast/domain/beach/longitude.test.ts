@@ -1,5 +1,4 @@
 import { Longitude } from "./longitude";
-import { InvalidLongitudeError } from "./errors/invalid-longitude-error"
 
 describe('Beach Longitude Object Value', () => {
   it('should accept valid longitude', () => {
