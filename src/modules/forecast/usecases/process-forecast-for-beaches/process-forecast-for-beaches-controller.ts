@@ -1,7 +1,7 @@
 import { HttpResponse } from "@src/shared/http/dtos/http-response";
 import { UseCase  } from "@src/main/adapters/ports/use-case";
 import { ControllerError } from "@src/shared/errors/ports/controller-error"
-import { badRequest, created, serverError } from "@src/shared/http/helpers/http-helper";
+import { badRequest, ok, serverError } from "@src/shared/http/helpers/http-helper";
 import { ForecastRatingBeach } from "../../dtos/forecast-rating-beach"
 import { HttpRequest } from "@src/shared/http/dtos/http-request"
 
@@ -26,7 +26,7 @@ export class FetchPointsController {
         return badRequest(error)
       }
       
-      return created<ForecastRatingBeach>(response);
+      return ok<ForecastRatingBeach>(response.value);
     } catch (error) {
       return serverError(error);
     }
