@@ -6,6 +6,17 @@ import { IUsersRepository } from '../users-repository';
 import { mongoHelper } from '@src/external/repositories/mongodb/helpers/mongo-helper';
 
 export class UserRepository implements IUsersRepository {
+  async findById(id: string): Promise<User | null> {
+    const userCollection = mongoHelper.getCollection('users');
+    const user = await userCollection.findOne<PersistenceUserModel>({ id });
+
+    if (!user) {
+      return null
+    }
+
+    return UserMapper.toDomain(user)
+  }
+  
   async findByEmail(email: string): Promise<User | null> {
     const userCollection = mongoHelper.getCollection('users');
     const user = await userCollection.findOne<PersistenceUserModel>({ email });
