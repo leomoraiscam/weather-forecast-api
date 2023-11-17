@@ -55,7 +55,7 @@ describe('Fetch Point Client Service', () => {
     const fetchPointService = new FetchPointService(mockedRequest);
     const response = await fetchPointService.execute({lat, long});
 
-    expect(response.isLeft).toBeTruthy()
+    expect(response.isLeft()).toBeTruthy()
   });
 
   it('should be able to get an StormGlassResponseError when the StormGlass service responds with error', async () => {
@@ -69,6 +69,6 @@ describe('Fetch Point Client Service', () => {
     const fetchPointService = new FetchPointService(mockedRequest);
     const response = await fetchPointService.execute({lat, long});
 
-    expect(response.isLeft).toBeTruthy()
+    expect(response.isLeft()).toBeTruthy()
   });
 });
