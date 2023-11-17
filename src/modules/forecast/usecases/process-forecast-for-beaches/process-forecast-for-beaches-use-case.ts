@@ -1,5 +1,4 @@
 import { ForecastRatingBeach } from "../../dtos/forecast-rating-beach";
-import { Beach } from "../../dtos/beach"
 import { TimeForecast } from "../../dtos/time-forecast";
 import { normalizeForecastByTime } from "../../utils/normalize-forecast-by-time"
 import { BeachPosition } from "@config/constants/beach-position-enum";
@@ -7,39 +6,50 @@ import { UseCase } from "@src/main/adapters/ports/use-case"
 import { FetchPointNormalize } from "@src/external/stormglass-service/dtos/fetch-point-normalize"
 import { Either, left, right } from "@src/shared/logic/Either";
 import { StormGlassResponseError } from "@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error";
+import { IUsersRepository } from "@src/modules/accounts/repositories/users-repository";
+import { IBeachRepository } from "../../repositories/beaches-repository";
+import { BeachesNotFoundError } from "./errors/beaches-not-found-error";
+import { UserNotFoundError } from "./errors/user-not-found-error";
 
 export class ProcessForecastBeachesUseCase {
-  constructor(private stormGlassService: UseCase){}
+  constructor(
+    private stormGlassService: UseCase, 
+    private usersRepository: IUsersRepository,
+    private beachesRepository: IBeachRepository  
+  ){}
 
-  public async execute(_: Beach[]): Promise<Either<
+  public async execute(userId: string): Promise<Either<
     | StormGlassResponseError, 
     TimeForecast[]
   >> {
+      const user = await this.usersRepository.findById(userId);
+
+      if (!user) {
+        return left(new UserNotFoundError())
+      }
+
+      const beaches = await this.beachesRepository.findAllBeachesByUser(userId);
+
+      if(!beaches) {
+        return left(new BeachesNotFoundError())
+      }
+ 
       const beachForecastsSources: ForecastRatingBeach[] = [];
 
-      const mockedBeaches: Beach[] = [
-        {
-          name: 'Dee Why',
-          lat: -33.792726,
-          lng: 151.289824,
-          position: BeachPosition.E,
-        },
-      ];
-
-      for (const beach of mockedBeaches) {
+      for (const beach of beaches) {
         const { lat, lng, name, position } = beach
 
-        const points = await this.stormGlassService.execute({lat, long: lng});
+        const points = await this.stormGlassService.execute({lat: lat.value, long: lng.value});
 
         if (!points.value.length) {
           return left(points.value)
         }
 
         const enrichedBeachRating = points.value.map((pointForecast: FetchPointNormalize): ForecastRatingBeach => ({
-          lat,
-          lng,
-          name,
-          position,
+          lat: lat.value,
+          lng: lng.value,
+          name: name.value,
+          position: BeachPosition.N,
           rating: 1,
           ...pointForecast
         }))
