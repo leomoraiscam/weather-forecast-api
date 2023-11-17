@@ -4,7 +4,6 @@ import { ControllerError } from "@src/shared/errors/ports/controller-error"
 import { badRequest, created, serverError } from "@src/shared/http/helpers/http-helper";
 import { ForecastRatingBeach } from "../../dtos/forecast-rating-beach"
 import { HttpRequest } from "@src/shared/http/dtos/http-request"
-import { BeachCoordinate } from "../../dtos/beach-cordinate";
 
 export class FetchPointsController {
   private readonly usecase: UseCase;
