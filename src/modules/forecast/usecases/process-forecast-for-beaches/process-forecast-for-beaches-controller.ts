@@ -14,24 +14,12 @@ export class FetchPointsController {
   }
 
   async handle( 
-    request:HttpRequest<BeachCoordinate>
+    request:HttpRequest<{userId: string}>
   ): Promise<HttpResponse<ForecastRatingBeach | ControllerError>> {
     try {
-      const { params } = request
+      const { userId } = request
 
-      const lat = params && !params.lat;
-      const lng = params && !params.lng;
-
-      if (lat || lng) {
-        const missing = lat ? 'lat' : 'lng';
-
-        return badRequest({
-          name: 'MissingError',
-          message: `Missing parameter from request: ${missing}.`
-        })
-      }
-
-      const response = await this.usecase.execute({ lat, lng });
+      const response = await this.usecase.execute(userId);
 
       if (response.isLeft()) {
         const error = response.value
