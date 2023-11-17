@@ -13,14 +13,14 @@ describe('Fetch Point Client Service', () => {
   it('should be able to return the normalize forecast data from the stormGlass service', async () => {
     mockedRequest.get.mockResolvedValue({ data: stormGlassWeather3HoursFixture, status: 200})
 
-    const { lat, long } = {
+    const { lat, lng } = {
       lat: -33.792726,
-      long: 151.289824
+      lng: 151.289824
     }
 
     const fetchPointService = new FetchPointService(mockedRequest);
 
-    const response = await fetchPointService.execute({ lat, long });
+    const response = await fetchPointService.execute({ lat, lng });
 
     expect(response).toEqual({
       value: stormGlassNormalizedResponse3Hours
@@ -30,14 +30,14 @@ describe('Fetch Point Client Service', () => {
   it('should be able to exclude incomplete data points received from stormGlass service', async () => {
     mockedRequest.get.mockResolvedValue({data: stormGlassIncompleteResponse, status: 200});
 
-    const { lat, long } = {
+    const { lat, lng } = {
       lat: -33.792726,
-      long: 151.289824
+      lng: 151.289824
     }
 
     const fetchPointService = new FetchPointService(mockedRequest);
 
-    const response = await fetchPointService.execute({lat, long});
+    const response = await fetchPointService.execute({lat, lng});
 
     expect(response).toEqual({
       value: []
@@ -47,13 +47,13 @@ describe('Fetch Point Client Service', () => {
   it('should be able to get a generic error from stormGlass service when the request fail before reaching the service', async () => {
     mockedRequest.get.mockRejectedValue({ response: {data: [{message: 'Network Error'}]} });
 
-    const { lat, long } = {
+    const { lat, lng } = {
       lat: -33.792726,
-      long: 151.289824
+      lng: 151.289824
     }
 
     const fetchPointService = new FetchPointService(mockedRequest);
-    const response = await fetchPointService.execute({lat, long});
+    const response = await fetchPointService.execute({lat, lng});
 
     expect(response.isLeft()).toBeTruthy()
   });
@@ -61,13 +61,13 @@ describe('Fetch Point Client Service', () => {
   it('should be able to get an StormGlassResponseError when the StormGlass service responds with error', async () => {
     mockedRequest.get.mockRejectedValue(stormGlassResponseError);
    
-    const { lat, long } = {
+    const { lat, lng } = {
       lat: -33.792726,
-      long: 151.289824
+      lng: 151.289824
     }
 
     const fetchPointService = new FetchPointService(mockedRequest);
-    const response = await fetchPointService.execute({lat, long});
+    const response = await fetchPointService.execute({lat, lng});
 
     expect(response.isLeft()).toBeTruthy()
   });

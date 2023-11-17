@@ -14,10 +14,10 @@ export class FetchPointService implements StormGlassService {
     'swellDirection,swellHeight,swellPeriod,waveDirection,waveHeight,windDirection,windSpeed';
   readonly stormGlassAPISource = 'noaa';
 
-  public async execute({ lat, long }: FetchPointCoordinate): Promise<Either<StormGlassResponseError, FetchPointNormalize[]>> {
+  public async execute({ lat, lng }: FetchPointCoordinate): Promise<Either<StormGlassResponseError, FetchPointNormalize[]>> {
     try {
       const response = await this.requestProvider.get<StormGlassForecastResponse>({
-        url: `https://api.stormglass.io/v2/weather/point?params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&lat=${lat}&lng=${long}`,
+        url: `https://api.stormglass.io/v2/weather/point?params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&lat=${lat}&lng=${lng}`,
         config:       {
           headers: {
             Authorization: 'fake-token',

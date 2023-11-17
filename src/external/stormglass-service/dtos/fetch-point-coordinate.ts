@@ -1,4 +1,4 @@
 export interface FetchPointCoordinate {
   lat: number;
-  long: number
+  lng: number
 }
