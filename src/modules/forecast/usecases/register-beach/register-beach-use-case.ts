@@ -20,7 +20,8 @@ export class RegisterBeachUseCase {
   | InvalidNameError
   | InvalidLatitudeError
   | InvalidLongitudeError
-  | InvalidPositionError,
+  | InvalidPositionError
+  | BeachAlreadyExistsError,
   RegisterBeachResponse
 >> {
     const nameOrError = Name.create(name);
