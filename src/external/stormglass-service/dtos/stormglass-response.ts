@@ -1,5 +1,5 @@
 interface StormGlassPointSource {
-  [key: string]: number
+  [key: string]: number;
 }
 
 interface StormGlassPoint {
@@ -14,5 +14,5 @@ interface StormGlassPoint {
 }
 
 export interface StormGlassForecastResponse {
-  hours: StormGlassPoint[]
+  hours: StormGlassPoint[];
 }

@@ -12,16 +12,16 @@ export class BeachRepository implements IBeachRepository {
     const beach = await beachCollection.findOne<Beach>({ lat, lng });
 
     if (!beach) {
-      return null
+      return null;
     }
 
-    return beach
+    return beach;
   }
 
   async findAllBeachesByUser(userId: string): Promise<Beach[]> {
     const beachCollection = mongoHelper.getCollection('beaches');
 
-    const data = await beachCollection.find({userId}).toArray()
+    const data = await beachCollection.find({ userId }).toArray();
 
     const serializerBeach = data.map((beach) => ({
       id: beach.id,
@@ -29,17 +29,17 @@ export class BeachRepository implements IBeachRepository {
       lat: beach.lat,
       lng: beach.lng,
       position: beach.position,
-      userId: beach.userId
-    }))
+      userId: beach.userId,
+    }));
 
-    return BeachMapper.toDomain(serializerBeach)
+    return BeachMapper.toDomain(serializerBeach);
   }
 
   async create(beach: Beach): Promise<Beach> {
     const userCollection = mongoHelper.getCollection('beaches');
     const result = await this.findByGeolocation({
       lat: beach.lat.value,
-      lng: beach.lng.value
+      lng: beach.lng.value,
     });
 
     if (!result) {
@@ -49,10 +49,10 @@ export class BeachRepository implements IBeachRepository {
         lat: beach.lat.value,
         lng: beach.lng.value,
         position: beach.position.value,
-        userId: beach.userId
+        userId: beach.userId,
       });
     }
 
-    return result
+    return result;
   }
 }

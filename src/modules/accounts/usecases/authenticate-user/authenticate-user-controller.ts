@@ -1,10 +1,10 @@
-import { HttpResponse } from "@src/shared/http/dtos/http-response"
-import { UseCase  } from "@src/main/adapters/ports/use-case";
-import { ControllerError } from "@src/shared/errors/ports/controller-error"
-import { badRequest, created, serverError } from "@src/shared/http/helpers/http-helper";
-import { HttpRequest } from "@src/shared/http/dtos/http-request"
-import { AuthenticateUserRequest } from "../../dtos/authenticate-user-request";
-import { AuthenticateUserResponse } from "../../dtos/authenticate-user-response";
+import { HttpResponse } from '@src/shared/http/dtos/http-response';
+import { UseCase } from '@src/main/adapters/ports/use-case';
+import { ControllerError } from '@src/shared/errors/ports/controller-error';
+import { badRequest, created, serverError } from '@src/shared/http/helpers/http-helper';
+import { HttpRequest } from '@src/shared/http/dtos/http-request';
+import { AuthenticateUserRequest } from '../../dtos/authenticate-user-request';
+import { AuthenticateUserResponse } from '../../dtos/authenticate-user-response';
 
 export class AuthenticateUserController {
   private readonly usecase: UseCase;
@@ -14,7 +14,7 @@ export class AuthenticateUserController {
   }
 
   async handle(
-    request:HttpRequest<AuthenticateUserRequest>
+    request: HttpRequest<AuthenticateUserRequest>,
   ): Promise<HttpResponse<AuthenticateUserResponse | ControllerError>> {
     try {
       const { body } = request;
@@ -24,9 +24,9 @@ export class AuthenticateUserController {
 
         return badRequest({
           name: 'MissingError',
-          message: `Missing parameter from request: ${missing}.`
-        })
-      } 
+          message: `Missing parameter from request: ${missing}.`,
+        });
+      }
 
       const response = await this.usecase.execute(body);
 

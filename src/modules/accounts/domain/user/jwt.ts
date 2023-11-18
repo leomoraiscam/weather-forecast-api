@@ -1,60 +1,58 @@
-import { sign, verify } from 'jsonwebtoken'
+import { sign, verify } from 'jsonwebtoken';
 
-import { InvalidJWTTokenError } from './errors/invalid-jwt-token-error'
-import { User } from './user'
-import { Either, left, right } from '@src/shared/logic/Either'
+import { InvalidJWTTokenError } from './errors/invalid-jwt-token-error';
+import { User } from './user';
+import { Either, left, right } from '@src/shared/logic/Either';
 
 interface JWTData {
-  userId: string
-  token: string
+  userId: string;
+  token: string;
 }
 
 export interface JWTTokenPayload {
-  exp: number
-  sub: string
+  exp: number;
+  sub: string;
 }
 
 export class JWT {
-  public readonly userId: string
-  public readonly token: string
+  public readonly userId: string;
+  public readonly token: string;
 
   private constructor({ userId, token }: JWTData) {
-    this.userId = userId
-    this.token = token
+    this.userId = userId;
+    this.token = token;
   }
 
-  static decodeToken(
-    token: string
-  ): Either<InvalidJWTTokenError, JWTTokenPayload> {
+  static decodeToken(token: string): Either<InvalidJWTTokenError, JWTTokenPayload> {
     try {
-      const decoded = verify(token, 'secret-key') as JWTTokenPayload
+      const decoded = verify(token, 'secret-key') as JWTTokenPayload;
 
-      return right(decoded)
+      return right(decoded);
     } catch (err) {
-      return left(new InvalidJWTTokenError())
+      return left(new InvalidJWTTokenError());
     }
   }
 
   static createFromJWT(token: string): Either<InvalidJWTTokenError, JWT> {
-    const jwtPayloadOrError = this.decodeToken(token)
+    const jwtPayloadOrError = this.decodeToken(token);
 
     if (jwtPayloadOrError.isLeft()) {
-      return left(jwtPayloadOrError.value)
+      return left(jwtPayloadOrError.value);
     }
 
-    const jwt = new JWT({ token, userId: jwtPayloadOrError.value.sub })
+    const jwt = new JWT({ token, userId: jwtPayloadOrError.value.sub });
 
-    return right(jwt)
+    return right(jwt);
   }
 
   static signUser(user: User): JWT {
     const token = sign({}, 'secret-key', {
       subject: user.id,
       expiresIn: '1d',
-    })
+    });
 
-    const jwt = new JWT({ userId: user.id, token })
+    const jwt = new JWT({ userId: user.id, token });
 
-    return jwt
+    return jwt;
   }
 }

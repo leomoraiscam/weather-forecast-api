@@ -3,8 +3,5 @@ import { makeAuthenticateUserController } from '@src/main/factories/controllers/
 import { adaptRoute } from '../adapters/express-route-adapter';
 
 export default (router: Router): void => {
-  router.post(
-    '/sessions',
-    adaptRoute(makeAuthenticateUserController())
-  );
+  router.post('/sessions', adaptRoute(makeAuthenticateUserController()));
 };

@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { Controller } from "../adapters/ports/controller";
+import { Controller } from '../adapters/ports/controller';
 
 export const adaptRoute = (controller: Controller) => {
-  return async (request: Request, response: Response): Promise<void> => {   
+  return async (request: Request, response: Response): Promise<void> => {
     const { params, body, userId } = {
       body: request.body,
       params: request.query,
@@ -12,9 +12,9 @@ export const adaptRoute = (controller: Controller) => {
     const httpResponse = await controller.handle({
       params,
       body,
-      userId
+      userId,
     });
 
-    response.status(httpResponse.statusCode).json(httpResponse.body)
+    response.status(httpResponse.statusCode).json(httpResponse.body);
   };
 };

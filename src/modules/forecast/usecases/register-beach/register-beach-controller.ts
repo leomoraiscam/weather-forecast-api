@@ -1,10 +1,10 @@
-import { HttpResponse } from "@src/shared/http/dtos/http-response"
-import { UseCase  } from "@src/main/adapters/ports/use-case";
-import { badRequest, conflict, created, serverError } from "@src/shared/http/helpers/http-helper";
-import { HttpRequest } from "@src/shared/http/dtos/http-request"
-import { BeachAlreadyExistsError } from "./errors/beach-already-exists-error";
-import { ControllerError } from "@src/shared/errors/ports/controller-error";
-import { Beach } from "../../dtos/beach";
+import { HttpResponse } from '@src/shared/http/dtos/http-response';
+import { UseCase } from '@src/main/adapters/ports/use-case';
+import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
+import { HttpRequest } from '@src/shared/http/dtos/http-request';
+import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
+import { ControllerError } from '@src/shared/errors/ports/controller-error';
+import { Beach } from '../../dtos/beach';
 
 export class RegisterBeachController {
   private readonly usecase: UseCase;
@@ -13,9 +13,7 @@ export class RegisterBeachController {
     this.usecase = usecase;
   }
 
-  async handle(
-    request:HttpRequest<Beach>
-  ): Promise<HttpResponse<Beach | ControllerError>> {
+  async handle(request: HttpRequest<Beach>): Promise<HttpResponse<Beach | ControllerError>> {
     try {
       const { body, userId } = request;
 
@@ -24,30 +22,29 @@ export class RegisterBeachController {
 
         return badRequest({
           name: 'MissingError',
-          message: `Missing parameter from request: ${missing}.`
-        })
+          message: `Missing parameter from request: ${missing}.`,
+        });
       }
 
       const response = await this.usecase.execute({
-        ...body, 
-        userId
+        ...body,
+        userId,
       });
 
       if (response.isLeft()) {
-        const error = response.value
+        const error = response.value;
 
         switch (error.constructor) {
           case BeachAlreadyExistsError:
-            return conflict(error)
+            return conflict(error);
           default:
-            return badRequest(error)
+            return badRequest(error);
         }
-      } 
-      
+      }
+
       return created<Beach>(response.value);
     } catch (error) {
       return serverError(error);
     }
   }
 }
-

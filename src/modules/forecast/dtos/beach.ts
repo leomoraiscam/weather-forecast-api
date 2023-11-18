@@ -1,4 +1,4 @@
-import { BeachPosition } from "@config/constants/beach-position-enum";
+import { BeachPosition } from '@config/constants/beach-position-enum';
 
 export interface Beach {
   name: string;

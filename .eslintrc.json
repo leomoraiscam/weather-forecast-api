@@ -15,11 +15,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": [
-    "@typescript-eslint",
-    "eslint-plugin-import-helpers",
-    "prettier"
-  ],
+  "plugins": ["@typescript-eslint", "eslint-plugin-import-helpers", "prettier"],
   "rules": {
     "prettier/prettier": "error",
     "camelcase": "off",
@@ -55,10 +51,7 @@
         "alphabetize": { "order": "asc", "ignoreCase": true }
       }
     ],
-    "import/no-extraneous-dependencies": [
-      "error",
-      { "devDependencies": ["**/*.spec.js"] }
-    ],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": ["**/*.spec.js"] }],
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -68,7 +61,7 @@
   },
   "settings": {
     "import/resolver": {
-        "typescript": {}
+      "typescript": {}
     }
   }
 }

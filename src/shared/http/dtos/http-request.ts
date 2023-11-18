@@ -1,5 +1,5 @@
 export interface HttpRequest<T> {
-  params?: T
+  params?: T;
   body?: T;
-  userId?: string
+  userId?: string;
 }

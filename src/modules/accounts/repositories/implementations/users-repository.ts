@@ -11,21 +11,21 @@ export class UserRepository implements IUsersRepository {
     const user = await userCollection.findOne<PersistenceUserModel>({ id });
 
     if (!user) {
-      return null
+      return null;
     }
 
-    return UserMapper.toDomain(user)
+    return UserMapper.toDomain(user);
   }
-  
+
   async findByEmail(email: string): Promise<User | null> {
     const userCollection = mongoHelper.getCollection('users');
     const user = await userCollection.findOne<PersistenceUserModel>({ email });
 
     if (!user) {
-      return null
+      return null;
     }
 
-    return UserMapper.toDomain(user)
+    return UserMapper.toDomain(user);
   }
 
   async create(user: User): Promise<User> {
@@ -33,11 +33,11 @@ export class UserRepository implements IUsersRepository {
     const result = await this.findByEmail(user.email.value);
 
     if (!result) {
-      const data = await UserMapper.toPersistence(user)
+      const data = await UserMapper.toPersistence(user);
 
       await userCollection.insertOne(data);
     }
 
-    return result
+    return result;
   }
 }

@@ -1,4 +1,4 @@
-import '../shared/module-alias'
+import '../shared/module-alias';
 import express from 'express';
 import * as dotenv from 'dotenv';
 import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
@@ -21,9 +21,7 @@ mongoHelper
   .connect(`mongodb://localhost:16017`)
   .then(async () => {
     app.listen(process.env.APP_PORT || 3000, () => {
-      console.log(
-        `Server running at http://localhost:${process.env.APP_PORT || 3000}`
-      );
+      console.log(`Server running at http://localhost:${process.env.APP_PORT || 3000}`);
     });
   })
   .catch((error: any) => {

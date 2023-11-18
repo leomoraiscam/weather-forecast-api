@@ -3,8 +3,5 @@ import { makeRegisterUserController } from '@src/main/factories/controllers/regi
 import { adaptRoute } from '../adapters/express-route-adapter';
 
 export default (router: Router): void => {
-  router.post(
-    '/users',
-    adaptRoute(makeRegisterUserController())
-  );
+  router.post('/users', adaptRoute(makeRegisterUserController()));
 };

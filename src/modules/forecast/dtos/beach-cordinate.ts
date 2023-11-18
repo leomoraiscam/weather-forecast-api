@@ -1,4 +1,4 @@
 export interface BeachCoordinate {
   lat: number;
-  lng: number
+  lng: number;
 }

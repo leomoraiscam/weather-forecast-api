@@ -4,5 +4,5 @@ export interface RequestConfig extends AxiosRequestConfig {}
 
 export interface HttpRequest {
   url: string;
-  config: RequestConfig
+  config: RequestConfig;
 }

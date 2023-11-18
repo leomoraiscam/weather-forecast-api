@@ -1,6 +1,6 @@
-import { BeachPosition } from "@config/constants/beach-position-enum";
-import { InvalidPositionError } from "./errors/invalid-position-error"
-import { Either, left, right } from "@src/shared/logic/Either";
+import { BeachPosition } from '@config/constants/beach-position-enum';
+import { InvalidPositionError } from './errors/invalid-position-error';
+import { Either, left, right } from '@src/shared/logic/Either';
 
 export class Position {
   private readonly position: string;
@@ -14,22 +14,22 @@ export class Position {
   }
 
   static validate(position: string): boolean {
-    if(!position) {
-      return false
+    if (!position) {
+      return false;
     }
 
     const values = Object.values(BeachPosition);
 
     if (!values.includes(`${position}` as unknown as BeachPosition)) {
-      return false
+      return false;
     }
 
-    return true
+    return true;
   }
 
   static create(position: string): Either<InvalidPositionError, Position> {
     if (!this.validate(position)) {
-      return left(new InvalidPositionError(position))
+      return left(new InvalidPositionError(position));
     }
 
     return right(new Position(position));

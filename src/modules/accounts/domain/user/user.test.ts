@@ -1,11 +1,11 @@
-import { Email } from './email'
-import { Name } from './name'
-import { Password } from './password'
-import { User } from './user'
+import { Email } from './email';
+import { Name } from './name';
+import { Password } from './password';
+import { User } from './user';
 
-const name = Name.create('John Doe').value as Name
-const email = Email.create('johndoe@example.com').value as Email
-const password = Password.create('123456').value as Password
+const name = Name.create('John Doe').value as Name;
+const email = Email.create('johndoe@example.com').value as Email;
+const password = Password.create('123456').value as Password;
 
 describe('User Domain entity', () => {
   it('should be able to create new user', () => {
@@ -15,6 +15,6 @@ describe('User Domain entity', () => {
       password,
     });
 
-    expect(userOrError.isRight()).toBeTruthy()
-  })
-})
+    expect(userOrError.isRight()).toBeTruthy();
+  });
+});

@@ -1,25 +1,25 @@
-import { Email } from "../domain/user/email"
-import { Name } from "../domain/user/name"
-import { Password } from "../domain/user/password"
-import { User } from "../domain/user/user"
-import { PersistenceUserModel } from "./dtos/users-model"
+import { Email } from '../domain/user/email';
+import { Name } from '../domain/user/name';
+import { Password } from '../domain/user/password';
+import { User } from '../domain/user/user';
+import { PersistenceUserModel } from './dtos/users-model';
 
 export class UserMapper {
   static toDomain(raw: PersistenceUserModel): User {
-    const nameOrError = Name.create(raw.name)
-    const emailOrError = Email.create(raw.email)
-    const passwordOrError = Password.create(raw.password, true)
+    const nameOrError = Name.create(raw.name);
+    const emailOrError = Email.create(raw.email);
+    const passwordOrError = Password.create(raw.password, true);
 
     if (nameOrError.isLeft()) {
-      throw new Error('Name value is invalid.')
+      throw new Error('Name value is invalid.');
     }
 
     if (emailOrError.isLeft()) {
-      throw new Error('Email value is invalid.')
+      throw new Error('Email value is invalid.');
     }
 
     if (passwordOrError.isLeft()) {
-      throw new Error('Password value is invalid.')
+      throw new Error('Password value is invalid.');
     }
 
     const userOrError = User.create(
@@ -28,14 +28,14 @@ export class UserMapper {
         email: emailOrError.value,
         password: passwordOrError.value,
       },
-      raw.id
-    )
+      raw.id,
+    );
 
     if (userOrError.isRight()) {
-      return userOrError.value
+      return userOrError.value;
     }
 
-    return null
+    return null;
   }
 
   static async toPersistence(user: User) {
@@ -44,6 +44,6 @@ export class UserMapper {
       name: user.name.value,
       email: user.email.value,
       password: await user.password.getHashedValue(),
-    }
+    };
   }
 }

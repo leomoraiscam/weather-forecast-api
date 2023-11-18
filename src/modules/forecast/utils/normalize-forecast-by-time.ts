@@ -1,10 +1,10 @@
-import { ForecastRatingBeach } from "../dtos/forecast-rating-beach";
-import { TimeForecast } from "../dtos/time-forecast";
+import { ForecastRatingBeach } from '../dtos/forecast-rating-beach';
+import { TimeForecast } from '../dtos/time-forecast';
 
-export function normalizeForecastByTime (forecast: ForecastRatingBeach[]): TimeForecast[] {
+export function normalizeForecastByTime(forecast: ForecastRatingBeach[]): TimeForecast[] {
   const forecastByTime: TimeForecast[] = [];
 
-  for(const point of forecast) {
+  for (const point of forecast) {
     const timePoint = forecastByTime.find((forecastData) => forecastData.time === point.time);
 
     if (timePoint) {
@@ -12,10 +12,10 @@ export function normalizeForecastByTime (forecast: ForecastRatingBeach[]): TimeF
     } else {
       forecastByTime.push({
         time: point.time,
-        forecast: [point]
-      })
+        forecast: [point],
+      });
     }
   }
 
-  return forecastByTime
+  return forecastByTime;
 }

@@ -1,11 +1,11 @@
-import { HttpResponse } from "@src/shared/http/dtos/http-response"
-import { UseCase  } from "@src/main/adapters/ports/use-case";
-import { badRequest, conflict, created, serverError } from "@src/shared/http/helpers/http-helper";
-import { HttpRequest } from "@src/shared/http/dtos/http-request"
-import { RegisterUser } from "../../dtos/register-user-response";
-import { RegisterUserRequest } from "../../dtos/register-user-request";
-import { AccountAlreadyExistsError } from "./errors/account-already-exists-error";
-import { ControllerError } from "@src/shared/errors/ports/controller-error";
+import { HttpResponse } from '@src/shared/http/dtos/http-response';
+import { UseCase } from '@src/main/adapters/ports/use-case';
+import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
+import { HttpRequest } from '@src/shared/http/dtos/http-request';
+import { RegisterUser } from '../../dtos/register-user-response';
+import { RegisterUserRequest } from '../../dtos/register-user-request';
+import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
+import { ControllerError } from '@src/shared/errors/ports/controller-error';
 
 export class RegisterUserController {
   private readonly usecase: UseCase;
@@ -15,7 +15,7 @@ export class RegisterUserController {
   }
 
   async handle(
-    request:HttpRequest<RegisterUserRequest>
+    request: HttpRequest<RegisterUserRequest>,
   ): Promise<HttpResponse<RegisterUser | ControllerError>> {
     try {
       const { body } = request;
@@ -25,27 +25,26 @@ export class RegisterUserController {
 
         return badRequest({
           name: 'MissingError',
-          message: `Missing parameter from request: ${missing}.`
-        })
+          message: `Missing parameter from request: ${missing}.`,
+        });
       }
 
       const response = await this.usecase.execute(body);
 
       if (response.isLeft()) {
-        const error = response.value
+        const error = response.value;
 
         switch (error.constructor) {
           case AccountAlreadyExistsError:
-            return conflict(error)
+            return conflict(error);
           default:
-            return badRequest(error)
+            return badRequest(error);
         }
-      } 
-      
+      }
+
       return created<RegisterUser>(response.value);
     } catch (error) {
       return serverError(error);
     }
   }
 }
-

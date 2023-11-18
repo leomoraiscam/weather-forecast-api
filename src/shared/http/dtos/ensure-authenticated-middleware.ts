@@ -1,7 +1,7 @@
 export interface EnsureAuthenticatedMiddlewareRequest {
-  accesstoken: string
+  accesstoken: string;
 }
 
 export interface DecodedJwt {
-  sub: string
+  sub: string;
 }
