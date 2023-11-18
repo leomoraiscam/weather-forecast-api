@@ -2,7 +2,6 @@ import { HttpResponse } from "@src/shared/http/dtos/http-response"
 import { UseCase  } from "@src/main/adapters/ports/use-case";
 import { badRequest, conflict, created, serverError } from "@src/shared/http/helpers/http-helper";
 import { HttpRequest } from "@src/shared/http/dtos/http-request"
-import {  } from "../../dtos/forecast-rating-beach";
 import { BeachAlreadyExistsError } from "./errors/beach-already-exists-error";
 import { ControllerError } from "@src/shared/errors/ports/controller-error";
 import { Beach } from "../../dtos/beach";
