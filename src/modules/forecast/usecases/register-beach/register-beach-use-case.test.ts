@@ -22,7 +22,8 @@ describe('Create Beach Use Case', () => {
       name: 'John Doe',
       lat: 1,
       lng: 1,
-      position: BeachPosition.E
+      position: BeachPosition.E,
+      userId: 'fake-user-id'
     })
 
     expect(response.isRight()).toBeTruthy()  
@@ -33,7 +34,8 @@ describe('Create Beach Use Case', () => {
       name: 'John Doe',
       lat: 151.289824,
       lng: 1,
-      position: BeachPosition.E
+      position: BeachPosition.E,
+      userId: 'fake-user-id'
     })
    
     expect(response.isLeft()).toBeTruthy()
