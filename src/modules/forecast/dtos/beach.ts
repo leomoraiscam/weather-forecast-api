@@ -5,5 +5,5 @@ export interface Beach {
   position: BeachPosition;
   lat: number;
   lng: number;
-  userId: string;
+  userId?: string;
 }

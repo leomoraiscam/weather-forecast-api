@@ -13,18 +13,18 @@ export class InMemoryBeachRepository implements IBeachRepository {
   }
 
   async findAllBeachesByUser(userId: string): Promise<Beach[]> {
-    const data = [
-      {
-        id: '474a4d37-2503-470a-b55e-94b1abc66509',
-        lat: -33.792726,
-        lng: 151.289824,
-        position: 'N',
-        userId: '7a5043d6-30b9-4340-bf6e-e89776968e72',
-        name: 'Dee Why',
-      },
-    ];
+    const beaches = this.beaches.filter((beach) => beach.userId === userId);
 
-    return BeachMapper.toDomain(data);
+    const serializerBeach = beaches.map((beach) => ({
+      id: beach.id,
+      name: beach.name.value,
+      lat: beach.lat.value,
+      lng: beach.lng.value,
+      position: beach.position.value,
+      userId: beach.userId,
+    }));
+
+    return BeachMapper.toDomain(serializerBeach);
   }
 
   async create(beach: Beach): Promise<Beach> {

@@ -10,6 +10,7 @@ import { IUsersRepository } from '@src/modules/accounts/repositories/users-repos
 import { IBeachRepository } from '../../repositories/beaches-repository';
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';
 import { UserNotFoundError } from './errors/user-not-found-error';
+import { calculateRatingByPoint } from '../../helpers/calculate-rating-by-point';
 
 export class ProcessForecastBeachesUseCase {
   constructor(
@@ -36,7 +37,7 @@ export class ProcessForecastBeachesUseCase {
     for (const beach of beaches) {
       const { lat, lng, name, position } = beach;
 
-      const points = await this.stormGlassService.execute({ lat: lat.value, lng: lng.value });
+      const points = await this.stormGlassService.execute({ lat: lat.value, lng: lng.value }); //OK
 
       if (!points.value.length) {
         return left(points.value);
@@ -47,10 +48,14 @@ export class ProcessForecastBeachesUseCase {
           lat: lat.value,
           lng: lng.value,
           name: name.value,
-          position: BeachPosition.N,
-          rating: 1,
+          position: BeachPosition[position.value as unknown as BeachPosition],
+          rating: calculateRatingByPoint(pointForecast, {
+            lat: lat.value,
+            lng: lng.value,
+            name: name.value,
+            position: BeachPosition[position.value as unknown as BeachPosition],
+          }),
           ...pointForecast,
-          userId,
         }),
       );
 
