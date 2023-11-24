@@ -1,8 +1,8 @@
 import { AxiosRequestConfig } from 'axios';
 
-export interface RequestConfig extends AxiosRequestConfig {}
+export interface IRequestConfig extends AxiosRequestConfig {}
 
-export interface HttpRequest {
+export interface IHttpRequest {
   url: string;
-  config: RequestConfig;
+  config: IRequestConfig;
 }

@@ -1,13 +1,15 @@
-import { FetchPointNormalize } from '../dtos/fetch-point-normalize';
-import { StormGlassForecastResponse } from '../dtos/stormglass-response';
-import { StormGlassMapper } from '../mapper/stormglass-mapper';
-import { FetchPointCoordinate } from '../dtos/fetch-point-coordinate';
-import { StormGlassService } from '../ports/stormglass-service';
+/* eslint-disable no-useless-constructor */
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
-import { IRequestProvider } from '../providers/models/request-provider';
 import { Either, left, right } from '@src/shared/logic/Either';
 
-export class FetchPointService implements StormGlassService {
+import { IFetchPointCoordinate } from '../dtos/fetch-point-coordinate';
+import { IFetchPointNormalize } from '../dtos/fetch-point-normalize';
+import { IStormGlassForecastResponse } from '../dtos/stormglass-response';
+import { StormGlassMapper } from '../mapper/stormglass-mapper';
+import { IStormGlassService } from '../ports/stormglass-service';
+import { IRequestProvider } from '../providers/models/request-provider';
+
+export class FetchPointService implements IStormGlassService {
   constructor(private requestProvider: IRequestProvider) {}
 
   readonly stormGlassAPIParams =
@@ -17,9 +19,9 @@ export class FetchPointService implements StormGlassService {
   public async execute({
     lat,
     lng,
-  }: FetchPointCoordinate): Promise<Either<StormGlassResponseError, FetchPointNormalize[]>> {
+  }: IFetchPointCoordinate): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
     try {
-      const response = await this.requestProvider.get<StormGlassForecastResponse>({
+      const response = await this.requestProvider.get<IStormGlassForecastResponse>({
         url: `${process.env.STORM_GLASS_API_URL}/point?params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&lat=${lat}&lng=${lng}`,
         config: {
           headers: {

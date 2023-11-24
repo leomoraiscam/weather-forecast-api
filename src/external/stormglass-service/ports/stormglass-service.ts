@@ -1,10 +1,11 @@
 import { Either } from '@src/shared/logic/Either';
-import { FetchPointCoordinate } from '../dtos/fetch-point-coordinate';
-import { FetchPointNormalize } from '../dtos/fetch-point-normalize';
-import { StormGlassResponseError } from '../../../modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
 
-export interface StormGlassService {
+import { StormGlassResponseError } from '../../../modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
+import { IFetchPointCoordinate } from '../dtos/fetch-point-coordinate';
+import { IFetchPointNormalize } from '../dtos/fetch-point-normalize';
+
+export interface IStormGlassService {
   execute: (
-    options: FetchPointCoordinate,
-  ) => Promise<Either<StormGlassResponseError, FetchPointNormalize[]>>;
+    options: IFetchPointCoordinate,
+  ) => Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>>;
 }

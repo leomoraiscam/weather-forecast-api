@@ -1,4 +1,4 @@
-export interface FetchPointNormalize {
+export interface IFetchPointNormalize {
   time: string;
   swellDirection: number;
   swellHeight: number;

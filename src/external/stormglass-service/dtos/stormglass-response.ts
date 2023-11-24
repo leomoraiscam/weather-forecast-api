@@ -1,18 +1,18 @@
-interface StormGlassPointSource {
+interface IStormGlassPointSource {
   [key: string]: number;
 }
 
-interface StormGlassPoint {
+interface IStormGlassPoint {
   time: string;
-  swellDirection: StormGlassPointSource;
-  swellHeight: StormGlassPointSource;
-  swellPeriod: StormGlassPointSource;
-  waveDirection: StormGlassPointSource;
-  waveHeight: StormGlassPointSource;
-  windDirection: StormGlassPointSource;
-  windSpeed: StormGlassPointSource;
+  swellDirection: IStormGlassPointSource;
+  swellHeight: IStormGlassPointSource;
+  swellPeriod: IStormGlassPointSource;
+  waveDirection: IStormGlassPointSource;
+  waveHeight: IStormGlassPointSource;
+  windDirection: IStormGlassPointSource;
+  windSpeed: IStormGlassPointSource;
 }
 
-export interface StormGlassForecastResponse {
-  hours: StormGlassPoint[];
+export interface IStormGlassForecastResponse {
+  hours: IStormGlassPoint[];
 }
