@@ -1,6 +1,7 @@
 import pino, { Logger } from 'pino';
 
-import { ILoggerService, ILoggerData } from '../ports/logger-service';
+import { ILoggerData } from '../dtos/logger-data';
+import { ILoggerService } from '../ports/logger-service';
 
 export class WinstonLoggerService implements ILoggerService {
   private loggerService: Logger;
