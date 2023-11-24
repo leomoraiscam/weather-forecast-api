@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-constructor */
 import { Either, left, right } from '@src/shared/logic/Either';
 
 import { Beach } from '../../domain/beach/beach';

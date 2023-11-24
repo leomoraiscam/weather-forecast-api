@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { v4 as uuidV4 } from 'uuid';
 
 import { Either, right } from '@src/shared/logic/Either';

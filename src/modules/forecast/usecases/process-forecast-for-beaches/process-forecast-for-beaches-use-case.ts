@@ -1,6 +1,5 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-/* eslint-disable no-useless-constructor */
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
 import { IUseCase } from '@src/main/adapters/ports/use-case';

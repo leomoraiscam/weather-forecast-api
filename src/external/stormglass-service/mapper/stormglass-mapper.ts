@@ -1,4 +1,3 @@
-/* eslint-disable dot-notation */
 import { IFetchPointNormalize } from '../dtos/fetch-point-normalize';
 import { IStormGlassForecastResponse } from '../dtos/stormglass-response';
 

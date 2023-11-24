@@ -21,6 +21,9 @@
     "camelcase": "off",
     "import/no-unresolved": "error",
     "no-shadow": "off",
+    "dot-notation": "off",
+    "no-useless-constructor": "off",
+    "no-underscore-dangle": "off",
     "@typescript-eslint/naming-convention": [
       "error",
       {

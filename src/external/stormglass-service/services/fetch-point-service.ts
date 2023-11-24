@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-constructor */
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
 import { Either, left, right } from '@src/shared/logic/Either';
 
