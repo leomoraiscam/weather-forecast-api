@@ -18,7 +18,7 @@ app.use(contentType);
 setupRoute(app);
 
 mongoHelper
-  .connect(`mongodb://localhost:16017`)
+  .connect(`mongodb://${process.env.MONGO_URL}:${process.env.MONGO_PORT}/`)
   .then(async () => {
     app.listen(process.env.APP_PORT || 3000, () => {
       console.log(`Server running at http://localhost:${process.env.APP_PORT || 3000}`);

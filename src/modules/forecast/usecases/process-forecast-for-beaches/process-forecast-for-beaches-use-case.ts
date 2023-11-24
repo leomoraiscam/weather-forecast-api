@@ -37,7 +37,7 @@ export class ProcessForecastBeachesUseCase {
     for (const beach of beaches) {
       const { lat, lng, name, position } = beach;
 
-      const points = await this.stormGlassService.execute({ lat: lat.value, lng: lng.value }); //OK
+      const points = await this.stormGlassService.execute({ lat: lat.value, lng: lng.value });
 
       if (!points.value.length) {
         return left(points.value);

@@ -20,10 +20,10 @@ export class FetchPointService implements StormGlassService {
   }: FetchPointCoordinate): Promise<Either<StormGlassResponseError, FetchPointNormalize[]>> {
     try {
       const response = await this.requestProvider.get<StormGlassForecastResponse>({
-        url: `https://api.stormglass.io/v2/weather/point?params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&lat=${lat}&lng=${lng}`,
+        url: `${process.env.STORM_GLASS_API_URL}/point?params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&lat=${lat}&lng=${lng}`,
         config: {
           headers: {
-            Authorization: 'fake-token',
+            Authorization: process.env.STORM_GLASS_API_KEY,
           },
         },
       });

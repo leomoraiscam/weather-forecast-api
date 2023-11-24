@@ -25,7 +25,7 @@ export class JWT {
 
   static decodeToken(token: string): Either<InvalidJWTTokenError, JWTTokenPayload> {
     try {
-      const decoded = verify(token, 'secret-key') as JWTTokenPayload;
+      const decoded = verify(token, process.env.JWT_SECRET) as JWTTokenPayload;
 
       return right(decoded);
     } catch (err) {
@@ -46,9 +46,9 @@ export class JWT {
   }
 
   static signUser(user: User): JWT {
-    const token = sign({}, 'secret-key', {
+    const token = sign({}, process.env.JWT_SECRET, {
       subject: user.id,
-      expiresIn: '1d',
+      expiresIn: process.env.JWT_EXPIRES_IN,
     });
 
     const jwt = new JWT({ userId: user.id, token });
