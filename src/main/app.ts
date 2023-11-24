@@ -1,7 +1,9 @@
 import '../shared/module-alias';
-import express from 'express';
 import * as dotenv from 'dotenv';
+import express from 'express';
+
 import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
+
 import { bodyParser } from './config/body-parser';
 import { contentType } from './config/content-type';
 import { cors } from './config/cors';
@@ -24,7 +26,7 @@ mongoHelper
       console.log(`Server running at http://localhost:${process.env.APP_PORT || 3000}`);
     });
   })
-  .catch((error: any) => {
+  .catch((error) => {
     console.log(`Error: ${error}`);
   });
 

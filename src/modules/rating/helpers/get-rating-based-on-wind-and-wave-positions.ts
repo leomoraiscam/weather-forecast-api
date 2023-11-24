@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-use-before-define */
 import { BeachPosition } from '@config/constants/beach-position-enum';
 
 export function getRatingBasedOnWindAndWavePositions(
@@ -7,7 +9,8 @@ export function getRatingBasedOnWindAndWavePositions(
 ): number {
   if (waveDirection === windDirection) {
     return 1;
-  } else if (isWindOffShore(beach, waveDirection, windDirection)) {
+  }
+  if (isWindOffShore(beach, waveDirection, windDirection)) {
     return 5;
   }
 

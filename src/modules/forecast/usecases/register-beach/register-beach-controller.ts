@@ -1,20 +1,21 @@
-import { UseCase } from '@src/main/adapters/ports/use-case';
+/* eslint-disable no-nested-ternary */
+import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
-import { HttpRequest } from '@src/shared/http/dtos/http-request';
-import { HttpResponse } from '@src/shared/http/dtos/http-response';
+import { IHttpRequest } from '@src/shared/http/dtos/http-request';
+import { IHttpResponse } from '@src/shared/http/dtos/http-response';
 import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
 
 import { IBeach } from '../../dtos/beach';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 
 export class RegisterBeachController {
-  private readonly usecase: UseCase;
+  private readonly usecase: IUseCase;
 
-  constructor(usecase: UseCase) {
+  constructor(usecase: IUseCase) {
     this.usecase = usecase;
   }
 
-  async handle(request: HttpRequest<IBeach>): Promise<HttpResponse<IBeach | IControllerError>> {
+  async handle(request: IHttpRequest<IBeach>): Promise<IHttpResponse<IBeach | IControllerError>> {
     try {
       const { body, userId } = request;
 
@@ -43,7 +44,7 @@ export class RegisterBeachController {
         }
       }
 
-      return created<Beach>(response.value);
+      return created<IBeach>(response.value);
     } catch (error) {
       return serverError(error);
     }

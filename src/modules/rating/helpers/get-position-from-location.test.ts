@@ -1,15 +1,8 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
+
 import { getPositionFromLocation } from './get-position-from-location';
 
 describe('getPositionFromLocation', () => {
-  const beach = {
-    lat: -33.792726,
-    lng: 151.289824,
-    name: 'Manly',
-    position: BeachPosition.E,
-    userId: 'fake-user-id',
-  };
-
   it('should be able get the point based on a east location', () => {
     const rating = getPositionFromLocation(92);
 

@@ -1,15 +1,6 @@
-import { BeachPosition } from '@config/constants/beach-position-enum';
 import { getRatingForSwellSize } from './get-rating-for-swell-size';
 
 describe('getRatingForSwellSize', () => {
-  const beach = {
-    lat: -33.792726,
-    lng: 151.289824,
-    name: 'Manly',
-    position: BeachPosition.E,
-    userId: 'fake-user-id',
-  };
-
   it('should be able get rating 1 for less than ankle to knee high swell', () => {
     const rating = getRatingForSwellSize(0.2);
 

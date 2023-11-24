@@ -1,22 +1,22 @@
-import { UseCase } from '@src/main/adapters/ports/use-case';
+import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
-import { HttpRequest } from '@src/shared/http/dtos/http-request';
-import { HttpResponse } from '@src/shared/http/dtos/http-response';
+import { IHttpRequest } from '@src/shared/http/dtos/http-request';
+import { IHttpResponse } from '@src/shared/http/dtos/http-response';
 import { badRequest, created, serverError } from '@src/shared/http/helpers/http-helper';
 
 import { IAuthenticateUserRequest } from '../../dtos/authenticate-user-request';
 import { IAuthenticateUserResponse } from '../../dtos/authenticate-user-response';
 
 export class AuthenticateUserController {
-  private readonly usecase: UseCase;
+  private readonly usecase: IUseCase;
 
-  constructor(usecase: UseCase) {
+  constructor(usecase: IUseCase) {
     this.usecase = usecase;
   }
 
   async handle(
-    request: HttpRequest<IAuthenticateUserRequest>,
-  ): Promise<HttpResponse<IAuthenticateUserResponse | IControllerError>> {
+    request: IHttpRequest<IAuthenticateUserRequest>,
+  ): Promise<IHttpResponse<IAuthenticateUserResponse | IControllerError>> {
     try {
       const { body } = request;
 

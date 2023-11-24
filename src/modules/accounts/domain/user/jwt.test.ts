@@ -1,6 +1,6 @@
 import { Email } from './email';
 import { InvalidJWTTokenError } from './errors/invalid-jwt-token-error';
-import { JWT, JWTTokenPayload } from './jwt';
+import { JWT, IJWTTokenPayload } from './jwt';
 import { Name } from './name';
 import { Password } from './password';
 import { User } from './user';
@@ -39,7 +39,7 @@ describe('JWT domain entity', () => {
     const jwt = jwtOrError.value as JWT;
 
     expect(jwtOrError.isRight()).toBe(true);
-    expect(jwt.userId).toBe(user._id);
+    expect(jwt.userId).toBe(user.id);
   });
 
   it('should not be able to initialize JWT from invalid token', () => {
@@ -61,10 +61,10 @@ describe('JWT domain entity', () => {
     const jwt = JWT.signUser(user);
 
     const decodedOrError = JWT.decodeToken(jwt.token);
-    const decoded = decodedOrError.value as JWTTokenPayload;
+    const decoded = decodedOrError.value as IJWTTokenPayload;
 
     expect(decodedOrError.isRight()).toBe(true);
-    expect(decoded.sub).toBe(user._id);
+    expect(decoded.sub).toBe(user.id);
     expect(decoded.exp).toEqual(expect.any(Number));
   });
 

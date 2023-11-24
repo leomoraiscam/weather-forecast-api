@@ -1,12 +1,13 @@
-import { InMemoryBeachRepository } from '../../repositories/in-memory/in-memory-beach-repository';
-import { IBeachRepository } from '../../repositories/beaches-repository';
-import { RegisterBeachUseCase } from './register-beach-use-case';
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { Name } from '../../domain/beach/name';
+
+import { Beach } from '../../domain/beach/beach';
 import { Latitude } from '../../domain/beach/latitude';
 import { Longitude } from '../../domain/beach/longitude';
+import { Name } from '../../domain/beach/name';
 import { Position } from '../../domain/beach/position';
-import { Beach } from '../../domain/beach/beach';
+import { IBeachRepository } from '../../repositories/beaches-repository';
+import { InMemoryBeachRepository } from '../../repositories/in-memory/in-memory-beach-repository';
+import { RegisterBeachUseCase } from './register-beach-use-case';
 
 let beachRepository: IBeachRepository;
 let registerBeachUseCase: RegisterBeachUseCase;

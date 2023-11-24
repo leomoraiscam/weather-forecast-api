@@ -1,15 +1,6 @@
-import { BeachPosition } from '@config/constants/beach-position-enum';
 import { getRatingForSwellPeriod } from './get-rating-for-swell-period';
 
 describe('getRatingForSwellPeriod', () => {
-  const beach = {
-    lat: -33.792726,
-    lng: 151.289824,
-    name: 'Manly',
-    position: BeachPosition.E,
-    userId: 'fake-user-id',
-  };
-
   it('should be able get rating 1 for a period of 5 seconds', () => {
     const rating = getRatingForSwellPeriod(5);
 

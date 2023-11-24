@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import { Controller } from '../adapters/ports/controller';
 
-export const adaptRoute = (controller: Controller) => {
+import { IController } from './ports/controller';
+
+export const adaptRoute = (controller: IController) => {
   return async (request: Request, response: Response): Promise<void> => {
     const { params, body, userId } = {
       body: request.body,

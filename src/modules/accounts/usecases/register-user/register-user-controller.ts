@@ -1,7 +1,8 @@
-import { UseCase } from '@src/main/adapters/ports/use-case';
-import { ControllerError } from '@src/shared/errors/ports/controller-error';
-import { HttpRequest } from '@src/shared/http/dtos/http-request';
-import { HttpResponse } from '@src/shared/http/dtos/http-response';
+/* eslint-disable no-nested-ternary */
+import { IUseCase } from '@src/main/adapters/ports/use-case';
+import { IControllerError } from '@src/shared/errors/ports/controller-error';
+import { IHttpRequest } from '@src/shared/http/dtos/http-request';
+import { IHttpResponse } from '@src/shared/http/dtos/http-response';
 import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
 
 import { IRegisterUserRequest } from '../../dtos/register-user-request';
@@ -9,15 +10,15 @@ import { IRegisterUser } from '../../dtos/register-user-response';
 import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 
 export class RegisterUserController {
-  private readonly usecase: UseCase;
+  private readonly usecase: IUseCase;
 
-  constructor(usecase: UseCase) {
+  constructor(usecase: IUseCase) {
     this.usecase = usecase;
   }
 
   async handle(
-    request: HttpRequest<IRegisterUserRequest>,
-  ): Promise<HttpResponse<IRegisterUser | ControllerError>> {
+    request: IHttpRequest<IRegisterUserRequest>,
+  ): Promise<IHttpResponse<IRegisterUser | IControllerError>> {
     try {
       const { body } = request;
 

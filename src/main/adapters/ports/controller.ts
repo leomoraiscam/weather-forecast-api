@@ -1,5 +1,5 @@
-import { HttpResponse } from '@src/shared/http/dtos/http-response';
+import { IHttpResponse } from '@src/shared/http/dtos/http-response';
 
-export interface Controller<T = any> {
-  handle: (request: T) => Promise<HttpResponse<T>>;
+export interface IController<T = any> {
+  handle: (request: T) => Promise<IHttpResponse<T>>;
 }

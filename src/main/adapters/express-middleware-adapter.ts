@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { Middleware } from './ports/middleware';
+import { IMiddleware } from './ports/middleware';
 
-export const adaptMiddleware = (middleware: Middleware) => {
+export const adaptMiddleware = (middleware: IMiddleware) => {
   return async (request: Request, response: Response, next: NextFunction) => {
-    let requestData = {
+    const requestData = {
       accesstoken: request.headers['x-access-token'],
       ...(request.headers || {}),
     };
@@ -19,10 +19,9 @@ export const adaptMiddleware = (middleware: Middleware) => {
       Object.assign(request, httpResponse.body);
 
       return next();
-    } else {
-      return response.status(httpResponse.statusCode).json({
-        error: httpResponse.body.error,
-      });
     }
+    return response.status(httpResponse.statusCode).json({
+      error: httpResponse.body.error,
+    });
   };
 };

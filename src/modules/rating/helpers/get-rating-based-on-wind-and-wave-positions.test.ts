@@ -1,4 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
+
 import { getRatingBasedOnWindAndWavePositions } from './get-rating-based-on-wind-and-wave-positions';
 
 describe('GetRatingBasedOnWindAndWavePositions', () => {

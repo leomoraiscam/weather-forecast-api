@@ -1,9 +1,10 @@
-import { FetchPointService } from './fetch-point-service';
-import stormGlassWeather3HoursFixture from '@test/fixtures/storm-glass-weather-3-hours.json';
-import stormGlassNormalizedResponse3Hours from '@test/fixtures/storm-glass-normalized-response-3-hours.json';
-import stormGlassIncompleteResponse from '@test/fixtures/storm-glass-incomplete-response.json';
-import stormGlassResponseError from '@test/fixtures/storm-glass-response-error.json';
 import { AxiosRequestProvider } from '@src/external/stormglass-service/providers/implementations/axios-request-provider';
+import stormGlassIncompleteResponse from '@test/fixtures/storm-glass-incomplete-response.json';
+import stormGlassNormalizedResponse3Hours from '@test/fixtures/storm-glass-normalized-response-3-hours.json';
+import stormGlassResponseError from '@test/fixtures/storm-glass-response-error.json';
+import stormGlassWeather3HoursFixture from '@test/fixtures/storm-glass-weather-3-hours.json';
+
+import { FetchPointService } from './fetch-point-service';
 
 jest.mock('@src/external/stormglass-service/providers/implementations/axios-request-provider');
 

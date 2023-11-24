@@ -1,21 +1,21 @@
-import { UseCase } from '@src/main/adapters/ports/use-case';
+import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
-import { HttpRequest } from '@src/shared/http/dtos/http-request';
-import { HttpResponse } from '@src/shared/http/dtos/http-response';
+import { IHttpRequest } from '@src/shared/http/dtos/http-request';
+import { IHttpResponse } from '@src/shared/http/dtos/http-response';
 import { badRequest, ok, serverError } from '@src/shared/http/helpers/http-helper';
 
 import { IForecastRatingBeach } from '../../dtos/forecast-rating-beach';
 
 export class FetchPointsController {
-  private readonly usecase: UseCase;
+  private readonly usecase: IUseCase;
 
-  constructor(usecase: UseCase) {
+  constructor(usecase: IUseCase) {
     this.usecase = usecase;
   }
 
   async handle(
-    request: HttpRequest<{ userId: string }>,
-  ): Promise<HttpResponse<IForecastRatingBeach | IControllerError>> {
+    request: IHttpRequest<{ userId: string }>,
+  ): Promise<IHttpResponse<IForecastRatingBeach | IControllerError>> {
     try {
       const { userId } = request;
 

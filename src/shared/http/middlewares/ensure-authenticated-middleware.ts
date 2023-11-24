@@ -2,28 +2,28 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { decode } from 'jsonwebtoken';
 
-import { Middleware } from '@src/main/adapters/ports/middleware';
+import { IMiddleware } from '@src/main/adapters/ports/middleware';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
 
 import {
-  EnsureAuthenticatedMiddlewareRequest,
-  DecodedJwt,
+  IEnsureAuthenticatedMiddlewareRequest,
+  IDecodedJwt,
 } from '../dtos/ensure-authenticated-middleware';
-import { HttpResponse } from '../dtos/http-response';
+import { IHttpResponse } from '../dtos/http-response';
 import { ok, forbidden, serverError } from '../helpers/http-helper';
 
-export class EnsureAuthenticatedMiddleware implements Middleware {
+export class EnsureAuthenticatedMiddleware implements IMiddleware {
   constructor() {}
 
   async handle(
-    request: EnsureAuthenticatedMiddlewareRequest,
-  ): Promise<HttpResponse<{ userId: string } | IControllerError>> {
+    request: IEnsureAuthenticatedMiddlewareRequest,
+  ): Promise<IHttpResponse<{ userId: string } | IControllerError>> {
     try {
       const { accesstoken } = request;
 
       if (accesstoken) {
         try {
-          const decoded = decode(accesstoken) as DecodedJwt;
+          const decoded = decode(accesstoken) as IDecodedJwt;
 
           return ok({ userId: decoded.sub });
         } catch (err) {

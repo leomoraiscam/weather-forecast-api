@@ -3,7 +3,7 @@
 /* eslint-disable no-useless-constructor */
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
-import { UseCase } from '@src/main/adapters/ports/use-case';
+import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IUsersRepository } from '@src/modules/accounts/repositories/users-repository';
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
 import { Either, left, right } from '@src/shared/logic/Either';
@@ -18,7 +18,7 @@ import { UserNotFoundError } from './errors/user-not-found-error';
 
 export class ProcessForecastBeachesUseCase {
   constructor(
-    private stormGlassService: UseCase,
+    private stormGlassService: IUseCase,
     private usersRepository: IUsersRepository,
     private beachesRepository: IBeachRepository,
   ) {}
