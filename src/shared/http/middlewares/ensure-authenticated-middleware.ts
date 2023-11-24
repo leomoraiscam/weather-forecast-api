@@ -1,19 +1,23 @@
+/* eslint-disable no-useless-constructor */
+/* eslint-disable @typescript-eslint/no-namespace */
 import { decode } from 'jsonwebtoken';
+
+import { Middleware } from '@src/main/adapters/ports/middleware';
+import { IControllerError } from '@src/shared/errors/ports/controller-error';
+
 import {
   EnsureAuthenticatedMiddlewareRequest,
   DecodedJwt,
 } from '../dtos/ensure-authenticated-middleware';
 import { HttpResponse } from '../dtos/http-response';
 import { ok, forbidden, serverError } from '../helpers/http-helper';
-import { ControllerError } from '@src/shared/errors/ports/controller-error';
-import { Middleware } from '@src/main/adapters/ports/middleware';
 
 export class EnsureAuthenticatedMiddleware implements Middleware {
   constructor() {}
 
   async handle(
     request: EnsureAuthenticatedMiddlewareRequest,
-  ): Promise<HttpResponse<{ userId: string } | ControllerError>> {
+  ): Promise<HttpResponse<{ userId: string } | IControllerError>> {
     try {
       const { accesstoken } = request;
 

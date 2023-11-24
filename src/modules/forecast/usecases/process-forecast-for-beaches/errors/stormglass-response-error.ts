@@ -1,6 +1,6 @@
-import { UseCaseError } from '@src/shared/errors/ports/use-case-error';
+import { IUseCaseError } from '@src/shared/errors/ports/use-case-error';
 
-export class StormGlassResponseError extends Error implements UseCaseError {
+export class StormGlassResponseError extends Error implements IUseCaseError {
   constructor(message: string) {
     const internalMessage = 'Unexpected error returned by the StormGlass service';
 

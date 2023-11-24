@@ -1,5 +1,5 @@
 import { UseCase } from '@src/main/adapters/ports/use-case';
-import { ControllerError } from '@src/shared/errors/ports/controller-error';
+import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import { HttpRequest } from '@src/shared/http/dtos/http-request';
 import { HttpResponse } from '@src/shared/http/dtos/http-response';
 import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
@@ -14,7 +14,7 @@ export class RegisterBeachController {
     this.usecase = usecase;
   }
 
-  async handle(request: HttpRequest<IBeach>): Promise<HttpResponse<IBeach | ControllerError>> {
+  async handle(request: HttpRequest<IBeach>): Promise<HttpResponse<IBeach | IControllerError>> {
     try {
       const { body, userId } = request;
 

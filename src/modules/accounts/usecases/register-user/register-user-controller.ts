@@ -1,11 +1,12 @@
-import { HttpResponse } from '@src/shared/http/dtos/http-response';
 import { UseCase } from '@src/main/adapters/ports/use-case';
-import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
-import { HttpRequest } from '@src/shared/http/dtos/http-request';
-import { RegisterUser } from '../../dtos/register-user-response';
-import { RegisterUserRequest } from '../../dtos/register-user-request';
-import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 import { ControllerError } from '@src/shared/errors/ports/controller-error';
+import { HttpRequest } from '@src/shared/http/dtos/http-request';
+import { HttpResponse } from '@src/shared/http/dtos/http-response';
+import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
+
+import { IRegisterUserRequest } from '../../dtos/register-user-request';
+import { IRegisterUser } from '../../dtos/register-user-response';
+import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 
 export class RegisterUserController {
   private readonly usecase: UseCase;
@@ -15,8 +16,8 @@ export class RegisterUserController {
   }
 
   async handle(
-    request: HttpRequest<RegisterUserRequest>,
-  ): Promise<HttpResponse<RegisterUser | ControllerError>> {
+    request: HttpRequest<IRegisterUserRequest>,
+  ): Promise<HttpResponse<IRegisterUser | ControllerError>> {
     try {
       const { body } = request;
 
@@ -42,7 +43,7 @@ export class RegisterUserController {
         }
       }
 
-      return created<RegisterUser>(response.value);
+      return created<IRegisterUser>(response.value);
     } catch (error) {
       return serverError(error);
     }

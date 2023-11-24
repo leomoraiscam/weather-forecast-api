@@ -1,5 +1,5 @@
 import { UseCase } from '@src/main/adapters/ports/use-case';
-import { ControllerError } from '@src/shared/errors/ports/controller-error';
+import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import { HttpRequest } from '@src/shared/http/dtos/http-request';
 import { HttpResponse } from '@src/shared/http/dtos/http-response';
 import { badRequest, created, serverError } from '@src/shared/http/helpers/http-helper';
@@ -16,7 +16,7 @@ export class AuthenticateUserController {
 
   async handle(
     request: HttpRequest<IAuthenticateUserRequest>,
-  ): Promise<HttpResponse<IAuthenticateUserResponse | ControllerError>> {
+  ): Promise<HttpResponse<IAuthenticateUserResponse | IControllerError>> {
     try {
       const { body } = request;
 

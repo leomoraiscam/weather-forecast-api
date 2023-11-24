@@ -1,6 +1,6 @@
-import { UseCaseError } from '@src/shared/errors/ports/use-case-error';
+import { IUseCaseError } from '@src/shared/errors/ports/use-case-error';
 
-export class UserNotFoundError extends Error implements UseCaseError {
+export class UserNotFoundError extends Error implements IUseCaseError {
   constructor() {
     super(`The user does not exist.`);
     this.name = 'UserNotFoundError';

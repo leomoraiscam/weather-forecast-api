@@ -1,4 +1,4 @@
-export interface ControllerError {
+export interface IControllerError {
   name: string;
   message: string;
 }

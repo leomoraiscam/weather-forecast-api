@@ -1,4 +1,5 @@
-import { ControllerError } from '@src/shared/errors/ports/controller-error';
+import { IControllerError } from '@src/shared/errors/ports/controller-error';
+
 import { HttpResponse } from '../dtos/http-response';
 
 export function ok<T>(data?: T): HttpResponse<T> {
@@ -15,7 +16,7 @@ export function created<T>(data: T): HttpResponse<T> {
   };
 }
 
-export function badRequest(data: ControllerError): HttpResponse<ControllerError> {
+export function badRequest(data: IControllerError): HttpResponse<IControllerError> {
   return {
     statusCode: 400,
     body: {
@@ -25,7 +26,7 @@ export function badRequest(data: ControllerError): HttpResponse<ControllerError>
   };
 }
 
-export function forbidden(data: ControllerError): HttpResponse<ControllerError> {
+export function forbidden(data: IControllerError): HttpResponse<IControllerError> {
   return {
     statusCode: 403,
     body: {
@@ -35,7 +36,7 @@ export function forbidden(data: ControllerError): HttpResponse<ControllerError> 
   };
 }
 
-export function conflict(data: ControllerError): HttpResponse<ControllerError> {
+export function conflict(data: IControllerError): HttpResponse<IControllerError> {
   return {
     statusCode: 409,
     body: {
@@ -45,7 +46,7 @@ export function conflict(data: ControllerError): HttpResponse<ControllerError> {
   };
 }
 
-export function serverError(data: ControllerError): HttpResponse<ControllerError> {
+export function serverError(data: IControllerError): HttpResponse<IControllerError> {
   return {
     statusCode: 500,
     body: {
