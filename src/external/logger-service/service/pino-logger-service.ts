@@ -1,10 +1,11 @@
 import pino, { Logger } from 'pino';
-import { LoggerService, LoggerData, TypesLogger } from '../ports/logger-service';
 
-export class WinstonLoggerService implements LoggerService {
+import { ILoggerService, ILoggerData } from '../ports/logger-service';
+
+export class WinstonLoggerService implements ILoggerService {
   private loggerService: Logger;
 
-  log({ level, message, metadata }: LoggerData): void {
+  log({ level, message, metadata }: ILoggerData): void {
     this.loggerService = pino({
       enabled: true,
       level,

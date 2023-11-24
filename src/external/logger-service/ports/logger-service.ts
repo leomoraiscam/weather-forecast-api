@@ -1,18 +1,11 @@
-export enum TypesLogger {
-  INFO = 'info',
-  WARN = 'warn',
-  DEBUG = 'debug',
-  TRACE = 'trace',
-  ERROR = 'error',
-  FATAL = 'fatal',
-}
+import { TypesLogger } from '@config/constants/types-logger-enum';
 
-export interface LoggerData {
+export interface ILoggerData {
   level: TypesLogger;
   message: string;
   metadata?: object;
 }
 
-export interface LoggerService {
-  log({ level, message, metadata }: LoggerData): void;
+export interface ILoggerService {
+  log({ level, message, metadata }: ILoggerData): void;
 }
