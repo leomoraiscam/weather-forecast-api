@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-constructor */
 import { Either, left, right } from '@src/shared/logic/Either';
 
 import { Email } from '../../domain/user/email';
