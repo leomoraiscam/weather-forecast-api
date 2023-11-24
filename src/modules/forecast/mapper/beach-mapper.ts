@@ -7,11 +7,11 @@ import { IPersistenceBeachModel } from './dtos/beach-model';
 
 export class BeachMapper {
   static toDomain(raw: IPersistenceBeachModel[]): Beach[] {
-    const beaches = raw.map((data) => {
-      const nameOrError = Name.create(data.name);
-      const latitudeOrError = Latitude.create(data.lat);
-      const longitudeOrError = Longitude.create(data.lng);
-      const positionOrError = Position.create(data.position);
+    return raw.map(({ name, lat, lng, position, userId, id }) => {
+      const nameOrError = Name.create(name);
+      const latitudeOrError = Latitude.create(lat);
+      const longitudeOrError = Longitude.create(lng);
+      const positionOrError = Position.create(position);
 
       if (nameOrError.isLeft()) {
         throw new Error('Name value is invalid.');
@@ -35,9 +35,9 @@ export class BeachMapper {
           lat: latitudeOrError.value,
           lng: longitudeOrError.value,
           position: positionOrError.value,
-          userId: data.userId,
+          userId,
         },
-        data.id,
+        id,
       );
 
       if (beachOrError.isRight()) {
@@ -46,7 +46,5 @@ export class BeachMapper {
 
       return null;
     });
-
-    return beaches;
   }
 }
