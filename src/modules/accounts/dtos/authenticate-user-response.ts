@@ -1,3 +1,3 @@
-export interface AuthenticateUserResponse {
+export interface IAuthenticateUserResponse {
   token: string;
 }

@@ -1,4 +1,4 @@
-export interface AuthenticateUserRequest {
+export interface IAuthenticateUserRequest {
   email: string;
   password: string;
 }

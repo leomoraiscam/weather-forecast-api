@@ -1,4 +1,5 @@
 import { Either, left, right } from '@src/shared/logic/Either';
+
 import { InvalidEmailError } from './errors/invalid-email-error';
 
 export class Email {

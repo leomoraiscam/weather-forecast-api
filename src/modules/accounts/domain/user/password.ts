@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs';
-import { InvalidPasswordLengthError } from './errors/invalid-password-length-error';
+
 import { Either, left, right } from '@src/shared/logic/Either';
+
+import { InvalidPasswordLengthError } from './errors/invalid-password-length-error';
 
 export class Password {
   private readonly password: string;
@@ -24,7 +26,7 @@ export class Password {
       return this.password;
     }
 
-    return await bcrypt.hash(this.password, 8);
+    return bcrypt.hash(this.password, 8);
   }
 
   public async comparePassword(plainTextPassword: string): Promise<boolean> {
@@ -33,7 +35,7 @@ export class Password {
     if (this.hashed) {
       hashed = this.password;
 
-      return await bcrypt.compare(plainTextPassword, hashed);
+      return bcrypt.compare(plainTextPassword, hashed);
     }
 
     return this.password === plainTextPassword;

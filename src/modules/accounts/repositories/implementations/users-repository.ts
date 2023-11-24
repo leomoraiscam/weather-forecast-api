@@ -1,14 +1,14 @@
+import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
+
 import { User } from '../../domain/user/user';
-import { PersistenceUserModel } from '../../mapper/dtos/users-model';
+import { IPersistenceUserModel } from '../../mapper/dtos/users-model';
 import { UserMapper } from '../../mapper/user-mapper';
 import { IUsersRepository } from '../users-repository';
-
-import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
 
 export class UserRepository implements IUsersRepository {
   async findById(id: string): Promise<User | null> {
     const userCollection = mongoHelper.getCollection('users');
-    const user = await userCollection.findOne<PersistenceUserModel>({ id });
+    const user = await userCollection.findOne<IPersistenceUserModel>({ id });
 
     if (!user) {
       return null;
@@ -19,7 +19,7 @@ export class UserRepository implements IUsersRepository {
 
   async findByEmail(email: string): Promise<User | null> {
     const userCollection = mongoHelper.getCollection('users');
-    const user = await userCollection.findOne<PersistenceUserModel>({ email });
+    const user = await userCollection.findOne<IPersistenceUserModel>({ email });
 
     if (!user) {
       return null;

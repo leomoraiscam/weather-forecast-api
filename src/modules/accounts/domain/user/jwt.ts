@@ -1,15 +1,16 @@
 import { sign, verify } from 'jsonwebtoken';
 
-import { InvalidJWTTokenError } from './errors/invalid-jwt-token-error';
-import { User } from './user';
 import { Either, left, right } from '@src/shared/logic/Either';
 
-interface JWTData {
+import { InvalidJWTTokenError } from './errors/invalid-jwt-token-error';
+import { User } from './user';
+
+interface IJWTData {
   userId: string;
   token: string;
 }
 
-export interface JWTTokenPayload {
+export interface IJWTTokenPayload {
   exp: number;
   sub: string;
 }
@@ -18,14 +19,14 @@ export class JWT {
   public readonly userId: string;
   public readonly token: string;
 
-  private constructor({ userId, token }: JWTData) {
+  private constructor({ userId, token }: IJWTData) {
     this.userId = userId;
     this.token = token;
   }
 
-  static decodeToken(token: string): Either<InvalidJWTTokenError, JWTTokenPayload> {
+  static decodeToken(token: string): Either<InvalidJWTTokenError, IJWTTokenPayload> {
     try {
-      const decoded = verify(token, process.env.JWT_SECRET) as JWTTokenPayload;
+      const decoded = verify(token, process.env.JWT_SECRET) as IJWTTokenPayload;
 
       return right(decoded);
     } catch (err) {

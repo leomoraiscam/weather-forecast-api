@@ -1,15 +1,17 @@
+/* eslint-disable no-useless-constructor */
+import { Either, left, right } from '@src/shared/logic/Either';
+
 import { Email } from '../../domain/user/email';
+import { InvalidEmailError } from '../../domain/user/errors/invalid-email-error';
+import { InvalidNameError } from '../../domain/user/errors/invalid-name-error';
+import { InvalidPasswordLengthError } from '../../domain/user/errors/invalid-password-length-error';
 import { Name } from '../../domain/user/name';
 import { Password } from '../../domain/user/password';
 import { User } from '../../domain/user/user';
-import { RegisterUser } from '../../dtos/register-user-response';
+import { IRegisterUserRequest } from '../../dtos/register-user-request';
+import { IRegisterUser } from '../../dtos/register-user-response';
 import { IUsersRepository } from '../../repositories/users-repository';
 import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
-import { RegisterUserRequest } from '../../dtos/register-user-request';
-import { Either, left, right } from '@src/shared/logic/Either';
-import { InvalidNameError } from '../../domain/user/errors/invalid-name-error';
-import { InvalidEmailError } from '../../domain/user/errors/invalid-email-error';
-import { InvalidPasswordLengthError } from '../../domain/user/errors/invalid-password-length-error';
 
 export class RegisterUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
@@ -18,10 +20,10 @@ export class RegisterUserUseCase {
     name,
     email,
     password,
-  }: RegisterUserRequest): Promise<
+  }: IRegisterUserRequest): Promise<
     Either<
       AccountAlreadyExistsError | InvalidNameError | InvalidEmailError | InvalidPasswordLengthError,
-      RegisterUser
+      IRegisterUser
     >
   > {
     const nameOrError = Name.create(name);

@@ -1,10 +1,11 @@
-import { HttpResponse } from '@src/shared/http/dtos/http-response';
 import { UseCase } from '@src/main/adapters/ports/use-case';
 import { ControllerError } from '@src/shared/errors/ports/controller-error';
-import { badRequest, created, serverError } from '@src/shared/http/helpers/http-helper';
 import { HttpRequest } from '@src/shared/http/dtos/http-request';
-import { AuthenticateUserRequest } from '../../dtos/authenticate-user-request';
-import { AuthenticateUserResponse } from '../../dtos/authenticate-user-response';
+import { HttpResponse } from '@src/shared/http/dtos/http-response';
+import { badRequest, created, serverError } from '@src/shared/http/helpers/http-helper';
+
+import { IAuthenticateUserRequest } from '../../dtos/authenticate-user-request';
+import { IAuthenticateUserResponse } from '../../dtos/authenticate-user-response';
 
 export class AuthenticateUserController {
   private readonly usecase: UseCase;
@@ -14,8 +15,8 @@ export class AuthenticateUserController {
   }
 
   async handle(
-    request: HttpRequest<AuthenticateUserRequest>,
-  ): Promise<HttpResponse<AuthenticateUserResponse | ControllerError>> {
+    request: HttpRequest<IAuthenticateUserRequest>,
+  ): Promise<HttpResponse<IAuthenticateUserResponse | ControllerError>> {
     try {
       const { body } = request;
 
@@ -30,7 +31,7 @@ export class AuthenticateUserController {
 
       const response = await this.usecase.execute(body);
 
-      return created<AuthenticateUserResponse>(response.value);
+      return created<IAuthenticateUserResponse>(response.value);
     } catch (error) {
       return serverError(error);
     }
