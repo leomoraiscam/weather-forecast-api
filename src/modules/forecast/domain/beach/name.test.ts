@@ -1,5 +1,4 @@
 import { Name } from './name';
-import { InvalidNameError } from './errors/invalid-name-error';
 
 describe('Beach Name Object Value', () => {
   it('should accept valid name', () => {

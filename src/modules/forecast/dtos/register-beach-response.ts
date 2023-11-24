@@ -1,6 +1,6 @@
-import { Beach } from './beach';
+import { IBeach } from './beach';
 
-export interface RegisterBeachResponse extends Omit<Beach, 'position'> {
+export interface IRegisterBeachResponse extends Omit<IBeach, 'position'> {
   id: string;
   position: string;
 }

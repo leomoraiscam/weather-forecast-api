@@ -1,10 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 import { v4 as uuidV4 } from 'uuid';
-import { IBeachProps } from './dtos/beach-props';
+
 import { Either, right } from '@src/shared/logic/Either';
-import { InvalidNameError } from './errors/invalid-name-error';
-import { InvalidPositionError } from './errors/invalid-position-error';
+
+import { IBeachProps } from './dtos/beach-props';
 import { InvalidLatitudeError } from './errors/invalid-latitude-error';
 import { InvalidLongitudeError } from './errors/invalid-longitude-error';
+import { InvalidNameError } from './errors/invalid-name-error';
+import { InvalidPositionError } from './errors/invalid-position-error';
 
 export class Beach {
   public readonly _id?: string;

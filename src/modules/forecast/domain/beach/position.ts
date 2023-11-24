@@ -1,6 +1,7 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { InvalidPositionError } from './errors/invalid-position-error';
 import { Either, left, right } from '@src/shared/logic/Either';
+
+import { InvalidPositionError } from './errors/invalid-position-error';
 
 export class Position {
   private readonly position: string;

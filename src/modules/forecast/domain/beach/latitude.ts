@@ -1,4 +1,5 @@
 import { Either, left, right } from '@src/shared/logic/Either';
+
 import { InvalidLatitudeError } from './errors/invalid-latitude-error';
 
 export class Latitude {

@@ -1,10 +1,11 @@
-import { HttpResponse } from '@src/shared/http/dtos/http-response';
 import { UseCase } from '@src/main/adapters/ports/use-case';
-import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
-import { HttpRequest } from '@src/shared/http/dtos/http-request';
-import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 import { ControllerError } from '@src/shared/errors/ports/controller-error';
-import { Beach } from '../../dtos/beach';
+import { HttpRequest } from '@src/shared/http/dtos/http-request';
+import { HttpResponse } from '@src/shared/http/dtos/http-response';
+import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
+
+import { IBeach } from '../../dtos/beach';
+import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 
 export class RegisterBeachController {
   private readonly usecase: UseCase;
@@ -13,7 +14,7 @@ export class RegisterBeachController {
     this.usecase = usecase;
   }
 
-  async handle(request: HttpRequest<Beach>): Promise<HttpResponse<Beach | ControllerError>> {
+  async handle(request: HttpRequest<IBeach>): Promise<HttpResponse<IBeach | ControllerError>> {
     try {
       const { body, userId } = request;
 

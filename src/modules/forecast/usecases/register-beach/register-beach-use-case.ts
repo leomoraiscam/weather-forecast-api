@@ -1,16 +1,18 @@
-import { Name } from '../../domain/beach/name';
+/* eslint-disable no-useless-constructor */
+import { Either, left, right } from '@src/shared/logic/Either';
+
+import { Beach } from '../../domain/beach/beach';
+import { InvalidLatitudeError } from '../../domain/beach/errors/invalid-latitude-error';
+import { InvalidLongitudeError } from '../../domain/beach/errors/invalid-longitude-error';
+import { InvalidNameError } from '../../domain/beach/errors/invalid-name-error';
+import { InvalidPositionError } from '../../domain/beach/errors/invalid-position-error';
 import { Latitude } from '../../domain/beach/latitude';
 import { Longitude } from '../../domain/beach/longitude';
+import { Name } from '../../domain/beach/name';
 import { Position } from '../../domain/beach/position';
-import { Beach } from '../../domain/beach/beach';
-import { Beach as RegisterBeachRequest } from '../../dtos/beach';
-import { Either, left, right } from '@src/shared/logic/Either';
-import { InvalidNameError } from '../../domain/beach/errors/invalid-name-error';
-import { InvalidLongitudeError } from '../../domain/beach/errors/invalid-longitude-error';
-import { InvalidLatitudeError } from '../../domain/beach/errors/invalid-latitude-error';
-import { InvalidPositionError } from '../../domain/beach/errors/invalid-position-error';
+import { IBeach as RegisterBeachRequest } from '../../dtos/beach';
+import { IRegisterBeachResponse } from '../../dtos/register-beach-response';
 import { IBeachRepository } from '../../repositories/beaches-repository';
-import { RegisterBeachResponse } from '../../dtos/register-beach-response';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 
 export class RegisterBeachUseCase {
@@ -29,7 +31,7 @@ export class RegisterBeachUseCase {
       | InvalidLongitudeError
       | InvalidPositionError
       | BeachAlreadyExistsError,
-      RegisterBeachResponse
+      IRegisterBeachResponse
     >
   > {
     const nameOrError = Name.create(name);

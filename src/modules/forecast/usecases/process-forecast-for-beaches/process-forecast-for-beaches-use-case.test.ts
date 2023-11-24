@@ -1,59 +1,61 @@
-import stormGlassNormalizedResponse3Hours from '@test/fixtures/storm-glass-normalized-response-3-hours.json';
-import { ProcessForecastBeachesUseCase } from './process-forecast-for-beaches-use-case';
+/* eslint-disable max-classes-per-file */
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { Beach } from '@src/modules/forecast/domain/beach/beach';
-import { Name } from '@src/modules/forecast/domain/beach/name';
-import { Name as UserDomainName } from '@src/modules/accounts/domain/user/name';
-import { Longitude } from '@src/modules/forecast/domain/beach/longitude';
-import { Latitude } from '@src/modules/forecast/domain/beach/latitude';
-import { Position } from '@src/modules/forecast/domain/beach/position';
-import { FetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
-import { Either, left, right } from '@src/shared/logic/Either';
-import { StormGlassService } from '@src/external/stormglass-service/ports/stormglass-service';
-import { FetchPointCoordinate } from '@src/external/stormglass-service/dtos/fetch-point-coordinate';
-import { StormGlassResponseError } from './errors/stormglass-response-error';
-import { InMemoryUsersRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
-import { InMemoryBeachRepository } from '../../repositories/in-memory/in-memory-beach-repository';
+import { IFetchPointCoordinate } from '@src/external/stormglass-service/dtos/fetch-point-coordinate';
+import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
+import { IStormGlassService } from '@src/external/stormglass-service/ports/stormglass-service';
 import { Email } from '@src/modules/accounts/domain/user/email';
+import { Name as UserDomainName } from '@src/modules/accounts/domain/user/name';
 import { Password } from '@src/modules/accounts/domain/user/password';
 import { User } from '@src/modules/accounts/domain/user/user';
+import { InMemoryUsersRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
+import { Beach } from '@src/modules/forecast/domain/beach/beach';
+import { Latitude } from '@src/modules/forecast/domain/beach/latitude';
+import { Longitude } from '@src/modules/forecast/domain/beach/longitude';
+import { Name } from '@src/modules/forecast/domain/beach/name';
+import { Position } from '@src/modules/forecast/domain/beach/position';
+import { Either, left, right } from '@src/shared/logic/Either';
+import stormGlassNormalizedResponse3Hours from '@test/fixtures/storm-glass-normalized-response-3-hours.json';
 
-export class FetchPointService implements StormGlassService {
+import { InMemoryBeachRepository } from '../../repositories/in-memory/in-memory-beach-repository';
+import { StormGlassResponseError } from './errors/stormglass-response-error';
+import { ProcessForecastBeachesUseCase } from './process-forecast-for-beaches-use-case';
+
+export class FetchPointService implements IStormGlassService {
   public async execute(
-    _: FetchPointCoordinate,
-  ): Promise<Either<StormGlassResponseError, FetchPointNormalize[]>> {
+    _: IFetchPointCoordinate,
+  ): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
     return right(stormGlassNormalizedResponse3Hours);
   }
 }
 
-export class FetchPointService02 implements StormGlassService {
+export class FetchPointService02 implements IStormGlassService {
   public async execute(
-    _: FetchPointCoordinate,
-  ): Promise<Either<StormGlassResponseError, FetchPointNormalize[]>> {
+    _: IFetchPointCoordinate,
+  ): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
     return right([]);
   }
 }
 
-export class FetchPointServiceEmpty implements StormGlassService {
+export class FetchPointServiceEmpty implements IStormGlassService {
   public async execute(
-    _: FetchPointCoordinate,
-  ): Promise<Either<StormGlassResponseError, FetchPointNormalize[]>> {
+    _: IFetchPointCoordinate,
+  ): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
     return right([]);
   }
 }
 
-export class FetchPointServiceError implements StormGlassService {
+export class FetchPointServiceError implements IStormGlassService {
   public async execute(
-    _: FetchPointCoordinate,
-  ): Promise<Either<StormGlassResponseError, FetchPointNormalize[]>> {
+    _: IFetchPointCoordinate,
+  ): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
     return left(new StormGlassResponseError('Error fetching data'));
   }
 }
 
-describe('Forecast Service', () => {
-  let inMemoryUsersRepository: InMemoryUsersRepository;
-  let inMemoryBeachesRepository: InMemoryBeachRepository;
+let inMemoryUsersRepository: InMemoryUsersRepository;
+let inMemoryBeachesRepository: InMemoryBeachRepository;
 
+describe('Forecast Service', () => {
   const mockedSuccessResponseStormGlassService02 = new FetchPointService02();
   const mockedSuccessEmptyResponseStormGlassService = new FetchPointServiceEmpty();
   const mockedErrorResponseStormGlassService = new FetchPointServiceError();

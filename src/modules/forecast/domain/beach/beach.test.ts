@@ -1,9 +1,10 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
+
 import { Beach } from './beach';
-import { Name } from './name';
-import { Position } from './position';
 import { Latitude } from './latitude';
 import { Longitude } from './longitude';
+import { Name } from './name';
+import { Position } from './position';
 
 describe('Domain Beach model', () => {
   it('should be able to create new beach', () => {

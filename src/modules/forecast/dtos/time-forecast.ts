@@ -1,6 +1,6 @@
-import { ForecastRatingBeach } from './forecast-rating-beach';
+import { IForecastRatingBeach } from './forecast-rating-beach';
 
-export interface TimeForecast {
+export interface ITimeForecast {
   time: string;
-  forecast: ForecastRatingBeach[];
+  forecast: IForecastRatingBeach[];
 }

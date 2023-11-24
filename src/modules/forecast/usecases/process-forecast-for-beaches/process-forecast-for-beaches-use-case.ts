@@ -1,16 +1,20 @@
-import { ForecastRatingBeach } from '../../dtos/forecast-rating-beach';
-import { TimeForecast } from '../../dtos/time-forecast';
-import { normalizeForecastByTime } from '../../utils/normalize-forecast-by-time';
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-useless-constructor */
 import { BeachPosition } from '@config/constants/beach-position-enum';
+import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
 import { UseCase } from '@src/main/adapters/ports/use-case';
-import { FetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
-import { Either, left, right } from '@src/shared/logic/Either';
-import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
 import { IUsersRepository } from '@src/modules/accounts/repositories/users-repository';
+import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
+import { Either, left, right } from '@src/shared/logic/Either';
+
+import { IForecastRatingBeach } from '../../dtos/forecast-rating-beach';
+import { ITimeForecast } from '../../dtos/time-forecast';
+import { calculateRatingByPoint } from '../../helpers/calculate-rating-by-point';
 import { IBeachRepository } from '../../repositories/beaches-repository';
+import { normalizeForecastByTime } from '../../utils/normalize-forecast-by-time';
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';
 import { UserNotFoundError } from './errors/user-not-found-error';
-import { calculateRatingByPoint } from '../../helpers/calculate-rating-by-point';
 
 export class ProcessForecastBeachesUseCase {
   constructor(
@@ -19,7 +23,7 @@ export class ProcessForecastBeachesUseCase {
     private beachesRepository: IBeachRepository,
   ) {}
 
-  public async execute(userId: string): Promise<Either<StormGlassResponseError, TimeForecast[]>> {
+  public async execute(userId: string): Promise<Either<StormGlassResponseError, ITimeForecast[]>> {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
@@ -32,7 +36,7 @@ export class ProcessForecastBeachesUseCase {
       return left(new BeachesNotFoundError());
     }
 
-    const beachForecastsSources: ForecastRatingBeach[] = [];
+    const beachForecastsSources: IForecastRatingBeach[] = [];
 
     for (const beach of beaches) {
       const { lat, lng, name, position } = beach;
@@ -44,7 +48,7 @@ export class ProcessForecastBeachesUseCase {
       }
 
       const enrichedBeachRating = points.value.map(
-        (pointForecast: FetchPointNormalize): ForecastRatingBeach => ({
+        (pointForecast: IFetchPointNormalize): IForecastRatingBeach => ({
           lat: lat.value,
           lng: lng.value,
           name: name.value,

@@ -1,4 +1,4 @@
-export interface BeachCoordinate {
+export interface IBeachCoordinate {
   lat: number;
   lng: number;
 }

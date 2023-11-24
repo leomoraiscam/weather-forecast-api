@@ -1,4 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
+
 import { GetRatingByPointUseCase } from './get-rating-by-point-use-case';
 
 let getRatingByPointUseCase: GetRatingByPointUseCase;

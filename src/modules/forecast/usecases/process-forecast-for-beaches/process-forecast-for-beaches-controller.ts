@@ -1,9 +1,10 @@
-import { HttpResponse } from '@src/shared/http/dtos/http-response';
 import { UseCase } from '@src/main/adapters/ports/use-case';
 import { ControllerError } from '@src/shared/errors/ports/controller-error';
-import { badRequest, ok, serverError } from '@src/shared/http/helpers/http-helper';
-import { ForecastRatingBeach } from '../../dtos/forecast-rating-beach';
 import { HttpRequest } from '@src/shared/http/dtos/http-request';
+import { HttpResponse } from '@src/shared/http/dtos/http-response';
+import { badRequest, ok, serverError } from '@src/shared/http/helpers/http-helper';
+
+import { IForecastRatingBeach } from '../../dtos/forecast-rating-beach';
 
 export class FetchPointsController {
   private readonly usecase: UseCase;
@@ -14,7 +15,7 @@ export class FetchPointsController {
 
   async handle(
     request: HttpRequest<{ userId: string }>,
-  ): Promise<HttpResponse<ForecastRatingBeach | ControllerError>> {
+  ): Promise<HttpResponse<IForecastRatingBeach | ControllerError>> {
     try {
       const { userId } = request;
 
@@ -26,7 +27,7 @@ export class FetchPointsController {
         return badRequest(error);
       }
 
-      return ok<ForecastRatingBeach>(response.value);
+      return ok<IForecastRatingBeach>(response.value);
     } catch (error) {
       return serverError(error);
     }
