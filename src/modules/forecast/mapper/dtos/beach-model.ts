@@ -1,4 +1,4 @@
-export interface PersistenceBeachModel {
+export interface IPersistenceBeachModel {
   id?: string;
   name: string;
   lat: number;
