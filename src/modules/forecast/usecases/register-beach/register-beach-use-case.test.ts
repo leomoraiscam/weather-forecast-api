@@ -18,7 +18,7 @@ describe('Create Beach Use Case', () => {
     beach = {
       name: 'Dee why',
       lat: -33.792726,
-      lng: 151.289824,
+      lng: 141.289824,
       position: BeachPosition.E,
       userId: 'fake-user-id',
     };

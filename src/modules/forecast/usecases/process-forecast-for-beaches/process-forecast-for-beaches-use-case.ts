@@ -31,7 +31,7 @@ export class ProcessForecastBeachesUseCase {
 
     const beaches = await this.beachesRepository.findAllBeachesByUser(userId);
 
-    if (!beaches) {
+    if (!beaches.length) {
       return left(new BeachesNotFoundError());
     }
 

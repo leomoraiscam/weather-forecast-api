@@ -13,11 +13,14 @@ export function createUser(overrides?: UserOverrides) {
   const email = Email.create(overrides?.email ?? 'john@doe.com').value as Email;
   const password = Password.create(overrides?.password ?? '123456').value as Password;
 
-  const user = User.create({
-    name,
-    email,
-    password,
-  });
+  const user = User.create(
+    {
+      name,
+      email,
+      password,
+    },
+    'fake-user-id',
+  );
 
   return user.value as User;
 }
