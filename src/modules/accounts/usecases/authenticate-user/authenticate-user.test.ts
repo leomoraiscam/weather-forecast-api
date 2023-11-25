@@ -1,4 +1,4 @@
-import { createUser } from '@test/factories/UserFactory';
+import { createUser } from '@test/factories/user-factory';
 
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository';
 import { IUsersRepository } from '../../repositories/users-repository';

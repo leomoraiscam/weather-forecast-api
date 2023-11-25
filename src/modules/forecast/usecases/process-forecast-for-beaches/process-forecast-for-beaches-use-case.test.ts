@@ -1,8 +1,8 @@
 /* eslint-disable max-classes-per-file */
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { InMemoryUsersRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
-import { createBeach } from '@test/factories/BeachFactory';
-import { createUser } from '@test/factories/UserFactory';
+import { createBeach } from '@test/factories/beach-factory';
+import { createUser } from '@test/factories/user-factory';
 import { StormGlassServiceMock } from '@test/mocks/storm-glass-service-mock';
 import { StormGlassServiceStub } from '@test/stubs/storm-glass-service-stub';
 import { StormGlassServicerErrorStub } from '@test/stubs/storn-glass-service-error-stub';

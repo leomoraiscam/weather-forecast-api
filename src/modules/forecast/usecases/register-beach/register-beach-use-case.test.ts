@@ -1,5 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { createBeach } from '@test/factories/BeachFactory';
+import { createBeach } from '@test/factories/beach-factory';
 
 import { IBeach } from '../../dtos/beach';
 import { IBeachRepository } from '../../repositories/beaches-repository';
