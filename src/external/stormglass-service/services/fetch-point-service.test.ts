@@ -9,8 +9,9 @@ import { FetchPointService } from './fetch-point-service';
 
 jest.mock('@src/external/stormglass-service/providers/implementations/axios-request-provider');
 
-describe('Fetch Point Client Service', () => {
+describe('StormGlass Service', () => {
   const mockedRequest = new AxiosRequestProvider() as jest.Mocked<AxiosRequestProvider>;
+
   let lat: number;
   let lng: number;
 
