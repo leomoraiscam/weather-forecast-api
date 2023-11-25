@@ -1,8 +1,9 @@
 import { AxiosRequestProvider } from '@src/external/stormglass-service/providers/implementations/axios-request-provider';
 import fetchPointsNormalizedResponse from '@test/fixtures/fetch-points-normalized-response.json';
 import stormGlassIncompleteResponse from '@test/fixtures/storm-glass-incomplete-response.json';
+import stormGlassResponseGenericError from '@test/fixtures/storm-glass-response-generic-error.json';
 import stormGlassResponseRateLimitError from '@test/fixtures/storm-glass-response-rate-limit-error.json';
-import stormGlassWeather3HoursFixture from '@test/fixtures/storm-glass-response-weather-3-hours.json';
+import stormGlassWeather3HoursResponse from '@test/fixtures/storm-glass-response-weather-3-hours.json';
 
 import { FetchPointService } from './fetch-point-service';
 
@@ -24,7 +25,7 @@ describe('Fetch Point Client Service', () => {
   });
 
   it('should be able to return the normalize forecast data from the stormGlass service', async () => {
-    mockedRequest.get.mockResolvedValue({ data: stormGlassWeather3HoursFixture, status: 200 });
+    mockedRequest.get.mockResolvedValue({ data: stormGlassWeather3HoursResponse, status: 200 });
 
     const fetchPointService = new FetchPointService(mockedRequest);
 
@@ -48,11 +49,7 @@ describe('Fetch Point Client Service', () => {
   });
 
   it('should be able to get a generic error from stormGlass service when the request fail before reaching the service', async () => {
-    mockedRequest.get.mockRejectedValue({
-      response: {
-        data: [{ message: 'Network Error' }],
-      },
-    });
+    mockedRequest.get.mockRejectedValue(stormGlassResponseGenericError);
 
     const fetchPointService = new FetchPointService(mockedRequest);
 
