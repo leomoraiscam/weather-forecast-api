@@ -8,24 +8,24 @@ export class StormGlassMapper {
         (point) =>
           !!(
             point.time &&
-            point.swellDirection['noaa'] &&
-            point.swellHeight['noaa'] &&
-            point.swellPeriod['noaa'] &&
-            point.waveDirection['noaa'] &&
-            point.waveHeight['noaa'] &&
-            point.windDirection['noaa'] &&
-            point.windSpeed['noaa']
+            point.swellDirection?.['noaa'] &&
+            point.swellHeight?.['noaa'] &&
+            point.swellPeriod?.['noaa'] &&
+            point.waveDirection?.['noaa'] &&
+            point.waveHeight?.['noaa'] &&
+            point.windDirection?.['noaa'] &&
+            point.windSpeed?.['noaa']
           ),
       )
       .map((point) => ({
         time: point.time,
-        swellDirection: point.swellDirection.noaa,
-        swellHeight: point.swellHeight.noaa,
-        swellPeriod: point.swellPeriod.noaa,
-        waveDirection: point.waveDirection.noaa,
-        waveHeight: point.waveHeight.noaa,
-        windDirection: point.windDirection.noaa,
-        windSpeed: point.windSpeed.noaa,
+        swellDirection: point.swellDirection['noaa'],
+        swellHeight: point.swellHeight['noaa'],
+        swellPeriod: point.swellPeriod['noaa'],
+        waveDirection: point.waveDirection['noaa'],
+        waveHeight: point.waveHeight['noaa'],
+        windDirection: point.windDirection['noaa'],
+        windSpeed: point.windSpeed['noaa'],
       }));
   }
 }

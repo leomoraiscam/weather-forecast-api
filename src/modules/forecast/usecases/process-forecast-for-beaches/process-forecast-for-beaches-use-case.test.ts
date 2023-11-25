@@ -14,7 +14,7 @@ import { Longitude } from '@src/modules/forecast/domain/beach/longitude';
 import { Name } from '@src/modules/forecast/domain/beach/name';
 import { Position } from '@src/modules/forecast/domain/beach/position';
 import { Either, left, right } from '@src/shared/logic/Either';
-import stormGlassNormalizedResponse3Hours from '@test/fixtures/storm-glass-normalized-response-3-hours.json';
+import fetchPointsNormalizedResponse from '@test/fixtures/fetch-points-normalized-response.json';
 
 import { InMemoryBeachRepository } from '../../repositories/in-memory/in-memory-beach-repository';
 import { StormGlassResponseError } from './errors/stormglass-response-error';
@@ -24,7 +24,7 @@ export class FetchPointService implements IStormGlassService {
   public async execute(
     _: IFetchPointCoordinate,
   ): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
-    return right(stormGlassNormalizedResponse3Hours);
+    return right(fetchPointsNormalizedResponse);
   }
 }
 
