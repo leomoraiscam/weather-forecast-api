@@ -51,4 +51,20 @@ describe('Create Beach Use Case', () => {
 
     expect(response.isLeft()).toBeTruthy();
   });
+
+  it('should be able to register new beach with existing lat and lng to distinct user', async () => {
+    const beachOrError = createBeach();
+
+    beachRepository.create(beachOrError);
+
+    const response = await registerBeachUseCase.execute({
+      name: 'Dee why',
+      lat: -33.792726,
+      lng: 151.289824,
+      position: BeachPosition.E,
+      userId: 'fake-id',
+    });
+
+    expect(response.isRight()).toBeTruthy();
+  });
 });

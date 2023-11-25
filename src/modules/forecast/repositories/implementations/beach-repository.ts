@@ -6,10 +6,10 @@ import { BeachMapper } from '../../mapper/beach-mapper';
 import { IBeachRepository } from '../beaches-repository';
 
 export class BeachRepository implements IBeachRepository {
-  async findByGeolocation({ lat, lng }: IBeachCoordinate): Promise<Beach> {
+  async findByGeolocation({ lat, lng, userId }: IBeachCoordinate): Promise<Beach> {
     const beachCollection = mongoHelper.getCollection('beaches');
 
-    const beach = await beachCollection.findOne<Beach>({ lat, lng });
+    const beach = await beachCollection.findOne<Beach>({ lat, lng, userId });
 
     if (!beach) {
       return null;
@@ -37,9 +37,11 @@ export class BeachRepository implements IBeachRepository {
 
   async create(beach: Beach): Promise<Beach> {
     const userCollection = mongoHelper.getCollection('beaches');
+
     const result = await this.findByGeolocation({
       lat: beach.lat.value,
       lng: beach.lng.value,
+      userId: beach.userId,
     });
 
     if (!result) {

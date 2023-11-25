@@ -71,6 +71,7 @@ export class RegisterBeachUseCase {
     const BeachAlreadyExists = await this.beachesRepository.findByGeolocation({
       lat: beach.lat.value,
       lng: beach.lng.value,
+      userId,
     });
 
     if (BeachAlreadyExists) {

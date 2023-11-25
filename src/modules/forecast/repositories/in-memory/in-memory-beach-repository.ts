@@ -7,9 +7,11 @@ export class InMemoryBeachRepository implements IBeachRepository {
   beaches: Beach[] = [];
 
   async findByGeolocation(data: IBeachCoordinate): Promise<Beach> {
-    const { lat, lng } = data;
+    const { lat, lng, userId } = data;
 
-    return this.beaches.find((beach) => beach.lat.value === lat && beach.lng.value === lng);
+    return this.beaches.find(
+      (beach) => beach.lat.value === lat && beach.lng.value === lng && beach.userId === userId,
+    );
   }
 
   async findAllBeachesByUser(userId: string): Promise<Beach[]> {
