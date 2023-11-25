@@ -1,7 +1,5 @@
-import { Email } from '../../domain/user/email';
-import { Name } from '../../domain/user/name';
-import { Password } from '../../domain/user/password';
-import { User } from '../../domain/user/user';
+import { createUser } from '@test/factories/UserFactory';
+
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository';
 import { IUsersRepository } from '../../repositories/users-repository';
 import { RegisterUserUseCase } from './register-user-use-case';
@@ -37,17 +35,11 @@ describe('Register User Use Case', () => {
   });
 
   it('should not be able to register new user with existing email', async () => {
-    const name = Name.create('John Doe').value as Name;
-    const email = Email.create('johndoe@example.com').value as Email;
-    const password = Password.create('123456').value as Password;
+    const user = createUser({
+      email: 'john@doe.com',
+    });
 
-    const userOrError = User.create({
-      name,
-      email,
-      password,
-    }).value as User;
-
-    usersRepository.create(userOrError);
+    usersRepository.create(user);
 
     const response = await registerUserUseCase.execute({
       name: 'John Doe',
