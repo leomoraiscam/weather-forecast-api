@@ -1,7 +1,5 @@
-import { Email } from '../../domain/user/email';
-import { Name } from '../../domain/user/name';
-import { Password } from '../../domain/user/password';
-import { User } from '../../domain/user/user';
+import { createUser } from '@test/factories/UserFactory';
+
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository';
 import { IUsersRepository } from '../../repositories/users-repository';
 import { AuthenticateUser } from './authenticate-user';
@@ -9,27 +7,19 @@ import { AuthenticateUser } from './authenticate-user';
 let usersRepository: IUsersRepository;
 let authenticateUser: AuthenticateUser;
 
-describe('Authenticate User', () => {
+describe('Authenticate User Use case', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
     authenticateUser = new AuthenticateUser(usersRepository);
   });
 
   it('should be able to authenticate', async () => {
-    const name = Name.create('John Doe').value as Name;
-    const email = Email.create('johndoe@example.com').value as Email;
-    const password = Password.create('123456').value as Password;
+    const user = createUser();
 
-    const userOrError = User.create({
-      name,
-      email,
-      password,
-    }).value as User;
-
-    usersRepository.create(userOrError);
+    usersRepository.create(user);
 
     const response = await authenticateUser.execute({
-      email: 'johndoe@example.com',
+      email: 'john@doe.com',
       password: '123456',
     });
 
@@ -42,25 +32,19 @@ describe('Authenticate User', () => {
       password: '123456',
     });
 
-    expect(response.isLeft).toBeTruthy();
+    expect(response.isLeft()).toBeTruthy();
   });
 
   it('should not be able to authenticate with invalid password', async () => {
-    const name = Name.create('John Doe').value as Name;
-    const email = Email.create('johndoe@example.com').value as Email;
-    const password = Password.create('123456').value as Password;
+    const user = createUser();
 
-    User.create({
-      name,
-      email,
-      password,
-    }).value as User;
+    usersRepository.create(user);
 
     const response = await authenticateUser.execute({
-      email: 'johndoe@example.com',
+      email: 'john@doe.com',
       password: '123456789',
     });
 
-    expect(response.isLeft).toBeTruthy();
+    expect(response.isLeft()).toBeTruthy();
   });
 });
