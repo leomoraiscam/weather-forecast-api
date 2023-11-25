@@ -15,4 +15,5 @@ module.exports = {
     '@config/(.*)': '<rootDir>/src/config/$1',
     '@test/(.*)': '<rootDir>/test/$1',
   },
+  setupFiles: ['dotenv/config'],
 };
