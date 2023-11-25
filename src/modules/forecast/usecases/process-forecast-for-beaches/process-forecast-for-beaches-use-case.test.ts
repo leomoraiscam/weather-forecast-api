@@ -3,9 +3,9 @@ import { BeachPosition } from '@config/constants/beach-position-enum';
 import { InMemoryUsersRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
 import { createBeach } from '@test/factories/BeachFactory';
 import { createUser } from '@test/factories/UserFactory';
-import { FetchPointServiceMock } from '@test/mocks/fetch-point-service-mock';
-import { FetchPointServiceErrorStub } from '@test/stubs/fetch-point-service-empty-stub';
-import { FetchPointService } from '@test/stubs/fetch-point-service-stub';
+import { StormGlassServiceMock } from '@test/mocks/storm-glass-service-mock';
+import { StormGlassServiceStub } from '@test/stubs/storm-glass-service-stub';
+import { StormGlassServicerErrorStub } from '@test/stubs/storn-glass-service-error-stub';
 
 import { InMemoryBeachRepository } from '../../repositories/in-memory/in-memory-beach-repository';
 import { StormGlassResponseError } from './errors/stormglass-response-error';
@@ -15,14 +15,16 @@ let inMemoryUsersRepository: InMemoryUsersRepository;
 let inMemoryBeachesRepository: InMemoryBeachRepository;
 
 describe('Process Forecast For Beaches Use Case', () => {
-  inMemoryUsersRepository = new InMemoryUsersRepository();
-  inMemoryBeachesRepository = new InMemoryBeachRepository();
+  beforeEach(() => {
+    inMemoryUsersRepository = new InMemoryUsersRepository();
+    inMemoryBeachesRepository = new InMemoryBeachRepository();
+  });
 
   it('should not be able to return list the forecast of beaches array when user does not exist', async () => {
-    const fetchPointServiceMock = new FetchPointServiceMock();
+    const stormGlassServiceMock = new StormGlassServiceMock();
 
     const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
-      fetchPointServiceMock,
+      stormGlassServiceMock,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
     );
@@ -30,7 +32,7 @@ describe('Process Forecast For Beaches Use Case', () => {
     const response = await processForecastBeachesUseCase.execute('any-user-id');
 
     expect(response.isLeft()).toBeTruthy();
-    expect(fetchPointServiceMock.timesSendWasCalled).toEqual(0);
+    expect(stormGlassServiceMock.timesSendWasCalled).toEqual(0);
   });
 
   it('should not be able to return list the forecast of beaches array when user not has beaches', async () => {
@@ -38,9 +40,9 @@ describe('Process Forecast For Beaches Use Case', () => {
 
     inMemoryUsersRepository.create(user);
 
-    const fetchPointServiceMock = new FetchPointServiceMock();
+    const stormGlassServiceMock = new StormGlassServiceMock();
     const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
-      fetchPointServiceMock,
+      stormGlassServiceMock,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
     );
@@ -48,7 +50,7 @@ describe('Process Forecast For Beaches Use Case', () => {
     const response = await processForecastBeachesUseCase.execute('fake-user-id');
 
     expect(response.isLeft()).toBeTruthy();
-    expect(fetchPointServiceMock.timesSendWasCalled).toEqual(0);
+    expect(stormGlassServiceMock.timesSendWasCalled).toEqual(0);
   });
 
   it('should be able to throw internal processing error when something goes wrong during the rating process', async () => {
@@ -60,10 +62,10 @@ describe('Process Forecast For Beaches Use Case', () => {
 
     inMemoryBeachesRepository.create(beach);
 
-    const fetchPointServiceErrorStub = new FetchPointServiceErrorStub();
+    const stormGlassServicerErrorStub = new StormGlassServicerErrorStub();
 
     const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
-      fetchPointServiceErrorStub,
+      stormGlassServicerErrorStub,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
     );
@@ -88,10 +90,10 @@ describe('Process Forecast For Beaches Use Case', () => {
 
     inMemoryBeachesRepository.create(manlyBeach);
 
-    const fetchPointService = new FetchPointService();
+    const stormGlassServiceStub = new StormGlassServiceStub();
 
     const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
-      fetchPointService,
+      stormGlassServiceStub,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
     );
@@ -103,21 +105,6 @@ describe('Process Forecast For Beaches Use Case', () => {
         {
           time: '2020-04-26T00:00:00+00:00',
           forecast: [
-            {
-              lat: -33.792726,
-              lng: 141.289824,
-              name: 'Dee Why',
-              position: 'S',
-              rating: 2,
-              swellDirection: 123.41,
-              swellHeight: 0.21,
-              swellPeriod: 3.67,
-              time: '2020-04-26T00:00:00+00:00',
-              waveDirection: 232.12,
-              waveHeight: 0.46,
-              windDirection: 310.48,
-              windSpeed: 100,
-            },
             {
               lat: -33.792726,
               lng: 151.289824,

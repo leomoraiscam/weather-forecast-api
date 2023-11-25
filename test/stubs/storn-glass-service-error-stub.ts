@@ -4,7 +4,7 @@ import { IStormGlassService } from '../../src/external/stormglass-service/ports/
 import { StormGlassResponseError } from '../../src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
 import { Either, left } from '../../src/shared/logic/Either';
 
-export class FetchPointServiceErrorStub implements IStormGlassService {
+export class StormGlassServicerErrorStub implements IStormGlassService {
   public async execute(
     _: IFetchPointCoordinate,
   ): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
