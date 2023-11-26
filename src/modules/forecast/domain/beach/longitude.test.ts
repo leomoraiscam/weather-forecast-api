@@ -7,6 +7,12 @@ describe('Beach Longitude Object Value', () => {
     expect(longitudeOrError.isRight()).toBeTruthy();
   });
 
+  it('should reject empty longitude', () => {
+    const longitudeOrError = Longitude.create(null);
+
+    expect(longitudeOrError.isLeft()).toBeTruthy();
+  });
+
   it('should reject lat when the same is not a number between -180 and 180', () => {
     const longitudeOrError = Longitude.create(249.99999999);
 

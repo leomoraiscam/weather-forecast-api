@@ -7,6 +7,12 @@ describe('Beach Latitude Object Value', () => {
     expect(latitudeOrError.isRight()).toBeTruthy();
   });
 
+  it('should reject empty latitude', () => {
+    const latitudeOrError = Latitude.create(null);
+
+    expect(latitudeOrError.isLeft()).toBeTruthy();
+  });
+
   it('should reject lat when the same is not a number between -90 and 90', () => {
     const latitudeOrError = Latitude.create(151.289824);
 

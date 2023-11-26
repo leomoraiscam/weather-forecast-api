@@ -9,6 +9,12 @@ describe('Beach Position Object Value', () => {
     expect(positionOrError.isRight()).toBeTruthy();
   });
 
+  it('should reject empty position', () => {
+    const positionOrError = Position.create(null);
+
+    expect(positionOrError.isLeft()).toBeTruthy();
+  });
+
   it('should reject position when teh same not equal beach Position valid', () => {
     const positionOrError = Position.create('G');
 

@@ -7,6 +7,12 @@ describe('User Name Object Value', () => {
     expect(nameOrError.isRight()).toBeTruthy();
   });
 
+  it('should reject empty name', () => {
+    const nameOrError = Name.create(null);
+
+    expect(nameOrError.isLeft()).toBeTruthy();
+  });
+
   it('should reject name with less than 2 characters', () => {
     const nameOrError = Name.create('j');
 
