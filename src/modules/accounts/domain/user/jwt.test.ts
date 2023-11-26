@@ -1,23 +1,11 @@
-import { Email } from './email';
+import { createUser } from '@test/factories/user-factory';
+
 import { InvalidJWTTokenError } from './errors/invalid-jwt-token-error';
 import { JWT, IJWTTokenPayload } from './jwt';
-import { Name } from './name';
-import { Password } from './password';
-import { User } from './user';
-
-const name = Name.create('John Doe').value as Name;
-const email = Email.create('johndoe@example.com').value as Email;
-const password = Password.create('123456').value as Password;
 
 describe('JWT domain entity', () => {
   it('should be able to create new user', () => {
-    const userOrError = User.create({
-      name,
-      email,
-      password,
-    });
-
-    const user = userOrError.value as User;
+    const user = createUser();
 
     const jwt = JWT.signUser(user);
 
@@ -25,13 +13,7 @@ describe('JWT domain entity', () => {
   });
 
   it('should be able to initialize JWT from created token', () => {
-    const userOrError = User.create({
-      name,
-      email,
-      password,
-    });
-
-    const user = userOrError.value as User;
+    const user = createUser();
 
     const createdJwt = JWT.signUser(user);
 
@@ -50,13 +32,7 @@ describe('JWT domain entity', () => {
   });
 
   it('should be able to decode JWT token', () => {
-    const userOrError = User.create({
-      name,
-      email,
-      password,
-    });
-
-    const user = userOrError.value as User;
+    const user = createUser();
 
     const jwt = JWT.signUser(user);
 
