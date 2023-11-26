@@ -21,7 +21,7 @@ describe('Register User Use Case', () => {
     });
 
     expect(await usersRepository.findByEmail('john@doe.com')).toBeTruthy();
-    expect(response.isRight).toBeTruthy();
+    expect(response.isRight()).toBeTruthy();
   });
 
   it('should not be able to register new user with invalid data', async () => {
@@ -31,22 +31,20 @@ describe('Register User Use Case', () => {
       password: '123',
     });
 
-    expect(response.isLeft).toBeTruthy();
+    expect(response.isLeft()).toBeTruthy();
   });
 
   it('should not be able to register new user with existing email', async () => {
-    const user = createUser({
-      email: 'john@doe.com',
-    });
+    const user = createUser();
 
     usersRepository.create(user);
 
     const response = await registerUserUseCase.execute({
       name: 'John Doe',
-      email: 'johndoe@example.com',
+      email: 'john@doe.com',
       password: '123456',
     });
 
-    expect(response.isLeft).toBeTruthy();
+    expect(response.isLeft()).toBeTruthy();
   });
 });

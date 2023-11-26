@@ -4,7 +4,7 @@ describe('User Name Object Value', () => {
   it('should accept valid name', () => {
     const nameOrError = Name.create('John Doe');
 
-    expect(nameOrError.isRight).toBeTruthy();
+    expect(nameOrError.isRight()).toBeTruthy();
   });
 
   it('should reject name with less than 2 characters', () => {

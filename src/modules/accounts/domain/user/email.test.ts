@@ -4,7 +4,7 @@ describe('User email value object', () => {
   it('should accept valid email address', () => {
     const emailOrError = Email.create('johndoe@example.com');
 
-    expect(emailOrError.isRight).toBeTruthy();
+    expect(emailOrError.isRight()).toBeTruthy();
   });
 
   it('should reject invalid email address', () => {
