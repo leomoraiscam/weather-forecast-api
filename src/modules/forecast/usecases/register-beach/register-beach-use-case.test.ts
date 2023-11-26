@@ -16,10 +16,10 @@ describe('Create Beach Use Case', () => {
     registerBeachUseCase = new RegisterBeachUseCase(beachRepository);
 
     beach = {
-      name: 'Dee why',
-      lat: -33.792726,
-      lng: 141.289824,
-      position: BeachPosition.E,
+      name: 'Dee Why',
+      lat: -33.750919,
+      lng: 151.299059,
+      position: BeachPosition.S,
       userId: 'fake-user-id',
     };
   });
@@ -58,10 +58,10 @@ describe('Create Beach Use Case', () => {
     beachRepository.create(beachOrError);
 
     const response = await registerBeachUseCase.execute({
-      name: 'Dee why',
-      lat: -33.792726,
-      lng: 151.289824,
-      position: BeachPosition.E,
+      name: 'Dee Why',
+      lat: -33.750919,
+      lng: 151.299059,
+      position: BeachPosition.S,
       userId: 'fake-id',
     });
 

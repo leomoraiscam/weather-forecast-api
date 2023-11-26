@@ -8,10 +8,9 @@ import fetchPointsNormalizedResponse from '../fixtures/fetch-points-normalized-r
 export class StormGlassServiceMock implements IStormGlassService {
   public timesSendWasCalled = 0;
 
-  public async execute({
-    lat,
-    lng,
-  }: IFetchPointCoordinate): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
+  public async execute(
+    _: IFetchPointCoordinate,
+  ): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
     return right(fetchPointsNormalizedResponse);
   }
 }

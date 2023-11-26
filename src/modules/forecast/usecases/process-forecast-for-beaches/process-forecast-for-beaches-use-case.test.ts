@@ -3,6 +3,7 @@ import { BeachPosition } from '@config/constants/beach-position-enum';
 import { InMemoryUsersRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
 import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
+import processForecastBeachesResponse from '@test/fixtures/process-forecast-beaches-response.json';
 import { StormGlassServiceMock } from '@test/mocks/storm-glass-service-mock';
 import { StormGlassServiceStub } from '@test/stubs/storm-glass-service-stub';
 import { StormGlassServicerErrorStub } from '@test/stubs/storn-glass-service-error-stub';
@@ -83,8 +84,8 @@ describe('Process Forecast For Beaches Use Case', () => {
 
     const manlyBeach = createBeach({
       name: 'Manly',
-      lat: -33.792726,
-      lng: 151.289824,
+      lat: -33.796478,
+      lng: 151.287648,
       position: BeachPosition.E,
     });
 
@@ -101,28 +102,7 @@ describe('Process Forecast For Beaches Use Case', () => {
     const beachesWithRating = await processForecastBeachesUseCase.execute('fake-user-id');
 
     expect(beachesWithRating).toEqual({
-      value: [
-        {
-          time: '2020-04-26T00:00:00+00:00',
-          forecast: [
-            {
-              lat: -33.792726,
-              lng: 151.289824,
-              name: 'Manly',
-              position: 'E',
-              rating: 2,
-              swellDirection: 123.41,
-              swellHeight: 0.21,
-              swellPeriod: 3.67,
-              time: '2020-04-26T00:00:00+00:00',
-              waveDirection: 232.12,
-              waveHeight: 0.46,
-              windDirection: 310.48,
-              windSpeed: 100,
-            },
-          ],
-        },
-      ],
+      value: processForecastBeachesResponse,
     });
   });
 

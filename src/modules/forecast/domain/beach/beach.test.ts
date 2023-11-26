@@ -21,6 +21,6 @@ describe('Domain Beach model', () => {
       userId: 'fake-user-id',
     });
 
-    expect(beach.isRight).toBeTruthy();
+    expect(beach.isRight()).toBeTruthy();
   });
 });

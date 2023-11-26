@@ -15,8 +15,8 @@ type BeachOverrides = {
 
 export function createBeach(overrides?: BeachOverrides) {
   const name = Name.create(overrides?.name ?? 'Dee Why').value as Name;
-  const lat = Latitude.create(overrides?.lat ?? -33.792726).value as Latitude;
-  const lng = Longitude.create(overrides?.lng ?? 141.289824).value as Longitude;
+  const lat = Latitude.create(overrides?.lat ?? -33.750919).value as Latitude;
+  const lng = Longitude.create(overrides?.lng ?? 151.299059).value as Longitude;
   const position = Position.create(overrides?.position ?? BeachPosition.S).value as Position;
   const userId = overrides?.userId ?? 'fake-user-id';
 

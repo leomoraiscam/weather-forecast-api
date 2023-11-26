@@ -3,9 +3,9 @@
     "time": "2020-04-26T00:00:00+00:00",
     "forecast": [
       {
-        "lat": -33.792726,
-        "lng": 151.289824,
-        "name": "Dee Why",
+        "lat": -33.796478,
+        "lng": 151.287648,
+        "name": "Manly",
         "position": "E",
         "rating": 2,
         "swellDirection": 64.26,
@@ -23,9 +23,9 @@
     "time": "2020-04-26T01:00:00+00:00",
     "forecast": [
       {
-        "lat": -33.792726,
-        "lng": 151.289824,
-        "name": "Dee Why",
+        "lat": -33.796478,
+        "lng": 151.287648,
+        "name": "Manly",
         "position": "E",
         "rating": 2,
         "swellDirection": 123.41,
@@ -43,9 +43,9 @@
     "time": "2020-04-26T02:00:00+00:00",
     "forecast": [
       {
-        "lat": -33.792726,
-        "lng": 151.289824,
-        "name": "Dee Why",
+        "lat": -33.796478,
+        "lng": 151.287648,
+        "name": "Manly",
         "position": "E",
         "rating": 2,
         "swellDirection": 182.56,
