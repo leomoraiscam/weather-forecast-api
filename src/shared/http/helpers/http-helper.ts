@@ -26,6 +26,16 @@ export function badRequest(data: IControllerError): IHttpResponse<IControllerErr
   };
 }
 
+export function unauthorized(data: IControllerError): IHttpResponse<IControllerError> {
+  return {
+    statusCode: 401,
+    body: {
+      name: data.name,
+      message: data.message,
+    },
+  };
+}
+
 export function forbidden(data: IControllerError): IHttpResponse<IControllerError> {
   return {
     statusCode: 403,
