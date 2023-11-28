@@ -5,10 +5,8 @@ import { Either, left, right } from '../Either';
 import { MissingParamError } from './errors/missing-param-error';
 
 export class RequiredFieldsValidator<T> implements IValidator<T> {
-  validate(data: T): Either<MissingParamError, null> {
-    const fields = Object.getOwnPropertyNames(data);
-
-    for (const field of fields) {
+  validate(data: T, requiredParams: string[]): Either<MissingParamError, null> {
+    for (const field of requiredParams) {
       if (
         data[field] === null ||
         data[field] === undefined ||
