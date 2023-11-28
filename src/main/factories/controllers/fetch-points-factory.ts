@@ -1,3 +1,4 @@
+import { RedisCacheProvider } from '@src/external/cache-service/implementations/redis-cache-provider';
 import { AxiosRequestProvider } from '@src/external/stormglass-service/providers/implementations/axios-request-provider';
 import { FetchPointService } from '@src/external/stormglass-service/services/fetch-point-service';
 import { UserRepository } from '@src/modules/accounts/repositories/implementations/users-repository';
@@ -9,7 +10,9 @@ import { IController } from '../../adapters/ports/controller';
 
 export const makeFetchPointController = (): IController => {
   const axiosRequestProvider = new AxiosRequestProvider();
-  const stormGlassService = new FetchPointService(axiosRequestProvider);
+  const cacheProvider = new RedisCacheProvider();
+
+  const stormGlassService = new FetchPointService(axiosRequestProvider, cacheProvider);
 
   const usersRepository = new UserRepository();
   const beachesRepository = new BeachRepository();
