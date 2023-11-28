@@ -56,6 +56,16 @@ export function conflict(data: IControllerError): IHttpResponse<IControllerError
   };
 }
 
+export function toManyRequests(data: IControllerError): IHttpResponse<IControllerError> {
+  return {
+    statusCode: 409,
+    body: {
+      name: data.name,
+      message: data.message,
+    },
+  };
+}
+
 export function serverError(data: IControllerError): IHttpResponse<IControllerError> {
   return {
     statusCode: 500,
