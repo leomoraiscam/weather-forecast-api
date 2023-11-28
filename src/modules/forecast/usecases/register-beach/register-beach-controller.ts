@@ -1,5 +1,5 @@
-/* eslint-disable no-nested-ternary */
 import { IUseCase } from '@src/main/adapters/ports/use-case';
+import { IValidator } from '@src/main/adapters/ports/validator';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { IHttpResponse } from '@src/shared/http/dtos/http-response';
@@ -10,22 +10,22 @@ import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 
 export class RegisterBeachController {
   private readonly usecase: IUseCase;
+  private readonly validator: IValidator<IBeach>;
+  readonly requiredParams = ['name', 'lat', 'lng', 'position'];
 
-  constructor(usecase: IUseCase) {
+  constructor(usecase: IUseCase, validator: IValidator<IBeach>) {
     this.usecase = usecase;
+    this.validator = validator;
   }
 
   async handle(request: IHttpRequest<IBeach>): Promise<IHttpResponse<IBeach | IControllerError>> {
     try {
       const { body, userId } = request;
 
-      if (!body?.name || !body?.lat || !body?.lng || !body.position) {
-        const missing = !body?.name ? 'name' : !body?.lat ? 'lat' : !body?.lng ? 'lng' : 'position';
+      const validator = this.validator.validate(body, this.requiredParams);
 
-        return badRequest({
-          name: 'MissingError',
-          message: `Missing parameter from request: ${missing}.`,
-        });
+      if (validator.isLeft()) {
+        return badRequest(validator.value);
       }
 
       const response = await this.usecase.execute({
