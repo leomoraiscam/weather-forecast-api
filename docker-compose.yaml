@@ -10,16 +10,25 @@ services:
       - MONGODB_PASSWORD=docker
       - MONGODB_DATABASE=weather-forecast
     ports:
-      - "16017:27017"
+      - '16017:27017'
     volumes:
-      -  weather-forecast-data:/data/db
+      - weather-forecast-data:/data/db
     # networks:
     #   - weather-forecast-network
+
+  weather-forecast-redis:
+    image: redis
+    container_name: weather-forecast-redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - weather-forecast-data:/bitnami/redis/data
+    # networks:
+    #   - bulk-message-network
 
 volumes:
   weather-forecast-data:
     driver: local
-
 # networks:
 #   weather-forecast-network:
 #     driver: bridge
