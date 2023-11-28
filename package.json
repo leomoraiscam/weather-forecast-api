@@ -21,6 +21,7 @@
     "module-alias": "^2.2.3",
     "mongodb": "^4.3.1",
     "pino": "^8.16.2",
+    "rate-limiter-flexible": "^3.0.4",
     "redis": "^4.6.11",
     "uuid": "^9.0.1"
   },
