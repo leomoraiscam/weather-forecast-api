@@ -1,0 +1,25 @@
+import { limiter } from '@src/external/database/redis/config/rate-limiter';
+import { IMiddleware } from '@src/main/adapters/ports/middleware';
+import { IControllerError } from '@src/shared/errors/ports/controller-error';
+
+import { IHttpResponse } from '../dtos/http-response';
+import { IRateLimiterMiddlewareRequest } from '../dtos/rate-limiter-request';
+import { toManyRequests, ok } from '../helpers/http-helper';
+
+export class RateLimiterMiddleware implements IMiddleware {
+  constructor() {}
+
+  async handle(
+    request: IRateLimiterMiddlewareRequest,
+  ): Promise<IHttpResponse<{ success: boolean } | IControllerError>> {
+    try {
+      const { ip } = request;
+
+      await limiter.consume(ip);
+
+      return ok({ success: true });
+    } catch (error) {
+      return toManyRequests(error);
+    }
+  }
+}

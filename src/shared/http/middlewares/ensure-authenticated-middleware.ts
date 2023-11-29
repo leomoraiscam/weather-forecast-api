@@ -8,7 +8,7 @@ import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import {
   IEnsureAuthenticatedMiddlewareRequest,
   IDecodedJwt,
-} from '../dtos/ensure-authenticated-middleware';
+} from '../dtos/ensure-authenticated-request';
 import { IHttpResponse } from '../dtos/http-response';
 import { ok, forbidden, serverError } from '../helpers/http-helper';
 

@@ -12,7 +12,7 @@ export const adaptMiddleware = (middleware: IMiddleware) => {
 
     const httpResponse = await middleware.handle(requestData, request.body);
 
-    if (httpResponse === false) {
+    if (!httpResponse) {
       return response.status(200).send();
     }
 
