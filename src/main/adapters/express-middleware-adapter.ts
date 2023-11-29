@@ -7,6 +7,7 @@ export const adaptMiddleware = (middleware: IMiddleware) => {
     const requestData = {
       accesstoken: request.headers['x-access-token'],
       ...(request.headers || {}),
+      ip: request.ip,
     };
 
     const httpResponse = await middleware.handle(requestData, request.body);

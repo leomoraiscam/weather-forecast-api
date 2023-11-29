@@ -26,7 +26,6 @@ export class FetchPointsController {
 
         return badRequest(error);
       }
-
       return ok<IForecastRatingBeach>(response.value);
     } catch (error) {
       return serverError(error);

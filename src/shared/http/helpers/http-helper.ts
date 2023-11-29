@@ -58,7 +58,7 @@ export function conflict(data: IControllerError): IHttpResponse<IControllerError
 
 export function toManyRequests(data: IControllerError): IHttpResponse<IControllerError> {
   return {
-    statusCode: 409,
+    statusCode: 422,
     body: {
       name: data.name,
       message: data.message,
