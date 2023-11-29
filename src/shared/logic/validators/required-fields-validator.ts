@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { IValidator } from '@src/main/adapters/ports/validator';
 
-import { Either, left, right } from '../Either';
+import { Either, left, right } from '../either/either';
 import { MissingParamError } from './errors/missing-param-error';
 
 export class RequiredFieldsValidator<T> implements IValidator<T> {

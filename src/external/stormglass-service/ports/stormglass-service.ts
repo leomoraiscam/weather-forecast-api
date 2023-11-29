@@ -1,4 +1,4 @@
-import { Either } from '@src/shared/logic/Either';
+import { Either } from '@src/shared/logic/either';
 
 import { StormGlassResponseError } from '../../../modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
 import { IFetchPointCoordinate } from '../dtos/fetch-point-coordinate';

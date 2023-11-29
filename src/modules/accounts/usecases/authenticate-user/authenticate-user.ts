@@ -1,4 +1,4 @@
-import { Either, left, right } from '@src/shared/logic/Either';
+import { Either, left, right } from '@src/shared/logic/either';
 
 import { JWT } from '../../domain/user/jwt';
 import { IAuthenticateUserRequest } from '../../dtos/authenticate-user-request';

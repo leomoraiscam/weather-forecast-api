@@ -1,6 +1,6 @@
 import { ICacheProvider } from '@src/external/cache-service/models/cache-provider';
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
-import { Either, left, right } from '@src/shared/logic/Either';
+import { Either, left, right } from '@src/shared/logic/either';
 
 import { IFetchPointCoordinate } from '../dtos/fetch-point-coordinate';
 import { IFetchPointNormalize } from '../dtos/fetch-point-normalize';

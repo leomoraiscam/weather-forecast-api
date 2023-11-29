@@ -1,4 +1,4 @@
-import { Either, left, right } from '@src/shared/logic/Either';
+import { Either, left, right } from '@src/shared/logic/either';
 
 import { Email } from '../../domain/user/email';
 import { InvalidEmailError } from '../../domain/user/errors/invalid-email-error';
