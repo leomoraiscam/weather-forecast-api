@@ -1,10 +1,8 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 
-import { GetRatingByPointUseCase } from './get-rating-by-point-use-case';
+import { calculateRatingByPoint } from './calculate-rating-by-point';
 
-let getRatingByPointUseCase: GetRatingByPointUseCase;
-
-describe('GetRatingByPointUseCase', () => {
+describe('Calculate rating by point helper', () => {
   const beach = {
     lat: -33.792726,
     lng: 151.289824,
@@ -24,12 +22,8 @@ describe('GetRatingByPointUseCase', () => {
     windSpeed: 100,
   };
 
-  beforeEach(() => {
-    getRatingByPointUseCase = new GetRatingByPointUseCase(beach);
-  });
-
   it('should get a rating less than 1 for a poor point', () => {
-    const rating = getRatingByPointUseCase.execute(defaultPoint);
+    const rating = calculateRatingByPoint(defaultPoint, beach);
 
     expect(rating).toBe(1);
   });
@@ -38,10 +32,11 @@ describe('GetRatingByPointUseCase', () => {
     const pointData = {
       swellHeight: 0.4,
     };
+
     // using spread operator for cloning objects instead of Object.assign
     const point = { ...defaultPoint, ...pointData };
 
-    const rating = getRatingByPointUseCase.execute(point);
+    const rating = calculateRatingByPoint(point, beach);
 
     expect(rating).toBe(1);
   });
@@ -54,7 +49,7 @@ describe('GetRatingByPointUseCase', () => {
         windDirection: 250,
       },
     };
-    const rating = getRatingByPointUseCase.execute(point);
+    const rating = calculateRatingByPoint(point, beach);
 
     expect(rating).toBe(3);
   });
@@ -68,7 +63,7 @@ describe('GetRatingByPointUseCase', () => {
         windDirection: 250,
       },
     };
-    const rating = getRatingByPointUseCase.execute(point);
+    const rating = calculateRatingByPoint(point, beach);
 
     expect(rating).toBe(4);
   });
@@ -82,7 +77,7 @@ describe('GetRatingByPointUseCase', () => {
         windDirection: 250,
       },
     };
-    const rating = getRatingByPointUseCase.execute(point);
+    const rating = calculateRatingByPoint(point, beach);
 
     expect(rating).toBe(4);
   });
@@ -96,10 +91,11 @@ describe('GetRatingByPointUseCase', () => {
         windDirection: 250,
       },
     };
-    const rating = getRatingByPointUseCase.execute(point);
+    const rating = calculateRatingByPoint(point, beach);
 
     expect(rating).toBe(5);
   });
+
   it('should get a rating of 4 a good condition but with crossshore winds', () => {
     const point = {
       ...defaultPoint,
@@ -109,7 +105,7 @@ describe('GetRatingByPointUseCase', () => {
         windDirection: 130,
       },
     };
-    const rating = getRatingByPointUseCase.execute(point);
+    const rating = calculateRatingByPoint(point, beach);
 
     expect(rating).toBe(4);
   });
