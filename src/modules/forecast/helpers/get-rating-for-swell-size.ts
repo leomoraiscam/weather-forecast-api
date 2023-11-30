@@ -1,17 +1,4 @@
-const WAVE_HEIGHTS = {
-  ankleToKnee: {
-    min: 0.3,
-    max: 1.0,
-  },
-  waistHigh: {
-    min: 1.0,
-    max: 2.0,
-  },
-  headHigh: {
-    min: 2.0,
-    max: 2.5,
-  },
-};
+import { WAVE_HEIGHTS } from '@src/config/constants/waves-height';
 
 export function getRatingForSwellSize(height: number): number {
   if (height < WAVE_HEIGHTS.ankleToKnee.min) return 1;

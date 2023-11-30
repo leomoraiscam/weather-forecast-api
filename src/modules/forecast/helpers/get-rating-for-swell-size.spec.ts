@@ -1,6 +1,6 @@
 import { getRatingForSwellSize } from './get-rating-for-swell-size';
 
-describe('getRatingForSwellSize', () => {
+describe('Get rating for swell size Helper', () => {
   it('should be able get rating 1 for less than ankle to knee high swell', () => {
     const rating = getRatingForSwellSize(0.2);
 
