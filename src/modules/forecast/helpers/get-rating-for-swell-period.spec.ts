@@ -1,6 +1,6 @@
 import { getRatingForSwellPeriod } from './get-rating-for-swell-period';
 
-describe('getRatingForSwellPeriod', () => {
+describe('Get rating for swell period helper', () => {
   it('should be able get rating 1 for a period of 5 seconds', () => {
     const rating = getRatingForSwellPeriod(5);
 
