@@ -10,8 +10,8 @@ import { Either, left, right } from '@src/shared/logic/either';
 import { IForecastRatingBeach } from '../../dtos/forecast-rating-beach';
 import { ITimeForecast } from '../../dtos/time-forecast';
 import { calculateRatingByPoint } from '../../helpers/calculate-rating-by-point';
+import { normalizeForecastByTime } from '../../helpers/normalize-forecast-by-time';
 import { IBeachRepository } from '../../repositories/beaches-repository';
-import { normalizeForecastByTime } from '../../utils/normalize-forecast-by-time';
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';
 import { UserNotFoundError } from './errors/user-not-found-error';
 
