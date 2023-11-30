@@ -2,34 +2,34 @@ import { BeachPosition } from '@config/constants/beach-position-enum';
 
 import { getPositionFromLocation } from './get-position-from-location';
 
-describe('getPositionFromLocation', () => {
+describe('Get Position From Location Helper', () => {
   it('should be able get the point based on a east location', () => {
-    const rating = getPositionFromLocation(92);
+    const position = getPositionFromLocation(92);
 
-    expect(rating).toBe(BeachPosition.E);
+    expect(position).toBe(BeachPosition.E);
   });
 
   it('should be able get the point based on a north location 1', () => {
-    const rating = getPositionFromLocation(360);
+    const position = getPositionFromLocation(360);
 
-    expect(rating).toBe(BeachPosition.N);
+    expect(position).toBe(BeachPosition.N);
   });
 
   it('should be able get the point based on a north location 2', () => {
-    const rating = getPositionFromLocation(40);
+    const position = getPositionFromLocation(40);
 
-    expect(rating).toBe(BeachPosition.N);
+    expect(position).toBe(BeachPosition.N);
   });
 
   it('should be able get the point based on a south location', () => {
-    const rating = getPositionFromLocation(200);
+    const position = getPositionFromLocation(200);
 
-    expect(rating).toBe(BeachPosition.S);
+    expect(position).toBe(BeachPosition.S);
   });
 
   it('should be able get the point based on a west location', () => {
-    const rating = getPositionFromLocation(300);
+    const position = getPositionFromLocation(300);
 
-    expect(rating).toBe(BeachPosition.W);
+    expect(position).toBe(BeachPosition.W);
   });
 });
