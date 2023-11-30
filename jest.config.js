@@ -15,6 +15,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/modules/**/usecases/**/*.ts',
     'src/modules/**/domain/**/*.ts',
+    'src/modules/**/helpers/**/*.ts',
     '!src/modules/**/domain/**/dtos/*.ts',
     'src/external/**/services/**/*.ts',
   ],
