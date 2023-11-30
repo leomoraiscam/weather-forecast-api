@@ -1,37 +1,53 @@
 version: '3.7'
 
 services:
-  weather-forecast-database:
+  app:
+    build:
+      context: .
+    container_name: waves-points-api
+    depends_on:
+      - waves-points-database
+      - waves-points-redis
+    volumes:
+      - .:/home/node/app
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+      - ${APP_PORT_DEBUG}:${APP_PORT_DEBUG}
+    networks:
+      - waves-points-network
+
+  waves-points-database:
     image: mongo
-    container_name: weather-forecast-database
+    container_name: waves-points-database
     environment:
       - ALLOW_EMPTY_PASSWORD=no
-      - MONGODB_USERNAME=docker
-      - MONGODB_PASSWORD=docker
-      - MONGODB_DATABASE=weather-forecast
+      - MONGODB_USERNAME=${MONGO_USER}
+      - MONGODB_PASSWORD=${MONGO_PASS}
+      - MONGODB_DATABASE=${MONGO_DB}
     ports:
-      - '16017:27017'
+      - ${MONGO_PORT}:${MONGO_PORT}
     volumes:
-      - weather-forecast-data:/data/db
-    # networks:
-    #   - weather-forecast-network
+      - waves-points-data:/data/db
+    networks:
+      - waves-points-network
 
-  weather-forecast-redis:
+  waves-points-redis:
     image: redis
-    container_name: weather-forecast-redis
+    container_name: waves-points-redis
     ports:
-      - '6379:6379'
+      - ${REDIS_PORT}:${REDIS_PORT}
     volumes:
-      - weather-forecast-data:/bitnami/redis/data
-    # networks:
-    #   - bulk-message-network
+      - waves-points-data:/bitnami/redis/data
+    networks:
+      - waves-points-network
 
 volumes:
-  weather-forecast-data:
+  waves-points-data:
     driver: local
-# networks:
-#   weather-forecast-network:
-#     driver: bridge
-#     ipam:
-#       config:
-#         - subnet: 172.16.57.0/24
+
+networks:
+  waves-points-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.57.0/24
