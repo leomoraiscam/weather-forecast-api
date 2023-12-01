@@ -21,8 +21,10 @@ export const adaptMiddleware = (middleware: IMiddleware) => {
 
       return next();
     }
+
     return response.status(httpResponse.statusCode).json({
-      error: httpResponse.body.error,
+      name: httpResponse.body.name,
+      message: httpResponse.body.message,
     });
   };
 };

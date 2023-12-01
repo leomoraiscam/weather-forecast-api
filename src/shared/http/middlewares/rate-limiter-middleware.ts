@@ -5,6 +5,7 @@ import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import { IHttpResponse } from '../dtos/http-response';
 import { IRateLimiterMiddlewareRequest } from '../dtos/rate-limiter-request';
 import { toManyRequests, ok } from '../helpers/http-helper';
+import { TooManyRequestsError } from './errors/too-many-requests-error';
 
 export class RateLimiterMiddleware implements IMiddleware {
   constructor() {}
@@ -19,7 +20,7 @@ export class RateLimiterMiddleware implements IMiddleware {
 
       return ok({ success: true });
     } catch (error) {
-      return toManyRequests(error);
+      return toManyRequests(new TooManyRequestsError());
     }
   }
 }
