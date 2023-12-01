@@ -1,0 +1,604 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "API for consult forecast wave points in favorites beaches",
+    "description": "Wave Points API",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "host": "http://localhost:3333/api-docs",
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"]
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333",
+      "description": "Local server - Development Environment v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Sessions",
+      "description": "sessions endpoints"
+    },
+    {
+      "name": "Users",
+      "description": "users endpoints"
+    },
+    {
+      "name": "Beaches",
+      "description": "beaches endpoints"
+    }
+  ],
+  "paths": {
+    "/api/sessions": {
+      "post": {
+        "tags": ["Sessions"],
+        "summary": "Authentication user",
+        "description": "Authenticate the user on the API generating a jwt token",
+        "operationId": "authenticateUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "This will be returned when the user has been authenticate and the JWT returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticatedUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "This will be returned when has validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "MissingParamError",
+                  "message": "The \"password\" parameter is missing in request body."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "This will be returned when the user is not authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "InvalidEmailOrPasswordError",
+                  "message": "Invalid e-mail/password combination."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "This will be returned when an unexpected error occurs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "InternalServerError",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "summary": "Create users",
+      "post": {
+        "summary": "Creates users",
+        "description": "Create users",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "This will be returned when the created a entity resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "This will be returned when has validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "MissingParamError",
+                  "message": "The \"password\" parameter is missing in request body."
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "This will be returned when the resource is already in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "AccountAlreadyExistsError",
+                  "message": "The email \"email@email.com\" is already registered."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "This will be returned when an unexpected error occurs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "InternalServerError",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Users"]
+      }
+    },
+    "/api/beaches": {
+      "summary": "Create beaches",
+      "post": {
+        "summary": "Creates beaches",
+        "description": "Create beaches",
+        "security": [{ "BearerToken": [] }],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTdmZTQ0YzQzYWQwYjAwMThmOGQ5ZmQiLCJuYW1lIjoiV2FsZGVtYXIgTmV0byIsImVtYWlsIjoid2FsZGVtYXJudEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRsUlZjWkc5d0dIVWJXcHF2TnJNR0F1SnNoWWJTR1RLSElQL3NycDlmTlkzZENFZDBJQjN6TyIsImlhdCI6MTU4NTQ0MDUxNywiZXhwIjoxNTg1NDYwNTE3fQ.JNtzLgCKGTAU9_-QjYUNxtM7X4nMU_pPIsNXDsEM-vP"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterBeachRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "This will be returned when the created a entity resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterBeachResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "This will be returned when has validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "MissingParamError",
+                  "message": "The \"position\" parameter is missing in request body."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "This will be returned when the authorization header is missing or the token is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "InvalidJWTTokenError",
+                  "message": "The JWT token is invalid."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "This will be returned when the resource does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "UserNotFoundError",
+                  "message": "The user doesnt exist"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "This will be returned when the resource is already in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "AccountAlreadyExistsError",
+                  "message": "The email \"email@email.com\" is already registered."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "This will be returned when an unexpected error occurs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "InternalServerError",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Beaches"]
+      }
+    },
+    "/api/fetch-points": {
+      "summary": "Fetch points forecast time",
+      "get": {
+        "summary": "Fetch points forecast time",
+        "description": "Fetch points forecast time",
+        "operationId": "getForecast",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTdmZTQ0YzQzYWQwYjAwMThmOGQ5ZmQiLCJuYW1lIjoiV2FsZGVtYXIgTmV0byIsImVtYWlsIjoid2FsZGVtYXJudEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRsUlZjWkc5d0dIVWJXcHF2TnJNR0F1SnNoWWJTR1RLSElQL3NycDlmTlkzZENFZDBJQjN6TyIsImlhdCI6MTU4NTQ0MDUxNywiZXhwIjoxNTg1NDYwNTE3fQ.JNtzLgCKGTAU9_-QjYUNxtM7X4nMU_pPIsNXDsEM-vP"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This will be returned when the created a entity resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcessForecastBeachesResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "This will be returned when the empty data to this entity"
+          },
+          "401": {
+            "description": "This will be returned when the authorization header is missing or the token is invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "InvalidJWTTokenError",
+                  "message": "The JWT token is invalid."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "This will be returned when the resource does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "UserNotFoundError",
+                  "message": "The user doesnt exist"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "This will be received many requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "ToManyRequestsError",
+                  "message": "to many requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "This will be returned when an unexpected error occurs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "name": "InternalServerError",
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Beaches"]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Bearer token to authenticate the user"
+      }
+    },
+    "schemas": {
+      "AuthenticateUserRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "john_doe@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "test@1234"
+          }
+        },
+        "required": ["email", "password"]
+      },
+      "AuthenticatedUserResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MDEzNzc1NzgsImV4cCI6MTcwMTQ2Mzk3OCwic3ViIjoiZmM4NzA4ODYtZWFiYS00MjNiLWE2YjQtOGNkOGVkOWQ0NjZlIn0.sNvjrdluzImlsM3OezKiMcbpRTWCtTFGnARWPF1A6BE"
+          }
+        }
+      },
+      "RegisterUserRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "john_doe@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "test@1234"
+          }
+        },
+        "required": ["name", "email", "password"]
+      },
+      "RegisterUserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "fc870886-eaba-423b-a6b4-8cd8ed9d466e"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "john_doe@mail.com"
+          }
+        }
+      },
+      "RegisterBeachRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Dee Why"
+          },
+          "lat": {
+            "type": "integer",
+            "example": -33.792726
+          },
+          "lng": {
+            "type": "integer",
+            "example": 151.289824
+          },
+          "position": {
+            "type": "string",
+            "example": "S",
+            "enum": ["E", "S", "N", "W"]
+          }
+        },
+        "required": ["name", "lat", "lng", "position"]
+      },
+      "RegisterBeachResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "c8fe203d-3df8-497c-9a9c-dcaa13fd2f24"
+          },
+          "name": {
+            "type": "string",
+            "example": "Dee Why"
+          },
+          "lat": {
+            "type": "integer",
+            "example": -33.792726
+          },
+          "lng": {
+            "type": "integer",
+            "example": 151.289824
+          },
+          "position": {
+            "type": "string",
+            "example": "S",
+            "enum": ["E", "S", "N", "W"]
+          },
+          "userId": {
+            "type": "string",
+            "example": "de2dc5d1-dbef-4d51-a0fa-de715e01de59"
+          }
+        }
+      },
+      "ProcessForecastBeachesResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "time": {
+              "type": "string",
+              "example": "2019-05-31T08:00:00+00:00"
+            },
+            "forecast": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Dee Why"
+                  },
+                  "lat": {
+                    "type": "integer",
+                    "example": -33.792726
+                  },
+                  "lng": {
+                    "type": "integer",
+                    "example": 151.289824
+                  },
+                  "position": {
+                    "type": "string",
+                    "example": "S"
+                  },
+                  "rating": {
+                    "type": "number",
+                    "example": 3
+                  },
+                  "swellDirection": {
+                    "type": "number",
+                    "description": "Swell direction in degrees",
+                    "example": 300
+                  },
+                  "swellHeight": {
+                    "type": "number",
+                    "description": "Swell height in meters",
+                    "example": 1
+                  },
+                  "swellPeriod": {
+                    "type": "number",
+                    "description": "Swell period in seconds",
+                    "example": 13.67
+                  },
+                  "waveDirection": {
+                    "type": "number",
+                    "description": "Wave direction in degrees",
+                    "example": 234
+                  },
+                  "waveHeight": {
+                    "type": "number",
+                    "description": "Wave height in meters",
+                    "example": 1.5
+                  },
+                  "windDirection": {
+                    "type": "number",
+                    "description": "Wind direction in degrees",
+                    "example": 234
+                  },
+                  "windSpeed": {
+                    "type": "number",
+                    "description": "Wind speed in meters per second",
+                    "example": 10
+                  },
+                  "time": {
+                    "type": "string",
+                    "example": "2019-05-31T08:00:00+00:00"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "message": "Invalid parameters",
+          "code": "400",
+          "error": "Bad Request"
+        }
+      }
+    }
+  }
+}
