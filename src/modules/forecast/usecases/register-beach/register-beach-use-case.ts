@@ -1,3 +1,4 @@
+import { IUsersRepository } from '@src/modules/accounts/repositories/users-repository';
 import { Either, left, right } from '@src/shared/logic/either';
 
 import { Beach } from '../../domain/beach/beach';
@@ -12,10 +13,14 @@ import { Position } from '../../domain/beach/position';
 import { IBeach as RegisterBeachRequest } from '../../dtos/beach';
 import { IRegisterBeachResponse } from '../../dtos/register-beach-response';
 import { IBeachRepository } from '../../repositories/beaches-repository';
+import { UserNotFoundError } from '../process-forecast-for-beaches/errors/user-not-found-error';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 
 export class RegisterBeachUseCase {
-  constructor(private beachesRepository: IBeachRepository) {}
+  constructor(
+    private beachesRepository: IBeachRepository,
+    private usersRepository: IUsersRepository,
+  ) {}
 
   async execute({
     name,
@@ -29,10 +34,17 @@ export class RegisterBeachUseCase {
       | InvalidLatitudeError
       | InvalidLongitudeError
       | InvalidPositionError
-      | BeachAlreadyExistsError,
+      | BeachAlreadyExistsError
+      | UserNotFoundError,
       IRegisterBeachResponse
     >
   > {
+    const user = await this.usersRepository.findById(userId);
+
+    if (!user) {
+      return left(new UserNotFoundError());
+    }
+
     const nameOrError = Name.create(name);
     const latitudeOrError = Latitude.create(lat);
     const longitudeOrError = Longitude.create(lng);

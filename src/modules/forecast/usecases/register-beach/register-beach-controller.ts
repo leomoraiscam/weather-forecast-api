@@ -3,9 +3,16 @@ import { IValidator } from '@src/main/adapters/ports/validator';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { IHttpResponse } from '@src/shared/http/dtos/http-response';
-import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
+import {
+  badRequest,
+  conflict,
+  created,
+  serverError,
+  notFound,
+} from '@src/shared/http/helpers/http-helper';
 
 import { IBeach } from '../../dtos/beach';
+import { UserNotFoundError } from '../process-forecast-for-beaches/errors/user-not-found-error';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 
 export class RegisterBeachController {
@@ -39,6 +46,8 @@ export class RegisterBeachController {
         switch (error.constructor) {
           case BeachAlreadyExistsError:
             return conflict(error);
+          case UserNotFoundError:
+            return notFound(error);
           default:
             return badRequest(error);
         }

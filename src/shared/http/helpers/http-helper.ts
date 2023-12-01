@@ -46,6 +46,16 @@ export function forbidden(data: IControllerError): IHttpResponse<IControllerErro
   };
 }
 
+export function notFound(data: IControllerError): IHttpResponse<IControllerError> {
+  return {
+    statusCode: 404,
+    body: {
+      name: data.name,
+      message: data.message,
+    },
+  };
+}
+
 export function conflict(data: IControllerError): IHttpResponse<IControllerError> {
   return {
     statusCode: 409,
