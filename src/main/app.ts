@@ -1,9 +1,11 @@
 import '../shared/module-alias';
 import * as dotenv from 'dotenv';
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 
 import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
 
+import swaggerFile from '../shared/swagger.json';
 import { bodyParser } from './config/body-parser';
 import { contentType } from './config/content-type';
 import { cors } from './config/cors';
@@ -16,6 +18,7 @@ const app = express();
 app.use(bodyParser);
 app.use(cors);
 app.use(contentType);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 setupRoute(app);
 
