@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { InMemoryUsersRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
 import { createBeach } from '@test/factories/beach-factory';
