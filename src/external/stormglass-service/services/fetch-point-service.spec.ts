@@ -1,5 +1,5 @@
 import { InMemoryCacheProvider } from '@src/external/cache-service/in-memory/in-memory-cache-provider';
-import { AxiosRequestProvider } from '@src/external/stormglass-service/providers/implementations/axios-request-provider';
+import { AxiosRequestProvider } from '@src/external/http-service/services/axios-request-provider';
 import fetchPointsNormalizedResponse from '@test/fixtures/fetch-points-normalized-response.json';
 import stormGlassIncompleteResponse from '@test/fixtures/storm-glass-incomplete-response.json';
 import stormGlassResponseGenericError from '@test/fixtures/storm-glass-response-generic-error.json';

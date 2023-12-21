@@ -1,8 +1,5 @@
-import { ICacheProvider } from '../models/cache-provider';
-
-interface ICacheData {
-  [key: string]: string;
-}
+import { ICacheData } from '../dtos/cache-data';
+import { ICacheProvider } from '../ports/cache-provider';
 
 export class InMemoryCacheProvider implements ICacheProvider {
   private cache: ICacheData = {};

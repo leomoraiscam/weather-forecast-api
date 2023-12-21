@@ -1,4 +1,5 @@
-import { ICacheProvider } from '@src/external/cache-service/models/cache-provider';
+import { ICacheProvider } from '@src/external/cache-service/ports/cache-provider';
+import { IRequestProvider } from '@src/external/http-service/ports/request-provider';
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
 import { Either, left, right } from '@src/shared/logic/either';
 
@@ -7,7 +8,6 @@ import { IFetchPointNormalize } from '../dtos/fetch-point-normalize';
 import { IStormGlassForecastResponse } from '../dtos/stormglass-response';
 import { StormGlassMapper } from '../mapper/stormglass-mapper';
 import { IStormGlassService } from '../ports/stormglass-service';
-import { IRequestProvider } from '../providers/models/request-provider';
 
 export class FetchPointService implements IStormGlassService {
   constructor(private requestProvider: IRequestProvider, private cacheProvider: ICacheProvider) {}

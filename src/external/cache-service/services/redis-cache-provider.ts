@@ -2,7 +2,7 @@ import Redis, { Redis as RedisClient } from 'ioredis';
 
 import cacheConfig from '@src/external/database/redis/config/cache';
 
-import { ICacheProvider } from '../models/cache-provider';
+import { ICacheProvider } from '../ports/cache-provider';
 
 export class RedisCacheProvider implements ICacheProvider {
   private client: RedisClient;
