@@ -1,5 +1,5 @@
 import { RedisCacheProvider } from '@src/external/cache-service/services/redis-cache-provider';
-import { AxiosRequestProvider } from '@src/external/stormglass-service/providers/implementations/axios-request-provider';
+import { AxiosRequestProvider } from '@src/external/http-service/services/axios-request-provider';
 import { FetchPointService } from '@src/external/stormglass-service/services/fetch-point-service';
 import { UserRepository } from '@src/modules/accounts/repositories/implementations/users-repository';
 import { BeachRepository } from '@src/modules/forecast/repositories/implementations/beach-repository';

@@ -8,7 +8,7 @@ import stormGlassWeather3HoursResponse from '@test/fixtures/storm-glass-response
 
 import { FetchPointService } from './fetch-point-service';
 
-jest.mock('@src/external/stormglass-service/providers/implementations/axios-request-provider');
+jest.mock('@src/external/http-service/services/axios-request-provider');
 
 let inMemoryCacheProvider: InMemoryCacheProvider;
 
