@@ -1,4 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
+import { InMemoryLoggerService } from '@src/external/logger-service/in-memory/in-memory-logger-service';
 import { InMemoryUsersRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
 import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
@@ -13,11 +14,13 @@ import { ProcessForecastBeachesUseCase } from './process-forecast-for-beaches-us
 
 let inMemoryUsersRepository: InMemoryUsersRepository;
 let inMemoryBeachesRepository: InMemoryBeachRepository;
+let inMemoryLoggerService: InMemoryLoggerService;
 
 describe('Process Forecast For Beaches Use Case', () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository();
     inMemoryBeachesRepository = new InMemoryBeachRepository();
+    inMemoryLoggerService = new InMemoryLoggerService();
   });
 
   it('should not be able to return list the forecast of beaches array when user does not exist', async () => {
@@ -27,6 +30,7 @@ describe('Process Forecast For Beaches Use Case', () => {
       stormGlassServiceMock,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
+      inMemoryLoggerService,
     );
 
     const response = await processForecastBeachesUseCase.execute('any-user-id');
@@ -45,6 +49,7 @@ describe('Process Forecast For Beaches Use Case', () => {
       stormGlassServiceMock,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
+      inMemoryLoggerService,
     );
 
     const response = await processForecastBeachesUseCase.execute('fake-user-id');
@@ -68,6 +73,7 @@ describe('Process Forecast For Beaches Use Case', () => {
       stormGlassServicerErrorStub,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
+      inMemoryLoggerService,
     );
 
     const response = await processForecastBeachesUseCase.execute('fake-user-id');
@@ -96,6 +102,7 @@ describe('Process Forecast For Beaches Use Case', () => {
       stormGlassServiceStub,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
+      inMemoryLoggerService,
     );
 
     const beachesWithRating = await processForecastBeachesUseCase.execute('fake-user-id');
@@ -105,5 +112,7 @@ describe('Process Forecast For Beaches Use Case', () => {
     });
   });
 
-  it.todo('should return the forecast for mutiple beaches in the same hour with different ratings');
+  it.todo(
+    'should return the forecast for multiple beaches in the same hour with different ratings',
+  );
 });
