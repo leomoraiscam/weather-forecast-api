@@ -1,6 +1,8 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 import { BeachPosition } from '@config/constants/beach-position-enum';
+import { TypesLogger } from '@config/constants/types-logger-enum';
+import { ILoggerService } from '@src/external/logger-service/ports/logger-service';
 import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
 import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IUsersRepository } from '@src/modules/accounts/repositories/users-repository';
@@ -20,6 +22,7 @@ export class ProcessForecastBeachesUseCase {
     private stormGlassService: IUseCase,
     private usersRepository: IUsersRepository,
     private beachesRepository: IBeachRepository,
+    private loggerService: ILoggerService,
   ) {}
 
   public async execute(userId: string): Promise<Either<StormGlassResponseError, ITimeForecast[]>> {
@@ -37,8 +40,18 @@ export class ProcessForecastBeachesUseCase {
 
     const beachForecastsSources: IForecastRatingBeach[] = [];
 
+    this.loggerService.log({
+      level: TypesLogger.INFO,
+      message: `${ProcessForecastBeachesUseCase.name} preparing the forecast for ${beaches.length} beaches`,
+    });
+
     for (const beach of beaches) {
       const { lat, lng, name, position } = beach;
+
+      this.loggerService.log({
+        level: TypesLogger.INFO,
+        message: `${ProcessForecastBeachesUseCase.name} Preparing the ${name.value} with lat: ${lat.value} and lng: ${lng.value} to user ${user.id}`,
+      });
 
       const points = await this.stormGlassService.execute({
         lat: lat.value,
@@ -70,6 +83,11 @@ export class ProcessForecastBeachesUseCase {
     }
 
     const normalizeForecast = normalizeForecastByTime(beachForecastsSources);
+
+    this.loggerService.log({
+      level: TypesLogger.INFO,
+      message: `${ProcessForecastBeachesUseCase.name} all forecast normalized data obtained with success`,
+    });
 
     return right(normalizeForecast);
   }
