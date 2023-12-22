@@ -1,6 +1,6 @@
 import { TypesLogger } from '@config/constants/types-logger-enum';
-import { ICacheProvider } from '@src/external/cache-service/ports/cache-provider';
-import { IRequestProvider } from '@src/external/http-service/ports/request-provider';
+import { ICacheService } from '@src/external/cache-service/ports/cache-service';
+import { IRequestService } from '@src/external/http-service/ports/request-service';
 import { ILoggerService } from '@src/external/logger-service/ports/logger-service';
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
 import { Either, left, right } from '@src/shared/logic/either';
@@ -13,8 +13,8 @@ import { IStormGlassService } from '../ports/stormglass-service';
 
 export class FetchPointService implements IStormGlassService {
   constructor(
-    private requestProvider: IRequestProvider,
-    private cacheProvider: ICacheProvider,
+    private requestService: IRequestService,
+    private cacheService: ICacheService,
     private loggerService: ILoggerService,
   ) {}
 
@@ -30,7 +30,7 @@ export class FetchPointService implements IStormGlassService {
     try {
       const cacheKey = `provider-forecast-point: ${userId}:${lat}-${lng}`;
 
-      const wavesPoints = await this.cacheProvider.recover<IFetchPointNormalize[]>(cacheKey);
+      const wavesPoints = await this.cacheService.recover<IFetchPointNormalize[]>(cacheKey);
 
       if (!wavesPoints) {
         this.loggerService.log({
@@ -43,7 +43,7 @@ export class FetchPointService implements IStormGlassService {
           },
         });
 
-        const response = await this.requestProvider.get<IStormGlassForecastResponse>({
+        const response = await this.requestService.get<IStormGlassForecastResponse>({
           url: `${process.env.STORM_GLASS_API_URL}/point?params=${this.stormGlassAPIParams}&source=${this.stormGlassAPISource}&lat=${lat}&lng=${lng}`,
           config: {
             headers: {
@@ -69,7 +69,7 @@ export class FetchPointService implements IStormGlassService {
           message: `${FetchPointService.name} Initializing data persistence in the cache`,
         });
 
-        await this.cacheProvider.save(cacheKey, normalizeStormGlassData);
+        await this.cacheService.save(cacheKey, normalizeStormGlassData);
 
         this.loggerService.log({
           level: TypesLogger.INFO,

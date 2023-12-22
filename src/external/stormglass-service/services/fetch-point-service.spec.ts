@@ -1,5 +1,5 @@
-import { InMemoryCacheProvider } from '@src/external/cache-service/in-memory/in-memory-cache-provider';
-import { AxiosRequestProvider } from '@src/external/http-service/services/axios-request-provider';
+import { InMemoryCacheService } from '@src/external/cache-service/in-memory/in-memory-cache-service';
+import { AxiosRequestService } from '@src/external/http-service/services/axios-request-service';
 import { InMemoryLoggerService } from '@src/external/logger-service/in-memory/in-memory-logger-service';
 import fetchPointsNormalizedResponse from '@test/fixtures/fetch-points-normalized-response.json';
 import stormGlassIncompleteResponse from '@test/fixtures/storm-glass-incomplete-response.json';
@@ -9,13 +9,13 @@ import stormGlassWeather3HoursResponse from '@test/fixtures/storm-glass-response
 
 import { FetchPointService } from './fetch-point-service';
 
-jest.mock('@src/external/http-service/services/axios-request-provider');
+jest.mock('@src/external/http-service/services/axios-request-service');
 
-let inMemoryCacheProvider: InMemoryCacheProvider;
+let inMemoryCacheService: InMemoryCacheService;
 let inMemoryLoggerService: InMemoryLoggerService;
 
 describe('StormGlass Service', () => {
-  const mockedRequest = new AxiosRequestProvider() as jest.Mocked<AxiosRequestProvider>;
+  const mockedRequest = new AxiosRequestService() as jest.Mocked<AxiosRequestService>;
 
   let lat: number;
   let lng: number;
@@ -24,7 +24,7 @@ describe('StormGlass Service', () => {
     lat = -33.792726;
     lng = 151.289824;
 
-    inMemoryCacheProvider = new InMemoryCacheProvider();
+    inMemoryCacheService = new InMemoryCacheService();
     inMemoryLoggerService = new InMemoryLoggerService();
   });
 
@@ -33,7 +33,7 @@ describe('StormGlass Service', () => {
 
     const fetchPointService = new FetchPointService(
       mockedRequest,
-      inMemoryCacheProvider,
+      inMemoryCacheService,
       inMemoryLoggerService,
     );
 
@@ -49,7 +49,7 @@ describe('StormGlass Service', () => {
 
     const fetchPointService = new FetchPointService(
       mockedRequest,
-      inMemoryCacheProvider,
+      inMemoryCacheService,
       inMemoryLoggerService,
     );
 
@@ -65,7 +65,7 @@ describe('StormGlass Service', () => {
 
     const fetchPointService = new FetchPointService(
       mockedRequest,
-      inMemoryCacheProvider,
+      inMemoryCacheService,
       inMemoryLoggerService,
     );
 
@@ -79,7 +79,7 @@ describe('StormGlass Service', () => {
 
     const fetchPointService = new FetchPointService(
       mockedRequest,
-      inMemoryCacheProvider,
+      inMemoryCacheService,
       inMemoryLoggerService,
     );
 

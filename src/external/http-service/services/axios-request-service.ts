@@ -2,9 +2,9 @@ import axios from 'axios';
 
 import { IHttpRequest } from '../dtos/http-request';
 import { IHttpResponse } from '../dtos/http-response';
-import { IRequestProvider } from '../ports/request-provider';
+import { IRequestService } from '../ports/request-service';
 
-export class AxiosRequestProvider implements IRequestProvider {
+export class AxiosRequestService implements IRequestService {
   private request = axios;
 
   public get<T>({ config, url }: IHttpRequest): Promise<IHttpResponse<T>> {

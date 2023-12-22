@@ -1,7 +1,7 @@
 import { ICacheData } from '../dtos/cache-data';
-import { ICacheProvider } from '../ports/cache-provider';
+import { ICacheService } from '../ports/cache-service';
 
-export class InMemoryCacheProvider implements ICacheProvider {
+export class InMemoryCacheService implements ICacheService {
   private cache: ICacheData = {};
 
   public async save(key: string, value: any): Promise<void> {
