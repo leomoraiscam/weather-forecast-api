@@ -4,7 +4,7 @@ import cacheConfig from '@src/external/database/redis/config/cache';
 
 import { ICacheService } from '../ports/cache-service';
 
-export class RedisCacheProvider implements ICacheService {
+export class RedisCacheService implements ICacheService {
   private client: RedisClient;
 
   constructor() {

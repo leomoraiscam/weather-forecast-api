@@ -1,5 +1,5 @@
-import { RedisCacheProvider } from '@src/external/cache-service/services/redis-cache-provider';
-import { AxiosRequestProvider } from '@src/external/http-service/services/axios-request-provider';
+import { RedisCacheService } from '@src/external/cache-service/services/redis-cache-service';
+import { AxiosRequestService } from '@src/external/http-service/services/axios-request-service';
 import { WinstonLoggerService } from '@src/external/logger-service/services/pino-logger-service';
 import { FetchPointService } from '@src/external/stormglass-service/services/fetch-point-service';
 import { UserRepository } from '@src/modules/accounts/repositories/implementations/users-repository';
@@ -10,13 +10,13 @@ import { ProcessForecastBeachesUseCase } from '@src/modules/forecast/usecases/pr
 import { IController } from '../../adapters/ports/controller';
 
 export const makeFetchPointController = (): IController => {
-  const axiosRequestProvider = new AxiosRequestProvider();
-  const cacheProvider = new RedisCacheProvider();
+  const cacheService = new RedisCacheService();
+  const axiosRequestService = new AxiosRequestService();
   const loggerProvider = new WinstonLoggerService();
 
   const stormGlassService = new FetchPointService(
-    axiosRequestProvider,
-    cacheProvider,
+    axiosRequestService,
+    cacheService,
     loggerProvider,
   );
 
