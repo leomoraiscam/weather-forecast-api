@@ -13,7 +13,7 @@ import { IRegisteredBeachDTO } from '@src/modules/forecast/dtos/registered-beach
 import { IBeachRepository } from '@src/modules/forecast/repositories/beach-repository';
 import { Either, left, right } from '@src/shared/logic/either';
 
-import { UserNotFoundError } from '../process-forecast-for-beaches/errors/user-not-found-error';
+import { UserNotFoundError } from '../user-beach-forecast-processing/errors/user-not-found-error';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 
 export class RegisterBeachUseCase {

@@ -13,7 +13,7 @@ import {
   notFound,
 } from '@src/shared/http/helpers/http-helper';
 
-import { UserNotFoundError } from '../process-forecast-for-beaches/errors/user-not-found-error';
+import { UserNotFoundError } from '../user-beach-forecast-processing/errors/user-not-found-error';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 
 export class RegisterBeachController {

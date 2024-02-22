@@ -1,7 +1,7 @@
 import { IFetchPointCoordinate } from '../../src/external/stormglass-service/dtos/fetch-point-coordinate';
 import { IFetchPointNormalize } from '../../src/external/stormglass-service/dtos/fetch-point-normalize';
 import { IStormGlassService } from '../../src/external/stormglass-service/ports/stormglass-service';
-import { StormGlassResponseError } from '../../src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
+import { StormGlassResponseError } from '../../src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
 import { Either, right } from '../../src/shared/logic/either';
 import fetchPointsNormalizedResponse from '../fixtures/fetch-points-normalized-response.json';
 

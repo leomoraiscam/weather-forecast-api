@@ -10,15 +10,15 @@ import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
 import { StormGlassServiceMock } from '@test/mocks/storm-glass-service-mock';
 
-import { FetchPointsController } from './process-forecast-for-beaches-controller';
-import { ProcessForecastBeachesUseCase } from './process-forecast-for-beaches-use-case';
+import { UserBeachForecastProcessingController } from './user-beach-forecast-processing-controller';
+import { UserBeachForecastProcessingUseCase } from './user-beach-forecast-processing-use-case';
 
 let inMemoryBeachRepository: InMemoryBeachRepository;
 let inMemoryUserRepository: InMemoryUserRepository;
 let inMemoryLoggerService: InMemoryLoggerService;
 let stormGlassServiceMock: StormGlassServiceMock;
-let fetchPointsController: FetchPointsController;
-let processForecastBeachesUseCase: ProcessForecastBeachesUseCase;
+let userBeachForecastProcessingController: UserBeachForecastProcessingController;
+let userBeachForecastProcessingUseCase: UserBeachForecastProcessingUseCase;
 let userId: string;
 
 export class ErrorThrowingUseCaseStub {
@@ -33,13 +33,15 @@ describe('Fetch points beach web controller', () => {
     inMemoryUserRepository = new InMemoryUserRepository();
     inMemoryLoggerService = new InMemoryLoggerService();
     stormGlassServiceMock = new StormGlassServiceMock();
-    processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
+    userBeachForecastProcessingUseCase = new UserBeachForecastProcessingUseCase(
       stormGlassServiceMock,
       inMemoryUserRepository,
       inMemoryBeachRepository,
       inMemoryLoggerService,
     );
-    fetchPointsController = new FetchPointsController(processForecastBeachesUseCase);
+    userBeachForecastProcessingController = new UserBeachForecastProcessingController(
+      userBeachForecastProcessingUseCase,
+    );
 
     const user = createUser();
     await inMemoryUserRepository.create(user);
@@ -58,7 +60,7 @@ describe('Fetch points beach web controller', () => {
       userId,
     };
 
-    const response = await fetchPointsController.handle(request);
+    const response = await userBeachForecastProcessingController.handle(request);
 
     expect(response.statusCode).toEqual(200);
   });
@@ -68,7 +70,7 @@ describe('Fetch points beach web controller', () => {
       userId: 'id-non-exist',
     };
 
-    const response = await fetchPointsController.handle(request);
+    const response = await userBeachForecastProcessingController.handle(request);
 
     expect(response.statusCode).toEqual(404);
   });
@@ -83,7 +85,7 @@ describe('Fetch points beach web controller', () => {
       userId: user.id,
     };
 
-    const response = await fetchPointsController.handle(request);
+    const response = await userBeachForecastProcessingController.handle(request);
 
     expect(response.statusCode).toEqual(404);
   });
@@ -95,7 +97,7 @@ describe('Fetch points beach web controller', () => {
       userId,
     };
 
-    const controller = new FetchPointsController(errorThrowingUseCaseStub);
+    const controller = new UserBeachForecastProcessingController(errorThrowingUseCaseStub);
 
     const response = await controller.handle(request);
 

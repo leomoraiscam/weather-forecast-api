@@ -10,7 +10,7 @@ import { StormGlassServicerErrorStub } from '@test/stubs/storm-glass-service-err
 import { StormGlassServiceStub } from '@test/stubs/storm-glass-service-stub';
 
 import { StormGlassResponseError } from './errors/stormglass-response-error';
-import { ProcessForecastBeachesUseCase } from './process-forecast-for-beaches-use-case';
+import { UserBeachForecastProcessingUseCase } from './user-beach-forecast-processing-use-case';
 
 let inMemoryUsersRepository: InMemoryUserRepository;
 let inMemoryBeachesRepository: InMemoryBeachRepository;
@@ -25,14 +25,14 @@ describe('Process Forecast For Beaches Use Case', () => {
 
   it('should not be able to return list the forecast of beaches array when user does not exist', async () => {
     const stormGlassServiceMock = new StormGlassServiceMock();
-    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
+    const userBeachForecastProcessingUseCase = new UserBeachForecastProcessingUseCase(
       stormGlassServiceMock,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
       inMemoryLoggerService,
     );
 
-    const response = await processForecastBeachesUseCase.execute('any-user-id');
+    const response = await userBeachForecastProcessingUseCase.execute('any-user-id');
 
     expect(response.isLeft()).toBeTruthy();
     expect(stormGlassServiceMock.timesSendWasCalled).toEqual(0);
@@ -44,14 +44,14 @@ describe('Process Forecast For Beaches Use Case', () => {
     inMemoryUsersRepository.create(user);
 
     const stormGlassServiceMock = new StormGlassServiceMock();
-    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
+    const userBeachForecastProcessingUseCase = new UserBeachForecastProcessingUseCase(
       stormGlassServiceMock,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
       inMemoryLoggerService,
     );
 
-    const response = await processForecastBeachesUseCase.execute('fake-user-id');
+    const response = await userBeachForecastProcessingUseCase.execute('fake-user-id');
 
     expect(response.isLeft()).toBeTruthy();
     expect(stormGlassServiceMock.timesSendWasCalled).toEqual(0);
@@ -65,14 +65,14 @@ describe('Process Forecast For Beaches Use Case', () => {
     inMemoryBeachesRepository.create(beach);
 
     const stormGlassServicerErrorStub = new StormGlassServicerErrorStub();
-    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
+    const userBeachForecastProcessingUseCase = new UserBeachForecastProcessingUseCase(
       stormGlassServicerErrorStub,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
       inMemoryLoggerService,
     );
 
-    const response = await processForecastBeachesUseCase.execute('fake-user-id');
+    const response = await userBeachForecastProcessingUseCase.execute('fake-user-id');
 
     expect(response.isLeft()).toBeTruthy();
     expect(response.value).toBeInstanceOf(StormGlassResponseError);
@@ -91,14 +91,14 @@ describe('Process Forecast For Beaches Use Case', () => {
     inMemoryBeachesRepository.create(manlyBeach);
 
     const stormGlassServiceStub = new StormGlassServiceStub();
-    const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
+    const userBeachForecastProcessingUseCase = new UserBeachForecastProcessingUseCase(
       stormGlassServiceStub,
       inMemoryUsersRepository,
       inMemoryBeachesRepository,
       inMemoryLoggerService,
     );
 
-    const beachesWithRating = await processForecastBeachesUseCase.execute('fake-user-id');
+    const beachesWithRating = await userBeachForecastProcessingUseCase.execute('fake-user-id');
 
     expect(beachesWithRating).toEqual({
       value: processForecastBeachesResponse,

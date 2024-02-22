@@ -4,8 +4,8 @@ import { WinstonLoggerService } from '@src/external/logger-service/services/pino
 import { FetchPointService } from '@src/external/stormglass-service/services/fetch-point-service';
 import { UserRepository } from '@src/modules/accounts/repositories/implementations/users-repository';
 import { BeachRepository } from '@src/modules/forecast/repositories/implementations/beach-repository';
-import { FetchPointsController } from '@src/modules/forecast/usecases/process-forecast-for-beaches/process-forecast-for-beaches-controller';
-import { ProcessForecastBeachesUseCase } from '@src/modules/forecast/usecases/process-forecast-for-beaches/process-forecast-for-beaches-use-case';
+import { FetchPointsController } from '@src/modules/forecast/usecases/user-beach-forecast-processing/process-forecast-for-beaches-controller';
+import { ProcessForecastBeachesUseCase } from '@src/modules/forecast/usecases/user-beach-forecast-processing/process-forecast-for-beaches-use-case';
 
 import { IController } from '../../adapters/ports/controller';
 

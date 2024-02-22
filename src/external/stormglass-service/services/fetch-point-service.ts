@@ -2,7 +2,7 @@ import { TypesLogger } from '@config/constants/types-logger-enum';
 import { ICacheService } from '@src/external/cache-service/ports/cache-service';
 import { IRequestService } from '@src/external/http-service/ports/request-service';
 import { ILoggerService } from '@src/external/logger-service/ports/logger-service';
-import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
+import { StormGlassResponseError } from '@src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
 import { Either, left, right } from '@src/shared/logic/either';
 
 import { IFetchPointCoordinate } from '../dtos/fetch-point-coordinate';

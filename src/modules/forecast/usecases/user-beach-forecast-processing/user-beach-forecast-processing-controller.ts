@@ -8,7 +8,7 @@ import { notFound, ok, serverError } from '@src/shared/http/helpers/http-helper'
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';
 import { UserNotFoundError } from './errors/user-not-found-error';
 
-export class FetchPointsController {
+export class UserBeachForecastProcessingController {
   private readonly usecase: IUseCase;
 
   constructor(usecase: IUseCase) {

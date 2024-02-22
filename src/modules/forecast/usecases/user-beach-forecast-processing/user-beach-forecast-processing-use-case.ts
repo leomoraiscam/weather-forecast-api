@@ -11,13 +11,13 @@ import { ITimeBeachRatingForecastDTO } from '@src/modules/forecast/dtos/time-bea
 import { calculateRatingByPoint } from '@src/modules/forecast/helpers/calculate-rating-by-point';
 import { normalizeForecastByTime } from '@src/modules/forecast/helpers/normalize-forecast-by-time';
 import { IBeachRepository } from '@src/modules/forecast/repositories/beach-repository';
-import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
+import { StormGlassResponseError } from '@src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
 import { Either, left, right } from '@src/shared/logic/either';
 
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';
 import { UserNotFoundError } from './errors/user-not-found-error';
 
-export class ProcessForecastBeachesUseCase {
+export class UserBeachForecastProcessingUseCase {
   constructor(
     private stormGlassService: IUseCase,
     private userRepository: IUserRepository,
@@ -44,7 +44,7 @@ export class ProcessForecastBeachesUseCase {
 
     this.loggerService.log({
       level: TypesLogger.INFO,
-      message: `${ProcessForecastBeachesUseCase.name} preparing the forecast for ${beaches.length} beaches`,
+      message: `${UserBeachForecastProcessingUseCase.name} preparing the forecast for ${beaches.length} beaches`,
     });
 
     for (const beach of beaches) {
@@ -52,7 +52,7 @@ export class ProcessForecastBeachesUseCase {
 
       this.loggerService.log({
         level: TypesLogger.INFO,
-        message: `${ProcessForecastBeachesUseCase.name} Preparing the ${name.value} with lat: ${lat.value} and lng: ${lng.value} to user ${userExisted.id}`,
+        message: `${UserBeachForecastProcessingUseCase.name} Preparing the ${name.value} with lat: ${lat.value} and lng: ${lng.value} to user ${userExisted.id}`,
       });
 
       const points = await this.stormGlassService.execute({
@@ -88,7 +88,7 @@ export class ProcessForecastBeachesUseCase {
 
     this.loggerService.log({
       level: TypesLogger.INFO,
-      message: `${ProcessForecastBeachesUseCase.name} all forecast normalized data obtained with success`,
+      message: `${UserBeachForecastProcessingUseCase.name} all forecast normalized data obtained with success`,
     });
 
     return right(normalizeForecast);
