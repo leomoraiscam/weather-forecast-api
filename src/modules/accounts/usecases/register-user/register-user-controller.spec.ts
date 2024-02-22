@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable max-classes-per-file */
+
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
-import { Either } from '@src/shared/logic/either';
+import { Either, left } from '@src/shared/logic/either';
 
 import { IRegisterUserDTO } from '../../dtos/register-user';
 import { InMemoryUserRepository } from '../../repositories/in-memory/in-memory-users-repository';
+import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 import { RegisterUserController } from './register-user-controller';
 import { RegisterUserUseCase } from './register-user-use-case';
 
@@ -16,6 +20,14 @@ let registerUserController: RegisterUserController;
 export class ErrorThrowingUseCaseStub {
   async execute(_: any): Promise<Either<any, any>> {
     throw Error();
+  }
+}
+
+export class ErrorThrowingConflictUseCaseStub {
+  async execute(_: any): Promise<Either<any, any>> {
+    const error = new AccountAlreadyExistsError('any_email@email.com');
+
+    return left(error);
   }
 }
 
@@ -73,6 +85,27 @@ describe('Register user web controller', () => {
     const response = await registerUserController.handle(requestWithInvalidEmail);
 
     expect(response.statusCode).toEqual(400);
+  });
+
+  it('should return status code 409 when user already exist', async () => {
+    const errorThrowingConflictUseCaseStub = new ErrorThrowingConflictUseCaseStub();
+
+    const request: IHttpRequest<IRegisterUserDTO> = {
+      body: {
+        name: 'Bradley May',
+        email: 'za@lisop.gs',
+        password: '123456789',
+      },
+    };
+
+    const controller: RegisterUserController = new RegisterUserController(
+      errorThrowingConflictUseCaseStub,
+      mockValidator,
+    );
+
+    const response = await controller.handle(request);
+
+    expect(response.statusCode).toEqual(409);
   });
 
   it('should return status code 500 when server raises', async () => {
