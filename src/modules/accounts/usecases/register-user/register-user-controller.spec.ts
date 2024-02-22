@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable max-classes-per-file */
-
+import { IRegisterUserDTO } from '@src/modules/accounts/dtos/register-user';
+import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { Either, left } from '@src/shared/logic/either';
 
-import { IRegisterUserDTO } from '../../dtos/register-user';
-import { InMemoryUserRepository } from '../../repositories/in-memory/in-memory-users-repository';
 import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 import { RegisterUserController } from './register-user-controller';
 import { RegisterUserUseCase } from './register-user-use-case';

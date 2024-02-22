@@ -1,14 +1,15 @@
-import { User } from '../../domain/user/user';
+import { User } from '@src/modules/accounts/domain/user/user';
+
 import { IUserRepository } from '../user-repository';
 
 export class InMemoryUserRepository implements IUserRepository {
   users: User[] = [];
 
-  async findById(id: string): Promise<User> {
+  async findById(id: string): Promise<User | undefined> {
     return this.users.find((user) => user.id === id);
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<User | undefined> {
     return this.users.find((user) => user.props.email.value === email);
   }
 

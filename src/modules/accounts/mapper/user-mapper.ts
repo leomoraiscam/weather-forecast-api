@@ -2,10 +2,10 @@ import { Email } from '../domain/user/email';
 import { Name } from '../domain/user/name';
 import { Password } from '../domain/user/password';
 import { User } from '../domain/user/user';
-import { IPersistenceUserModel } from './dtos/users-model';
+import { PersistenceUserModel } from './dtos/user-model';
 
 export class UserMapper {
-  static toDomain(raw: IPersistenceUserModel): User {
+  static toDomain(raw: PersistenceUserModel): User {
     const nameOrError = Name.create(raw.name);
     const emailOrError = Email.create(raw.email);
     const passwordOrError = Password.create(raw.password, true);

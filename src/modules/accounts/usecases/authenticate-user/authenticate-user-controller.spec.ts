@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable max-classes-per-file */
 
+import { IAuthenticateUserDTO } from '@src/modules/accounts/dtos/authenticate-user';
+import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { Either, left } from '@src/shared/logic/either';
 import { createUser } from '@test/factories/user-factory';
 
-import { IAuthenticateUserDTO } from '../../dtos/authenticate-user';
-import { InMemoryUserRepository } from '../../repositories/in-memory/in-memory-users-repository';
 import { AuthenticateUserController } from './authenticate-user-controller';
 import { AuthenticateUserUseCase } from './authenticate-user-use-case';
 

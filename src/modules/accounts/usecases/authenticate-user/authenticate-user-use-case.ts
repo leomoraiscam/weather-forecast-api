@@ -1,9 +1,9 @@
+import { JWT } from '@src/modules/accounts/domain/user/jwt';
+import { IAuthenticateUserDTO } from '@src/modules/accounts/dtos/authenticate-user';
+import { IAuthenticationUserDTO } from '@src/modules/accounts/dtos/authentication-user';
+import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
 import { Either, left, right } from '@src/shared/logic/either';
 
-import { JWT } from '../../domain/user/jwt';
-import { IAuthenticateUserDTO } from '../../dtos/authenticate-user';
-import { IAuthenticationUserDTO } from '../../dtos/authentication-user';
-import { IUserRepository } from '../../repositories/user-repository';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password-error';
 
 export class AuthenticateUserUseCase {

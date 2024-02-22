@@ -1,4 +1,4 @@
-export interface IPersistenceUserModel {
+export abstract class PersistenceUserModel {
   id?: string;
   name: string;
   email: string;

@@ -1,10 +1,10 @@
+import { InvalidEmailError } from '@src/modules/accounts/domain/user/errors/invalid-email-error';
+import { InvalidNameError } from '@src/modules/accounts/domain/user/errors/invalid-name-error';
+import { InvalidPasswordLengthError } from '@src/modules/accounts/domain/user/errors/invalid-password-length-error';
+import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
+import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
 import { createUser } from '@test/factories/user-factory';
 
-import { InvalidEmailError } from '../../domain/user/errors/invalid-email-error';
-import { InvalidNameError } from '../../domain/user/errors/invalid-name-error';
-import { InvalidPasswordLengthError } from '../../domain/user/errors/invalid-password-length-error';
-import { InMemoryUserRepository } from '../../repositories/in-memory/in-memory-users-repository';
-import { IUserRepository } from '../../repositories/user-repository';
 import { RegisterUserUseCase } from './register-user-use-case';
 
 let userRepository: IUserRepository;

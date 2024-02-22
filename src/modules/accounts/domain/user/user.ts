@@ -2,16 +2,16 @@ import { v4 as uuidV4 } from 'uuid';
 
 import { Either, right } from '@src/shared/logic/either';
 
-import { IUserProps } from './dtos/user-props';
+import { IUserPropsDTO } from './dtos/user-props';
 import { InvalidEmailError } from './errors/invalid-email-error';
 import { InvalidNameError } from './errors/invalid-name-error';
 import { InvalidPasswordLengthError } from './errors/invalid-password-length-error';
 
 export class User {
   public readonly _id: string;
-  public readonly props: IUserProps;
+  public readonly props: IUserPropsDTO;
 
-  constructor(props: IUserProps, id?: string) {
+  constructor(props: IUserPropsDTO, id?: string) {
     this._id = id || uuidV4();
     this.props = props;
   }
@@ -33,7 +33,7 @@ export class User {
   }
 
   static create(
-    props: IUserProps,
+    props: IUserPropsDTO,
     id?: string,
   ): Either<InvalidNameError | InvalidEmailError | InvalidPasswordLengthError, User> {
     const user = new User(props, id);

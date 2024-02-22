@@ -1,7 +1,7 @@
+import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
+import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
 import { createUser } from '@test/factories/user-factory';
 
-import { InMemoryUserRepository } from '../../repositories/in-memory/in-memory-users-repository';
-import { IUserRepository } from '../../repositories/user-repository';
 import { AuthenticateUserUseCase } from './authenticate-user-use-case';
 
 let usersRepository: IUserRepository;

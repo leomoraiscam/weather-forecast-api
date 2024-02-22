@@ -1,17 +1,17 @@
 import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
+import { User } from '@src/modules/accounts/domain/user/user';
+import { PersistenceUserModel } from '@src/modules/accounts/mapper/dtos/user-model';
+import { UserMapper } from '@src/modules/accounts/mapper/user-mapper';
 
-import { User } from '../../domain/user/user';
-import { IPersistenceUserModel } from '../../mapper/dtos/users-model';
-import { UserMapper } from '../../mapper/user-mapper';
-import { IUsersRepository } from '../users-repository';
+import { IUserRepository } from '../user-repository';
 
-export class UserRepository implements IUsersRepository {
-  async findById(id: string): Promise<User | null> {
+export class UserRepository implements IUserRepository {
+  async findById(id: string): Promise<User | undefined> {
     const userCollection = mongoHelper.getCollection('users');
-    const user = await userCollection.findOne<IPersistenceUserModel>({ id });
+    const user = await userCollection.findOne<PersistenceUserModel>({ id });
 
     if (!user) {
-      return null;
+      return undefined;
     }
 
     return UserMapper.toDomain(user);
@@ -19,10 +19,10 @@ export class UserRepository implements IUsersRepository {
 
   async findByEmail(email: string): Promise<User | null> {
     const userCollection = mongoHelper.getCollection('users');
-    const user = await userCollection.findOne<IPersistenceUserModel>({ email });
+    const user = await userCollection.findOne<PersistenceUserModel>({ email });
 
     if (!user) {
-      return null;
+      return undefined;
     }
 
     return UserMapper.toDomain(user);

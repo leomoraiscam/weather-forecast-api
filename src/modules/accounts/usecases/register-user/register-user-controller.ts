@@ -1,12 +1,12 @@
 import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IValidator } from '@src/main/adapters/ports/validator';
+import { IRegisterUserDTO } from '@src/modules/accounts/dtos/register-user';
+import { IRegisteredUserDTO } from '@src/modules/accounts/dtos/registered-user';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { IHttpResponse } from '@src/shared/http/dtos/http-response';
 import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
 
-import { IRegisterUserDTO } from '../../dtos/register-user';
-import { IRegisteredUserDTO } from '../../dtos/registered-user';
 import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 
 export class RegisterUserController {

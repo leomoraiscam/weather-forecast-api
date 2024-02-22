@@ -1,12 +1,12 @@
 import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IValidator } from '@src/main/adapters/ports/validator';
+import { IAuthenticateUserDTO } from '@src/modules/accounts/dtos/authenticate-user';
+import { IAuthenticationUserDTO } from '@src/modules/accounts/dtos/authentication-user';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { IHttpResponse } from '@src/shared/http/dtos/http-response';
 import { badRequest, ok, serverError, unauthorized } from '@src/shared/http/helpers/http-helper';
 
-import { IAuthenticateUserDTO } from '../../dtos/authenticate-user';
-import { IAuthenticationUserDTO } from '../../dtos/authentication-user';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password-error';
 
 export class AuthenticateUserController {

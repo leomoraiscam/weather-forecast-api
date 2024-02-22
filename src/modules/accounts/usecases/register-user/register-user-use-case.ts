@@ -1,15 +1,15 @@
+import { Email } from '@src/modules/accounts/domain/user/email';
+import { InvalidEmailError } from '@src/modules/accounts/domain/user/errors/invalid-email-error';
+import { InvalidNameError } from '@src/modules/accounts/domain/user/errors/invalid-name-error';
+import { InvalidPasswordLengthError } from '@src/modules/accounts/domain/user/errors/invalid-password-length-error';
+import { Name } from '@src/modules/accounts/domain/user/name';
+import { Password } from '@src/modules/accounts/domain/user/password';
+import { User } from '@src/modules/accounts/domain/user/user';
+import { IRegisterUserDTO } from '@src/modules/accounts/dtos/register-user';
+import { IRegisteredUserDTO } from '@src/modules/accounts/dtos/registered-user';
+import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
 import { Either, left, right } from '@src/shared/logic/either';
 
-import { Email } from '../../domain/user/email';
-import { InvalidEmailError } from '../../domain/user/errors/invalid-email-error';
-import { InvalidNameError } from '../../domain/user/errors/invalid-name-error';
-import { InvalidPasswordLengthError } from '../../domain/user/errors/invalid-password-length-error';
-import { Name } from '../../domain/user/name';
-import { Password } from '../../domain/user/password';
-import { User } from '../../domain/user/user';
-import { IRegisterUserDTO } from '../../dtos/register-user';
-import { IRegisteredUserDTO } from '../../dtos/registered-user';
-import { IUserRepository } from '../../repositories/user-repository';
 import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 
 export class RegisterUserUseCase {
