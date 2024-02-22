@@ -1,6 +1,6 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 
-export interface IBeach {
+export interface IRegisterBeachDTO {
   name: string;
   position?: BeachPosition;
   lat: number;
