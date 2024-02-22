@@ -1,12 +1,12 @@
 import { Beach } from '../../domain/beach/beach';
-import { IBeachCoordinate } from '../../dtos/beach-cordinate';
+import { IBeachCoordinates } from '../../dtos/beach-coordinates';
 import { BeachMapper } from '../../mapper/beach-mapper';
 import { IBeachRepository } from '../beaches-repository';
 
 export class InMemoryBeachRepository implements IBeachRepository {
   beaches: Beach[] = [];
 
-  async findByGeolocation(data: IBeachCoordinate): Promise<Beach> {
+  async findByGeolocation(data: IBeachCoordinates): Promise<Beach> {
     const { lat, lng, userId } = data;
 
     return this.beaches.find(
