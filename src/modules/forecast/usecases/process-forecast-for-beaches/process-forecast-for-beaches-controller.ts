@@ -2,9 +2,11 @@ import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { IHttpResponse } from '@src/shared/http/dtos/http-response';
-import { badRequest, ok, serverError } from '@src/shared/http/helpers/http-helper';
+import { notFound, ok, serverError } from '@src/shared/http/helpers/http-helper';
 
-import { IForecastRatingBeach } from '../../dtos/forecast-rating-beach';
+import { IBeachRatingForecast } from '../../dtos/beach-rating-forecast';
+import { BeachesNotFoundError } from './errors/beaches-not-found-error';
+import { UserNotFoundError } from './errors/user-not-found-error';
 
 export class FetchPointsController {
   private readonly usecase: IUseCase;
@@ -15,7 +17,7 @@ export class FetchPointsController {
 
   async handle(
     request: IHttpRequest<{ userId: string }>,
-  ): Promise<IHttpResponse<IForecastRatingBeach | IControllerError>> {
+  ): Promise<IHttpResponse<IBeachRatingForecast | IControllerError>> {
     try {
       const { userId } = request;
 
@@ -24,9 +26,17 @@ export class FetchPointsController {
       if (response.isLeft()) {
         const error = response.value;
 
-        return badRequest(error);
+        switch (error.constructor) {
+          case BeachesNotFoundError:
+            return notFound(error);
+          case UserNotFoundError:
+            return notFound(error);
+          default:
+            return notFound(error);
+        }
       }
-      return ok<IForecastRatingBeach>(response.value);
+
+      return ok<IBeachRatingForecast>(response.value);
     } catch (error) {
       return serverError(error);
     }
