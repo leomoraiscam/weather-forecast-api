@@ -7,6 +7,7 @@ import stormGlassResponseGenericError from '@test/fixtures/storm-glass-response-
 import stormGlassResponseRateLimitError from '@test/fixtures/storm-glass-response-rate-limit-error.json';
 import stormGlassWeather3HoursResponse from '@test/fixtures/storm-glass-response-weather-3-hours.json';
 
+import { IFetchPointCoordinate } from '../dtos/fetch-point-coordinate';
 import { FetchPointService } from './fetch-point-service';
 
 jest.mock('@src/external/http-service/services/axios-request-service');
@@ -88,7 +89,66 @@ describe('StormGlass Service', () => {
     expect(response.isLeft()).toBeTruthy();
   });
 
-  it.todo(
-    'should be able to get the normalized forecast points from cache and use it to return data points',
-  );
+  it('should be able to get the normalized forecast points from cache and use it to return data points', async () => {
+    mockedRequest.get.mockResolvedValue({ data: stormGlassWeather3HoursResponse, status: 200 });
+
+    const fetchPointService = new FetchPointService(
+      mockedRequest,
+      inMemoryCacheService,
+      inMemoryLoggerService,
+    );
+
+    const input: IFetchPointCoordinate = {
+      lat: -33.792726,
+      lng: 151.289824,
+      userId: 'user123',
+    };
+
+    const cachedDataMock = [
+      {
+        time: '2020-04-26T00:00:00+00:00',
+        swellDirection: 64.26,
+        swellHeight: 0.15,
+        swellPeriod: 3.89,
+        waveDirection: 231.38,
+        waveHeight: 0.47,
+        windDirection: 299.45,
+        windSpeed: 100,
+      },
+      {
+        time: '2020-04-26T01:00:00+00:00',
+        swellDirection: 123.41,
+        swellHeight: 0.21,
+        swellPeriod: 3.67,
+        waveDirection: 232.12,
+        waveHeight: 0.46,
+        windDirection: 310.48,
+        windSpeed: 100,
+      },
+      {
+        time: '2020-04-26T02:00:00+00:00',
+        swellDirection: 182.56,
+        swellHeight: 0.28,
+        swellPeriod: 3.44,
+        waveDirection: 232.86,
+        waveHeight: 0.46,
+        windDirection: 321.5,
+        windSpeed: 100,
+      },
+    ];
+
+    await inMemoryCacheService.save(
+      `provider-forecast-point: ${input.userId}:${lat}-${lng}`,
+      cachedDataMock,
+    );
+
+    const response = await fetchPointService.execute({
+      lat: input.lat,
+      lng: input.lng,
+      userId: input.userId,
+    });
+
+    expect(response.isRight()).toBeTruthy();
+    expect(response.value).toEqual(cachedDataMock);
+  });
 });
