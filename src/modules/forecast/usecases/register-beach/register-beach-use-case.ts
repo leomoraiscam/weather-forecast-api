@@ -1,4 +1,4 @@
-import { IUsersRepository } from '@src/modules/accounts/repositories/users-repository';
+import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
 import { Either, left, right } from '@src/shared/logic/either';
 
 import { Beach } from '../../domain/beach/beach';
@@ -19,7 +19,7 @@ import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 export class RegisterBeachUseCase {
   constructor(
     private beachesRepository: IBeachRepository,
-    private usersRepository: IUsersRepository,
+    private usersRepository: IUserRepository,
   ) {}
 
   async execute({

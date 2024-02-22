@@ -1,15 +1,15 @@
 import { createUser } from '@test/factories/user-factory';
 
-import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository';
-import { IUsersRepository } from '../../repositories/users-repository';
+import { InMemoryUserRepository } from '../../repositories/in-memory/in-memory-users-repository';
+import { IUserRepository } from '../../repositories/user-repository';
 import { AuthenticateUser } from './authenticate-user';
 
-let usersRepository: IUsersRepository;
+let usersRepository: IUserRepository;
 let authenticateUser: AuthenticateUser;
 
 describe('Authenticate User Use case', () => {
   beforeEach(() => {
-    usersRepository = new InMemoryUsersRepository();
+    usersRepository = new InMemoryUserRepository();
     authenticateUser = new AuthenticateUser(usersRepository);
   });
 

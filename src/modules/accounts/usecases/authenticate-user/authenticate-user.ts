@@ -3,11 +3,11 @@ import { Either, left, right } from '@src/shared/logic/either';
 import { JWT } from '../../domain/user/jwt';
 import { IAuthenticateUserRequest } from '../../dtos/authenticate-user-request';
 import { IAuthenticateUserResponse } from '../../dtos/authenticate-user-response';
-import { IUsersRepository } from '../../repositories/users-repository';
+import { IUserRepository } from '../../repositories/user-repository';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password-error';
 
 export class AuthenticateUser {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(private usersRepository: IUserRepository) {}
 
   async execute({
     email,

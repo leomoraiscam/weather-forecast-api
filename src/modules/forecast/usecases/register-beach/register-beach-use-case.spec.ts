@@ -1,6 +1,6 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { InMemoryUsersRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
-import { IUsersRepository } from '@src/modules/accounts/repositories/users-repository';
+import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
+import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
 import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
 
@@ -14,7 +14,7 @@ import { InMemoryBeachRepository } from '../../repositories/in-memory/in-memory-
 import { RegisterBeachUseCase } from './register-beach-use-case';
 
 let beachRepository: IBeachRepository;
-let usersRepository: IUsersRepository;
+let usersRepository: IUserRepository;
 
 let registerBeachUseCase: RegisterBeachUseCase;
 let beach: IBeach;
@@ -23,7 +23,7 @@ let userId: string;
 describe('Create Beach Use Case', () => {
   beforeEach(async () => {
     beachRepository = new InMemoryBeachRepository();
-    usersRepository = new InMemoryUsersRepository();
+    usersRepository = new InMemoryUserRepository();
     registerBeachUseCase = new RegisterBeachUseCase(beachRepository, usersRepository);
 
     const user = createUser();

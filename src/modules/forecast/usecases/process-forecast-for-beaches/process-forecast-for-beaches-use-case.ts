@@ -5,7 +5,7 @@ import { TypesLogger } from '@config/constants/types-logger-enum';
 import { ILoggerService } from '@src/external/logger-service/ports/logger-service';
 import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
 import { IUseCase } from '@src/main/adapters/ports/use-case';
-import { IUsersRepository } from '@src/modules/accounts/repositories/users-repository';
+import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
 import { Either, left, right } from '@src/shared/logic/either';
 
@@ -20,7 +20,7 @@ import { UserNotFoundError } from './errors/user-not-found-error';
 export class ProcessForecastBeachesUseCase {
   constructor(
     private stormGlassService: IUseCase,
-    private usersRepository: IUsersRepository,
+    private usersRepository: IUserRepository,
     private beachesRepository: IBeachRepository,
     private loggerService: ILoggerService,
   ) {}
