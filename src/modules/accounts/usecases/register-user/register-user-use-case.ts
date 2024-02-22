@@ -7,22 +7,22 @@ import { InvalidPasswordLengthError } from '../../domain/user/errors/invalid-pas
 import { Name } from '../../domain/user/name';
 import { Password } from '../../domain/user/password';
 import { User } from '../../domain/user/user';
-import { IRegisterUserRequest } from '../../dtos/register-user-request';
-import { IRegisterUser } from '../../dtos/register-user-response';
-import { IUsersRepository } from '../../repositories/users-repository';
+import { IRegisterUserDTO } from '../../dtos/register-user';
+import { IRegisteredUserDTO } from '../../dtos/registered-user';
+import { IUserRepository } from '../../repositories/user-repository';
 import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 
 export class RegisterUserUseCase {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(private userRepository: IUserRepository) {}
 
   async execute({
     name,
     email,
     password,
-  }: IRegisterUserRequest): Promise<
+  }: IRegisterUserDTO): Promise<
     Either<
       AccountAlreadyExistsError | InvalidNameError | InvalidEmailError | InvalidPasswordLengthError,
-      IRegisterUser
+      IRegisteredUserDTO
     >
   > {
     const nameOrError = Name.create(name);
@@ -53,13 +53,13 @@ export class RegisterUserUseCase {
 
     const user = userOrError.value;
 
-    const userAlreadyExists = await this.usersRepository.findByEmail(user.email.value);
+    const userExisted = await this.userRepository.findByEmail(user.email.value);
 
-    if (userAlreadyExists) {
+    if (userExisted) {
       return left(new AccountAlreadyExistsError(user.email.value));
     }
 
-    await this.usersRepository.create(user);
+    await this.userRepository.create(user);
 
     return right({
       id: user.id,

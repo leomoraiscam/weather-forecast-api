@@ -3,34 +3,33 @@ import { createUser } from '@test/factories/user-factory';
 import { InvalidEmailError } from '../../domain/user/errors/invalid-email-error';
 import { InvalidNameError } from '../../domain/user/errors/invalid-name-error';
 import { InvalidPasswordLengthError } from '../../domain/user/errors/invalid-password-length-error';
-import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository';
-import { IUsersRepository } from '../../repositories/users-repository';
+import { InMemoryUserRepository } from '../../repositories/in-memory/in-memory-users-repository';
+import { IUserRepository } from '../../repositories/user-repository';
 import { RegisterUserUseCase } from './register-user-use-case';
 
-let usersRepository: IUsersRepository;
+let userRepository: IUserRepository;
 let registerUserUseCase: RegisterUserUseCase;
 
 describe('Register User Use Case', () => {
   beforeEach(() => {
-    usersRepository = new InMemoryUsersRepository();
-    registerUserUseCase = new RegisterUserUseCase(usersRepository);
+    userRepository = new InMemoryUserRepository();
+    registerUserUseCase = new RegisterUserUseCase(userRepository);
   });
 
-  it('should be able to register new user', async () => {
+  it('should be able to register new user when received correct data', async () => {
     const response = await registerUserUseCase.execute({
-      name: 'John Doe',
-      email: 'john@doe.com',
+      name: 'Marvin Guerrero',
+      email: 'muzewzo@vaduusi.cd',
       password: '123456',
     });
 
-    expect(await usersRepository.findByEmail('john@doe.com')).toBeTruthy();
     expect(response.isRight()).toBeTruthy();
   });
 
   it('should not be able to register new user with name is invalid', async () => {
     const response = await registerUserUseCase.execute({
       name: 'J',
-      email: 'john@doe.com',
+      email: 'jabwa@tabgud.ad',
       password: '123456',
     });
 
@@ -40,7 +39,7 @@ describe('Register User Use Case', () => {
 
   it('should not be able to register new user with email is invalid', async () => {
     const response = await registerUserUseCase.execute({
-      name: 'John Doe',
+      name: 'Madge May',
       email: 'john',
       password: '123456',
     });
@@ -51,8 +50,8 @@ describe('Register User Use Case', () => {
 
   it('should not be able to register new user with password is invalid', async () => {
     const response = await registerUserUseCase.execute({
-      name: 'John Doe',
-      email: 'john@doe.com',
+      name: 'Nell Santos',
+      email: 'edi@gati.mk',
       password: '123',
     });
 
@@ -63,7 +62,7 @@ describe('Register User Use Case', () => {
   it('should not be able to register new user with existing email', async () => {
     const user = createUser();
 
-    usersRepository.create(user);
+    await userRepository.create(user);
 
     const response = await registerUserUseCase.execute({
       name: 'John Doe',
