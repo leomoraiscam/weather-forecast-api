@@ -1,9 +1,11 @@
 /* eslint-disable no-restricted-syntax */
-import { IForecastRatingBeach } from '../dtos/forecast-rating-beach';
-import { ITimeForecast } from '../dtos/time-forecast';
+import { IBeachRatingForecast } from '../dtos/beach-rating-forecast';
+import { ITimeBeachRatingForecastDTO } from '../dtos/time-beach-rating-forecast';
 
-export function normalizeForecastByTime(forecast: IForecastRatingBeach[]): ITimeForecast[] {
-  const forecastByTime: ITimeForecast[] = [];
+export function normalizeForecastByTime(
+  forecast: IBeachRatingForecast[],
+): ITimeBeachRatingForecastDTO[] {
+  const forecastByTime: ITimeBeachRatingForecastDTO[] = [];
 
   for (const point of forecast) {
     const timePoint = forecastByTime.find((forecastData) => forecastData.time === point.time);

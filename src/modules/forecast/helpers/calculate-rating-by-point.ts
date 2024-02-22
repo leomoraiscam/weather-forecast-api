@@ -1,12 +1,12 @@
 import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
-import { IBeach } from '@src/modules/forecast/dtos/beach';
+import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';
 
 import { getPositionFromLocation } from './get-position-from-location';
 import { getRatingBasedOnWindAndWavePositions } from './get-rating-based-on-wind-and-wave-positions';
 import { getRatingForSwellPeriod } from './get-rating-for-swell-period';
 import { getRatingForSwellSize } from './get-rating-for-swell-size';
 
-export function calculateRatingByPoint(point: IFetchPointNormalize, beach: IBeach) {
+export function calculateRatingByPoint(point: IFetchPointNormalize, beach: IRegisterBeachDTO) {
   const { swellDirection, windDirection, swellHeight, swellPeriod } = point;
 
   const swellDirectionPosition = getPositionFromLocation(swellDirection);

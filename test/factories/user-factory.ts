@@ -4,11 +4,13 @@ import { Password } from '../../src/modules/accounts/domain/user/password';
 import { User } from '../../src/modules/accounts/domain/user/user';
 
 type UserOverrides = {
+  id?: string;
   email?: string;
   password?: string;
 };
 
 export function createUser(overrides?: UserOverrides) {
+  const id = overrides?.id ?? 'fake-user-id';
   const name = Name.create('John Doe').value as Name;
   const email = Email.create(overrides?.email ?? 'john@doe.com').value as Email;
   const password = Password.create(overrides?.password ?? '123456').value as Password;
@@ -19,7 +21,7 @@ export function createUser(overrides?: UserOverrides) {
       email,
       password,
     },
-    'fake-user-id',
+    id,
   );
 
   return user.value as User;
