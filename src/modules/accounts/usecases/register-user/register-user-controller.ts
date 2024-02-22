@@ -5,23 +5,24 @@ import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { IHttpResponse } from '@src/shared/http/dtos/http-response';
 import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
 
-import { IRegisterUserRequest } from '../../dtos/register-user-request';
-import { IRegisterUser } from '../../dtos/register-user-response';
+import { IRegisterUserDTO } from '../../dtos/register-user';
+import { IRegisteredUserDTO } from '../../dtos/registered-user';
 import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 
 export class RegisterUserController {
   private readonly usecase: IUseCase;
-  private readonly validator: IValidator<IRegisterUserRequest>;
+  private readonly validator: IValidator<IRegisterUserDTO>;
+
   readonly requiredParams = ['name', 'email', 'password'];
 
-  constructor(usecase: IUseCase, validator: IValidator<IRegisterUserRequest>) {
+  constructor(usecase: IUseCase, validator: IValidator<IRegisterUserDTO>) {
     this.usecase = usecase;
     this.validator = validator;
   }
 
   async handle(
-    request: IHttpRequest<IRegisterUserRequest>,
-  ): Promise<IHttpResponse<IRegisterUser | IControllerError>> {
+    request: IHttpRequest<IRegisterUserDTO>,
+  ): Promise<IHttpResponse<IRegisteredUserDTO | IControllerError>> {
     const validator = this.validator.validate(request.body, this.requiredParams);
 
     if (validator.isLeft()) {
@@ -42,7 +43,7 @@ export class RegisterUserController {
         }
       }
 
-      return created<IRegisterUser>(response.value);
+      return created<IRegisteredUserDTO>(response.value);
     } catch (error) {
       return serverError(error);
     }
