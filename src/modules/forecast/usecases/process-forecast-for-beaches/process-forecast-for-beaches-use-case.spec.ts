@@ -25,7 +25,6 @@ describe('Process Forecast For Beaches Use Case', () => {
 
   it('should not be able to return list the forecast of beaches array when user does not exist', async () => {
     const stormGlassServiceMock = new StormGlassServiceMock();
-
     const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
       stormGlassServiceMock,
       inMemoryUsersRepository,
@@ -39,7 +38,7 @@ describe('Process Forecast For Beaches Use Case', () => {
     expect(stormGlassServiceMock.timesSendWasCalled).toEqual(0);
   });
 
-  it('should not be able to return list the forecast of beaches array when user not has beaches', async () => {
+  it('should not be able to return list the forecast of beaches array when user exist but not has beaches', async () => {
     const user = createUser();
 
     inMemoryUsersRepository.create(user);
@@ -60,15 +59,12 @@ describe('Process Forecast For Beaches Use Case', () => {
 
   it('should be able to throw internal processing error when something goes wrong during the rating process', async () => {
     const user = createUser();
-
     inMemoryUsersRepository.create(user);
 
     const beach = createBeach();
-
     inMemoryBeachesRepository.create(beach);
 
     const stormGlassServicerErrorStub = new StormGlassServicerErrorStub();
-
     const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
       stormGlassServicerErrorStub,
       inMemoryUsersRepository,
@@ -84,7 +80,6 @@ describe('Process Forecast For Beaches Use Case', () => {
 
   it('should return the forecast beaches in the same hour with different ratings', async () => {
     const user = createUser();
-
     await inMemoryUsersRepository.create(user);
 
     const manlyBeach = createBeach({
@@ -93,11 +88,9 @@ describe('Process Forecast For Beaches Use Case', () => {
       lng: 151.287648,
       position: BeachPosition.E,
     });
-
     inMemoryBeachesRepository.create(manlyBeach);
 
     const stormGlassServiceStub = new StormGlassServiceStub();
-
     const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
       stormGlassServiceStub,
       inMemoryUsersRepository,

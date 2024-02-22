@@ -9,8 +9,8 @@ import { IUserRepository } from '@src/modules/accounts/repositories/user-reposit
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
 import { Either, left, right } from '@src/shared/logic/either';
 
-import { IForecastRatingBeach } from '../../dtos/forecast-rating-beach';
-import { ITimeForecast } from '../../dtos/time-forecast';
+import { IBeachRatingForecast } from '../../dtos/beach-rating-forecast';
+import { ITimeBeachRatingForecastDTO } from '../../dtos/time-beach-rating-forecast';
 import { calculateRatingByPoint } from '../../helpers/calculate-rating-by-point';
 import { normalizeForecastByTime } from '../../helpers/normalize-forecast-by-time';
 import { IBeachRepository } from '../../repositories/beaches-repository';
@@ -20,25 +20,27 @@ import { UserNotFoundError } from './errors/user-not-found-error';
 export class ProcessForecastBeachesUseCase {
   constructor(
     private stormGlassService: IUseCase,
-    private usersRepository: IUserRepository,
-    private beachesRepository: IBeachRepository,
+    private userRepository: IUserRepository,
+    private beachRepository: IBeachRepository,
     private loggerService: ILoggerService,
   ) {}
 
-  public async execute(userId: string): Promise<Either<StormGlassResponseError, ITimeForecast[]>> {
-    const user = await this.usersRepository.findById(userId);
+  public async execute(
+    userId: string,
+  ): Promise<Either<StormGlassResponseError, ITimeBeachRatingForecastDTO[]>> {
+    const userExisted = await this.userRepository.findById(userId);
 
-    if (!user) {
+    if (!userExisted) {
       return left(new UserNotFoundError());
     }
 
-    const beaches = await this.beachesRepository.findAllBeachesByUser(userId);
+    const beaches = await this.beachRepository.findAllBeachesByUser(userId);
 
     if (!beaches.length) {
       return left(new BeachesNotFoundError());
     }
 
-    const beachForecastsSources: IForecastRatingBeach[] = [];
+    const beachRatingForecastsSources: IBeachRatingForecast[] = [];
 
     this.loggerService.log({
       level: TypesLogger.INFO,
@@ -50,13 +52,13 @@ export class ProcessForecastBeachesUseCase {
 
       this.loggerService.log({
         level: TypesLogger.INFO,
-        message: `${ProcessForecastBeachesUseCase.name} Preparing the ${name.value} with lat: ${lat.value} and lng: ${lng.value} to user ${user.id}`,
+        message: `${ProcessForecastBeachesUseCase.name} Preparing the ${name.value} with lat: ${lat.value} and lng: ${lng.value} to user ${userExisted.id}`,
       });
 
       const points = await this.stormGlassService.execute({
         lat: lat.value,
         lng: lng.value,
-        userId: user.id,
+        userId: userExisted.id,
       });
 
       if (!points.value.length) {
@@ -64,7 +66,7 @@ export class ProcessForecastBeachesUseCase {
       }
 
       const enrichedBeachRating = points.value.map(
-        (pointForecast: IFetchPointNormalize): IForecastRatingBeach => ({
+        (pointForecast: IFetchPointNormalize): IBeachRatingForecast => ({
           lat: lat.value,
           lng: lng.value,
           name: name.value,
@@ -79,10 +81,10 @@ export class ProcessForecastBeachesUseCase {
         }),
       );
 
-      beachForecastsSources.push(...enrichedBeachRating);
+      beachRatingForecastsSources.push(...enrichedBeachRating);
     }
 
-    const normalizeForecast = normalizeForecastByTime(beachForecastsSources);
+    const normalizeForecast = normalizeForecastByTime(beachRatingForecastsSources);
 
     this.loggerService.log({
       level: TypesLogger.INFO,
