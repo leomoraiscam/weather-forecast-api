@@ -11,21 +11,24 @@ import {
   notFound,
 } from '@src/shared/http/helpers/http-helper';
 
-import { IBeach } from '../../dtos/beach';
+import { IRegisterBeachDTO } from '../../dtos/register-beach';
+import { IRegisteredBeachDTO } from '../../dtos/registered-beach';
 import { UserNotFoundError } from '../process-forecast-for-beaches/errors/user-not-found-error';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 
 export class RegisterBeachController {
   private readonly usecase: IUseCase;
-  private readonly validator: IValidator<IBeach>;
+  private readonly validator: IValidator<IRegisterBeachDTO>;
   readonly requiredParams = ['name', 'lat', 'lng', 'position'];
 
-  constructor(usecase: IUseCase, validator: IValidator<IBeach>) {
+  constructor(usecase: IUseCase, validator: IValidator<IRegisterBeachDTO>) {
     this.usecase = usecase;
     this.validator = validator;
   }
 
-  async handle(request: IHttpRequest<IBeach>): Promise<IHttpResponse<IBeach | IControllerError>> {
+  async handle(
+    request: IHttpRequest<IRegisterBeachDTO>,
+  ): Promise<IHttpResponse<IRegisteredBeachDTO | IControllerError>> {
     try {
       const { body, userId } = request;
 
@@ -53,7 +56,7 @@ export class RegisterBeachController {
         }
       }
 
-      return created<IBeach>(response.value);
+      return created<IRegisteredBeachDTO>(response.value);
     } catch (error) {
       return serverError(error);
     }
