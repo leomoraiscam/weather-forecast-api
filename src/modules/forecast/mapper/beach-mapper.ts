@@ -3,10 +3,10 @@ import { Latitude } from '../domain/beach/latitude';
 import { Longitude } from '../domain/beach/longitude';
 import { Name } from '../domain/beach/name';
 import { Position } from '../domain/beach/position';
-import { IPersistenceBeachModel } from './dtos/beach-model';
+import { PersistenceBeachModel } from './dtos/beach-model';
 
 export class BeachMapper {
-  static toDomain(raw: IPersistenceBeachModel[]): Beach[] {
+  static toDomain(raw: PersistenceBeachModel[]): Beach[] {
     return raw.map(({ name, lat, lng, position, userId, id }) => {
       const nameOrError = Name.create(name);
       const latitudeOrError = Latitude.create(lat);

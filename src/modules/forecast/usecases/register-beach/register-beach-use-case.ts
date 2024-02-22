@@ -1,18 +1,18 @@
 import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
+import { Beach } from '@src/modules/forecast/domain/beach/beach';
+import { InvalidLatitudeError } from '@src/modules/forecast/domain/beach/errors/invalid-latitude-error';
+import { InvalidLongitudeError } from '@src/modules/forecast/domain/beach/errors/invalid-longitude-error';
+import { InvalidNameError } from '@src/modules/forecast/domain/beach/errors/invalid-name-error';
+import { InvalidPositionError } from '@src/modules/forecast/domain/beach/errors/invalid-position-error';
+import { Latitude } from '@src/modules/forecast/domain/beach/latitude';
+import { Longitude } from '@src/modules/forecast/domain/beach/longitude';
+import { Name } from '@src/modules/forecast/domain/beach/name';
+import { Position } from '@src/modules/forecast/domain/beach/position';
+import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';
+import { IRegisteredBeachDTO } from '@src/modules/forecast/dtos/registered-beach';
+import { IBeachRepository } from '@src/modules/forecast/repositories/beach-repository';
 import { Either, left, right } from '@src/shared/logic/either';
 
-import { Beach } from '../../domain/beach/beach';
-import { InvalidLatitudeError } from '../../domain/beach/errors/invalid-latitude-error';
-import { InvalidLongitudeError } from '../../domain/beach/errors/invalid-longitude-error';
-import { InvalidNameError } from '../../domain/beach/errors/invalid-name-error';
-import { InvalidPositionError } from '../../domain/beach/errors/invalid-position-error';
-import { Latitude } from '../../domain/beach/latitude';
-import { Longitude } from '../../domain/beach/longitude';
-import { Name } from '../../domain/beach/name';
-import { Position } from '../../domain/beach/position';
-import { IRegisterBeachDTO } from '../../dtos/register-beach';
-import { IRegisteredBeachDTO } from '../../dtos/registered-beach';
-import { IBeachRepository } from '../../repositories/beaches-repository';
 import { UserNotFoundError } from '../process-forecast-for-beaches/errors/user-not-found-error';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 

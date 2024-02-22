@@ -1,12 +1,13 @@
-import { Beach } from '../../domain/beach/beach';
-import { IBeachCoordinates } from '../../dtos/beach-coordinates';
-import { BeachMapper } from '../../mapper/beach-mapper';
-import { IBeachRepository } from '../beaches-repository';
+import { Beach } from '@src/modules/forecast/domain/beach/beach';
+import { IBeachCoordinatesDTO } from '@src/modules/forecast/dtos/beach-coordinates';
+import { BeachMapper } from '@src/modules/forecast/mapper/beach-mapper';
+
+import { IBeachRepository } from '../beach-repository';
 
 export class InMemoryBeachRepository implements IBeachRepository {
   beaches: Beach[] = [];
 
-  async findByGeolocation(data: IBeachCoordinates): Promise<Beach> {
+  async findByGeolocation(data: IBeachCoordinatesDTO): Promise<Beach> {
     const { lat, lng, userId } = data;
 
     return this.beaches.find(

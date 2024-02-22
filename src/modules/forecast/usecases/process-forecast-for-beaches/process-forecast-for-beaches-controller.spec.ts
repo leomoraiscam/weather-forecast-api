@@ -2,23 +2,23 @@
 /* eslint-disable max-classes-per-file */
 
 import { InMemoryLoggerService } from '@src/external/logger-service/in-memory/in-memory-logger-service';
-import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
+import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
+import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { Either } from '@src/shared/logic/either';
 import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
 import { StormGlassServiceMock } from '@test/mocks/storm-glass-service-mock';
 
-import { InMemoryBeachRepository } from '../../repositories/in-memory/in-memory-beach-repository';
 import { FetchPointsController } from './process-forecast-for-beaches-controller';
 import { ProcessForecastBeachesUseCase } from './process-forecast-for-beaches-use-case';
 
-let beachRepository: InMemoryBeachRepository;
-let userRepository: InMemoryUserRepository;
-let processForecastBeachesUseCase: ProcessForecastBeachesUseCase;
+let inMemoryBeachRepository: InMemoryBeachRepository;
+let inMemoryUserRepository: InMemoryUserRepository;
 let inMemoryLoggerService: InMemoryLoggerService;
 let stormGlassServiceMock: StormGlassServiceMock;
 let fetchPointsController: FetchPointsController;
+let processForecastBeachesUseCase: ProcessForecastBeachesUseCase;
 let userId: string;
 
 export class ErrorThrowingUseCaseStub {
@@ -29,20 +29,20 @@ export class ErrorThrowingUseCaseStub {
 
 describe('Fetch points beach web controller', () => {
   beforeEach(async () => {
-    beachRepository = new InMemoryBeachRepository();
-    userRepository = new InMemoryUserRepository();
-    stormGlassServiceMock = new StormGlassServiceMock();
+    inMemoryBeachRepository = new InMemoryBeachRepository();
+    inMemoryUserRepository = new InMemoryUserRepository();
     inMemoryLoggerService = new InMemoryLoggerService();
+    stormGlassServiceMock = new StormGlassServiceMock();
     processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
       stormGlassServiceMock,
-      userRepository,
-      beachRepository,
+      inMemoryUserRepository,
+      inMemoryBeachRepository,
       inMemoryLoggerService,
     );
     fetchPointsController = new FetchPointsController(processForecastBeachesUseCase);
 
     const user = createUser();
-    await userRepository.create(user);
+    await inMemoryUserRepository.create(user);
 
     userId = user.id;
 
@@ -50,7 +50,7 @@ describe('Fetch points beach web controller', () => {
       userId,
     });
 
-    await beachRepository.create(beach);
+    await inMemoryBeachRepository.create(beach);
   });
 
   it('should return status code 200 when request contains valid user data', async () => {
@@ -77,7 +77,7 @@ describe('Fetch points beach web controller', () => {
     const user = createUser({
       id: 'other-id',
     });
-    await userRepository.create(user);
+    await inMemoryUserRepository.create(user);
 
     const request: IHttpRequest<{ userId: string }> = {
       userId: user.id,

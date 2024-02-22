@@ -1,22 +1,21 @@
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
-import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
 import { createUser } from '@test/factories/user-factory';
 
 import { AuthenticateUserUseCase } from './authenticate-user-use-case';
 
-let usersRepository: IUserRepository;
+let inMemoryUserRepository: InMemoryUserRepository;
 let authenticateUserUseCase: AuthenticateUserUseCase;
 
 describe('Authenticate User Use case', () => {
   beforeEach(() => {
-    usersRepository = new InMemoryUserRepository();
-    authenticateUserUseCase = new AuthenticateUserUseCase(usersRepository);
+    inMemoryUserRepository = new InMemoryUserRepository();
+    authenticateUserUseCase = new AuthenticateUserUseCase(inMemoryUserRepository);
   });
 
   it('should be able return token property to user when the same is authenticate with success', async () => {
     const user = createUser();
 
-    usersRepository.create(user);
+    inMemoryUserRepository.create(user);
 
     const response = await authenticateUserUseCase.execute({
       email: 'john@doe.com',
@@ -30,7 +29,7 @@ describe('Authenticate User Use case', () => {
   it('should not be able return token property to user when received incorrect email for existing user', async () => {
     const user = createUser();
 
-    usersRepository.create(user);
+    inMemoryUserRepository.create(user);
 
     const response = await authenticateUserUseCase.execute({
       email: 'invalid@example.com',
@@ -43,7 +42,7 @@ describe('Authenticate User Use case', () => {
   it('should not be able return token property to user when received incorrect password for existing user', async () => {
     const user = createUser();
 
-    usersRepository.create(user);
+    inMemoryUserRepository.create(user);
 
     const response = await authenticateUserUseCase.execute({
       email: 'john@doe.com',

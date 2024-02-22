@@ -1,14 +1,14 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { InMemoryLoggerService } from '@src/external/logger-service/in-memory/in-memory-logger-service';
-import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
+import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
+import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
 import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
 import processForecastBeachesResponse from '@test/fixtures/process-forecast-beaches-response.json';
 import { StormGlassServiceMock } from '@test/mocks/storm-glass-service-mock';
+import { StormGlassServicerErrorStub } from '@test/stubs/storm-glass-service-error-stub';
 import { StormGlassServiceStub } from '@test/stubs/storm-glass-service-stub';
-import { StormGlassServicerErrorStub } from '@test/stubs/storn-glass-service-error-stub';
 
-import { InMemoryBeachRepository } from '../../repositories/in-memory/in-memory-beach-repository';
 import { StormGlassResponseError } from './errors/stormglass-response-error';
 import { ProcessForecastBeachesUseCase } from './process-forecast-for-beaches-use-case';
 

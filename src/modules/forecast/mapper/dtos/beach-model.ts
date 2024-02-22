@@ -1,4 +1,4 @@
-export interface IPersistenceBeachModel {
+export abstract class PersistenceBeachModel {
   id?: string;
   name: string;
   lat: number;

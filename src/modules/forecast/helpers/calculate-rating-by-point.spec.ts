@@ -33,7 +33,6 @@ describe('Calculate rating by point helper', () => {
       swellHeight: 0.4,
     };
 
-    // using spread operator for cloning objects instead of Object.assign
     const point = { ...defaultPoint, ...pointData };
 
     const rating = calculateRatingByPoint(point, beach);

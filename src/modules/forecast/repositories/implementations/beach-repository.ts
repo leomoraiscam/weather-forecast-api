@@ -1,12 +1,12 @@
 import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
+import { Beach } from '@src/modules/forecast/domain/beach/beach';
+import { IBeachCoordinatesDTO } from '@src/modules/forecast/dtos/beach-coordinates';
+import { BeachMapper } from '@src/modules/forecast/mapper/beach-mapper';
 
-import { Beach } from '../../domain/beach/beach';
-import { IBeachCoordinate } from '../../dtos/beach-cordinate';
-import { BeachMapper } from '../../mapper/beach-mapper';
-import { IBeachRepository } from '../beaches-repository';
+import { IBeachRepository } from '../beach-repository';
 
 export class BeachRepository implements IBeachRepository {
-  async findByGeolocation({ lat, lng, userId }: IBeachCoordinate): Promise<Beach> {
+  async findByGeolocation({ lat, lng, userId }: IBeachCoordinatesDTO): Promise<Beach> {
     const beachCollection = mongoHelper.getCollection('beaches');
 
     const beach = await beachCollection.findOne<Beach>({ lat, lng, userId });

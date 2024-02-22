@@ -2,18 +2,17 @@ import { InvalidEmailError } from '@src/modules/accounts/domain/user/errors/inva
 import { InvalidNameError } from '@src/modules/accounts/domain/user/errors/invalid-name-error';
 import { InvalidPasswordLengthError } from '@src/modules/accounts/domain/user/errors/invalid-password-length-error';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
-import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
 import { createUser } from '@test/factories/user-factory';
 
 import { RegisterUserUseCase } from './register-user-use-case';
 
-let userRepository: IUserRepository;
+let inMemoryUserRepository: InMemoryUserRepository;
 let registerUserUseCase: RegisterUserUseCase;
 
 describe('Register User Use Case', () => {
   beforeEach(() => {
-    userRepository = new InMemoryUserRepository();
-    registerUserUseCase = new RegisterUserUseCase(userRepository);
+    inMemoryUserRepository = new InMemoryUserRepository();
+    registerUserUseCase = new RegisterUserUseCase(inMemoryUserRepository);
   });
 
   it('should be able to register new user when received correct data', async () => {
@@ -62,7 +61,7 @@ describe('Register User Use Case', () => {
   it('should not be able to register new user with existing email', async () => {
     const user = createUser();
 
-    await userRepository.create(user);
+    await inMemoryUserRepository.create(user);
 
     const response = await registerUserUseCase.execute({
       name: 'John Doe',

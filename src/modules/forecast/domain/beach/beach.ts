@@ -2,7 +2,7 @@ import { v4 as uuidV4 } from 'uuid';
 
 import { Either, right } from '@src/shared/logic/either';
 
-import { IBeachProps } from './dtos/beach-props';
+import { IBeachPropsDTO } from './dtos/beach-props';
 import { InvalidLatitudeError } from './errors/invalid-latitude-error';
 import { InvalidLongitudeError } from './errors/invalid-longitude-error';
 import { InvalidNameError } from './errors/invalid-name-error';
@@ -10,9 +10,9 @@ import { InvalidPositionError } from './errors/invalid-position-error';
 
 export class Beach {
   public readonly _id?: string;
-  public readonly props: IBeachProps;
+  public readonly props: IBeachPropsDTO;
 
-  constructor(props: IBeachProps, id?: string) {
+  constructor(props: IBeachPropsDTO, id?: string) {
     this._id = id || uuidV4();
     this.props = props;
   }
@@ -42,7 +42,7 @@ export class Beach {
   }
 
   static create(
-    props: IBeachProps,
+    props: IBeachPropsDTO,
     id?: string,
   ): Either<
     InvalidNameError | InvalidPositionError | InvalidLatitudeError | InvalidLongitudeError,

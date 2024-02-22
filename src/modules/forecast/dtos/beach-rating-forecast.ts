@@ -2,7 +2,7 @@ import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetc
 
 import { IRegisterBeachDTO } from './register-beach';
 
-export interface IBeachRatingForecast
+export interface IBeachRatingForecastDTO
   extends Omit<IRegisterBeachDTO, 'user'>,
     IFetchPointNormalize {
   rating: number;

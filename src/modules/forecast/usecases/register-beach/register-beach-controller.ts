@@ -1,5 +1,7 @@
 import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IValidator } from '@src/main/adapters/ports/validator';
+import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';
+import { IRegisteredBeachDTO } from '@src/modules/forecast/dtos/registered-beach';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { IHttpResponse } from '@src/shared/http/dtos/http-response';
@@ -11,8 +13,6 @@ import {
   notFound,
 } from '@src/shared/http/helpers/http-helper';
 
-import { IRegisterBeachDTO } from '../../dtos/register-beach';
-import { IRegisteredBeachDTO } from '../../dtos/registered-beach';
 import { UserNotFoundError } from '../process-forecast-for-beaches/errors/user-not-found-error';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 

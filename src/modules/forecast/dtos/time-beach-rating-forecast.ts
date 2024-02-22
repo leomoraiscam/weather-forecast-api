@@ -1,6 +1,6 @@
-import { IBeachRatingForecast } from './beach-rating-forecast';
+import { IBeachRatingForecastDTO } from './beach-rating-forecast';
 
 export interface ITimeBeachRatingForecastDTO {
   time: string;
-  forecast: IBeachRatingForecast[];
+  forecast: IBeachRatingForecastDTO[];
 }

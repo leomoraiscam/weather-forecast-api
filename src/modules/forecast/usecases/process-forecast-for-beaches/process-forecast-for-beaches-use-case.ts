@@ -6,14 +6,14 @@ import { ILoggerService } from '@src/external/logger-service/ports/logger-servic
 import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
 import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
+import { IBeachRatingForecastDTO } from '@src/modules/forecast/dtos/beach-rating-forecast';
+import { ITimeBeachRatingForecastDTO } from '@src/modules/forecast/dtos/time-beach-rating-forecast';
+import { calculateRatingByPoint } from '@src/modules/forecast/helpers/calculate-rating-by-point';
+import { normalizeForecastByTime } from '@src/modules/forecast/helpers/normalize-forecast-by-time';
+import { IBeachRepository } from '@src/modules/forecast/repositories/beach-repository';
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/process-forecast-for-beaches/errors/stormglass-response-error';
 import { Either, left, right } from '@src/shared/logic/either';
 
-import { IBeachRatingForecast } from '../../dtos/beach-rating-forecast';
-import { ITimeBeachRatingForecastDTO } from '../../dtos/time-beach-rating-forecast';
-import { calculateRatingByPoint } from '../../helpers/calculate-rating-by-point';
-import { normalizeForecastByTime } from '../../helpers/normalize-forecast-by-time';
-import { IBeachRepository } from '../../repositories/beaches-repository';
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';
 import { UserNotFoundError } from './errors/user-not-found-error';
 
@@ -40,7 +40,7 @@ export class ProcessForecastBeachesUseCase {
       return left(new BeachesNotFoundError());
     }
 
-    const beachRatingForecastsSources: IBeachRatingForecast[] = [];
+    const beachRatingForecastsSources: IBeachRatingForecastDTO[] = [];
 
     this.loggerService.log({
       level: TypesLogger.INFO,
@@ -66,7 +66,7 @@ export class ProcessForecastBeachesUseCase {
       }
 
       const enrichedBeachRating = points.value.map(
-        (pointForecast: IFetchPointNormalize): IBeachRatingForecast => ({
+        (pointForecast: IFetchPointNormalize): IBeachRatingForecastDTO => ({
           lat: lat.value,
           lng: lng.value,
           name: name.value,

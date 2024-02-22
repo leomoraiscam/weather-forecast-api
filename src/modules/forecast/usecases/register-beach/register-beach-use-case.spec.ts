@@ -1,34 +1,35 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
-import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
+import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
+import { InvalidLatitudeError } from '@src/modules/forecast/domain/beach/errors/invalid-latitude-error';
+import { InvalidLongitudeError } from '@src/modules/forecast/domain/beach/errors/invalid-longitude-error';
+import { InvalidNameError } from '@src/modules/forecast/domain/beach/errors/invalid-name-error';
+import { InvalidPositionError } from '@src/modules/forecast/domain/beach/errors/invalid-position-error';
+import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';
+import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
 import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
 
-import { InvalidLatitudeError } from '../../domain/beach/errors/invalid-latitude-error';
-import { InvalidLongitudeError } from '../../domain/beach/errors/invalid-longitude-error';
-import { InvalidNameError } from '../../domain/beach/errors/invalid-name-error';
-import { InvalidPositionError } from '../../domain/beach/errors/invalid-position-error';
-import { IRegisterBeachDTO } from '../../dtos/register-beach';
-import { IBeachRepository } from '../../repositories/beaches-repository';
-import { InMemoryBeachRepository } from '../../repositories/in-memory/in-memory-beach-repository';
 import { RegisterBeachUseCase } from './register-beach-use-case';
 
-let beachRepository: IBeachRepository;
-let usersRepository: IUserRepository;
+let inMemoryBeachRepository: InMemoryBeachRepository;
+let inMemoryUserRepository: InMemoryUserRepository;
 let registerBeachUseCase: RegisterBeachUseCase;
 let beach: IRegisterBeachDTO;
 let userId: string;
 
 describe('Register Beach Use Case', () => {
   beforeEach(async () => {
-    beachRepository = new InMemoryBeachRepository();
-    usersRepository = new InMemoryUserRepository();
-    registerBeachUseCase = new RegisterBeachUseCase(beachRepository, usersRepository);
+    inMemoryBeachRepository = new InMemoryBeachRepository();
+    inMemoryUserRepository = new InMemoryUserRepository();
+    registerBeachUseCase = new RegisterBeachUseCase(
+      inMemoryBeachRepository,
+      inMemoryUserRepository,
+    );
 
     const user = createUser();
     userId = user.id;
 
-    await usersRepository.create(user);
+    await inMemoryUserRepository.create(user);
 
     beach = {
       name: 'Dee Why',
@@ -91,7 +92,7 @@ describe('Register Beach Use Case', () => {
 
   it('should not be able to register new beach with existing lat and lng to the same user', async () => {
     const beachOrError = createBeach();
-    beachRepository.create(beachOrError);
+    inMemoryBeachRepository.create(beachOrError);
 
     const response = await registerBeachUseCase.execute(beach);
 

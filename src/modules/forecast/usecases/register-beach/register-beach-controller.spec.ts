@@ -2,19 +2,19 @@
 /* eslint-disable max-classes-per-file */
 
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-users-repository';
+import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
+import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';
+import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { Either, left } from '@src/shared/logic/either';
 import { createUser } from '@test/factories/user-factory';
 
-import { IRegisterBeachDTO } from '../../dtos/register-beach';
-import { InMemoryBeachRepository } from '../../repositories/in-memory/in-memory-beach-repository';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 import { RegisterBeachController } from './register-beach-controller';
 import { RegisterBeachUseCase } from './register-beach-use-case';
 
-let beachRepository: InMemoryBeachRepository;
-let userRepository: InMemoryUserRepository;
+let inMemoryBeachRepository: InMemoryBeachRepository;
+let inMemoryUserRepository: InMemoryUserRepository;
 let registerBeachUseCase: RegisterBeachUseCase;
 const mockValidator = {
   validate: jest.fn().mockReturnValue({ isLeft: jest.fn().mockReturnValue(false) }),
@@ -38,13 +38,16 @@ export class ErrorThrowingConflictUseCaseStub {
 
 describe('Register beach web controller', () => {
   beforeEach(async () => {
-    beachRepository = new InMemoryBeachRepository();
-    userRepository = new InMemoryUserRepository();
-    registerBeachUseCase = new RegisterBeachUseCase(beachRepository, userRepository);
+    inMemoryBeachRepository = new InMemoryBeachRepository();
+    inMemoryUserRepository = new InMemoryUserRepository();
+    registerBeachUseCase = new RegisterBeachUseCase(
+      inMemoryBeachRepository,
+      inMemoryUserRepository,
+    );
     registerBeachController = new RegisterBeachController(registerBeachUseCase, mockValidator);
 
     const user = createUser();
-    await userRepository.create(user);
+    await inMemoryUserRepository.create(user);
 
     userId = user.id;
   });

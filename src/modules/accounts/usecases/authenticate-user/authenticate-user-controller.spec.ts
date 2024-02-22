@@ -10,7 +10,7 @@ import { createUser } from '@test/factories/user-factory';
 import { AuthenticateUserController } from './authenticate-user-controller';
 import { AuthenticateUserUseCase } from './authenticate-user-use-case';
 
-let userRepository: InMemoryUserRepository;
+let inMemoryUserRepository: InMemoryUserRepository;
 let authenticateUserUseCase: AuthenticateUserUseCase;
 const mockValidator = {
   validate: jest.fn().mockReturnValue({ isLeft: jest.fn().mockReturnValue(false) }),
@@ -41,8 +41,8 @@ export class ErrorDefaultThrowingUseCaseStub {
 
 describe('Authenticate user web controller', () => {
   beforeEach(() => {
-    userRepository = new InMemoryUserRepository();
-    authenticateUserUseCase = new AuthenticateUserUseCase(userRepository);
+    inMemoryUserRepository = new InMemoryUserRepository();
+    authenticateUserUseCase = new AuthenticateUserUseCase(inMemoryUserRepository);
     authenticateUserController = new AuthenticateUserController(
       authenticateUserUseCase,
       mockValidator,
@@ -52,7 +52,7 @@ describe('Authenticate user web controller', () => {
   it('should return status code 200 when request contains valid user data', async () => {
     const user = createUser();
 
-    await userRepository.create(user);
+    await inMemoryUserRepository.create(user);
 
     const request: IHttpRequest<IAuthenticateUserDTO> = {
       body: {
@@ -83,7 +83,7 @@ describe('Authenticate user web controller', () => {
   it('should return status code 401 when request contains invalid user email', async () => {
     const user = createUser();
 
-    await userRepository.create(user);
+    await inMemoryUserRepository.create(user);
 
     const request: IHttpRequest<IAuthenticateUserDTO> = {
       body: {
@@ -100,7 +100,7 @@ describe('Authenticate user web controller', () => {
   it('should return status code 401 when request contains invalid user password', async () => {
     const user = createUser();
 
-    await userRepository.create(user);
+    await inMemoryUserRepository.create(user);
 
     const request: IHttpRequest<IAuthenticateUserDTO> = {
       body: {
@@ -119,7 +119,7 @@ describe('Authenticate user web controller', () => {
 
     const user = createUser();
 
-    await userRepository.create(user);
+    await inMemoryUserRepository.create(user);
 
     const request: IHttpRequest<IAuthenticateUserDTO> = {
       body: {
@@ -143,7 +143,7 @@ describe('Authenticate user web controller', () => {
 
     const user = createUser();
 
-    await userRepository.create(user);
+    await inMemoryUserRepository.create(user);
 
     const request: IHttpRequest<IAuthenticateUserDTO> = {
       body: {

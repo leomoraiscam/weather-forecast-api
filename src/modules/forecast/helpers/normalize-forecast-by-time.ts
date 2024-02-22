@@ -1,9 +1,9 @@
 /* eslint-disable no-restricted-syntax */
-import { IBeachRatingForecast } from '../dtos/beach-rating-forecast';
+import { IBeachRatingForecastDTO } from '../dtos/beach-rating-forecast';
 import { ITimeBeachRatingForecastDTO } from '../dtos/time-beach-rating-forecast';
 
 export function normalizeForecastByTime(
-  forecast: IBeachRatingForecast[],
+  forecast: IBeachRatingForecastDTO[],
 ): ITimeBeachRatingForecastDTO[] {
   const forecastByTime: ITimeBeachRatingForecastDTO[] = [];
 

@@ -9,7 +9,7 @@ import { AccountAlreadyExistsError } from './errors/account-already-exists-error
 import { RegisterUserController } from './register-user-controller';
 import { RegisterUserUseCase } from './register-user-use-case';
 
-let userRepository: InMemoryUserRepository;
+let inMemoryUserRepository: InMemoryUserRepository;
 let registerUserUseCase: RegisterUserUseCase;
 const mockValidator = {
   validate: jest.fn().mockReturnValue({ isLeft: jest.fn().mockReturnValue(false) }),
@@ -32,8 +32,8 @@ export class ErrorThrowingConflictUseCaseStub {
 
 describe('Register user web controller', () => {
   beforeEach(() => {
-    userRepository = new InMemoryUserRepository();
-    registerUserUseCase = new RegisterUserUseCase(userRepository);
+    inMemoryUserRepository = new InMemoryUserRepository();
+    registerUserUseCase = new RegisterUserUseCase(inMemoryUserRepository);
     registerUserController = new RegisterUserController(registerUserUseCase, mockValidator);
   });
 
