@@ -10,17 +10,14 @@ import { Latitude } from '../../domain/beach/latitude';
 import { Longitude } from '../../domain/beach/longitude';
 import { Name } from '../../domain/beach/name';
 import { Position } from '../../domain/beach/position';
-import { IBeach as RegisterBeachRequest } from '../../dtos/beach';
-import { IRegisterBeachResponse } from '../../dtos/register-beach-response';
+import { IRegisterBeachDTO } from '../../dtos/register-beach';
+import { IRegisteredBeachDTO } from '../../dtos/registered-beach';
 import { IBeachRepository } from '../../repositories/beaches-repository';
 import { UserNotFoundError } from '../process-forecast-for-beaches/errors/user-not-found-error';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 
 export class RegisterBeachUseCase {
-  constructor(
-    private beachesRepository: IBeachRepository,
-    private usersRepository: IUserRepository,
-  ) {}
+  constructor(private beachRepository: IBeachRepository, private userRepository: IUserRepository) {}
 
   async execute({
     name,
@@ -28,7 +25,7 @@ export class RegisterBeachUseCase {
     lng,
     position,
     userId,
-  }: RegisterBeachRequest): Promise<
+  }: IRegisterBeachDTO): Promise<
     Either<
       | InvalidNameError
       | InvalidLatitudeError
@@ -36,12 +33,12 @@ export class RegisterBeachUseCase {
       | InvalidPositionError
       | BeachAlreadyExistsError
       | UserNotFoundError,
-      IRegisterBeachResponse
+      IRegisteredBeachDTO
     >
   > {
-    const user = await this.usersRepository.findById(userId);
+    const userExisted = await this.userRepository.findById(userId);
 
-    if (!user) {
+    if (!userExisted) {
       return left(new UserNotFoundError());
     }
 
@@ -80,17 +77,17 @@ export class RegisterBeachUseCase {
 
     const beach = beachOrError.value;
 
-    const BeachAlreadyExists = await this.beachesRepository.findByGeolocation({
+    const beachExisted = await this.beachRepository.findByGeolocation({
       lat: beach.lat.value,
       lng: beach.lng.value,
       userId,
     });
 
-    if (BeachAlreadyExists) {
+    if (beachExisted) {
       return left(new BeachAlreadyExistsError(`lat: ${beach.lat.value} lng: ${beach.lng.value}`));
     }
 
-    await this.beachesRepository.create(beach);
+    await this.beachRepository.create(beach);
 
     return right({
       id: beach.id,
