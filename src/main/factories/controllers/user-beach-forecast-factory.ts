@@ -13,16 +13,13 @@ export const makeFetchPointController = (): IController => {
   const cacheService = new RedisCacheService();
   const axiosRequestService = new AxiosRequestService();
   const loggerProvider = new WinstonLoggerService();
-
   const stormGlassService = new FetchPointService(
     axiosRequestService,
     cacheService,
     loggerProvider,
   );
-
   const usersRepository = new UserRepository();
   const beachesRepository = new BeachRepository();
-
   const userBeachForecastProcessingUseCase = new UserBeachForecastProcessingUseCase(
     stormGlassService,
     usersRepository,

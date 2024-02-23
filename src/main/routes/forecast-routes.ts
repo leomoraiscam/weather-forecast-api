@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { makeFetchPointController } from '@src/main/factories/controllers/fetch-points-factory';
 import { makeRegisterBeachController } from '@src/main/factories/controllers/register-beach-factory';
+import { makeFetchPointController } from '@src/main/factories/controllers/user-beach-forecast-factory';
 
 import { adaptMiddleware } from '../adapters/express-middleware-adapter';
 import { adaptRoute } from '../adapters/express-route-adapter';
@@ -16,7 +16,7 @@ export default (router: Router): void => {
   );
 
   router.get(
-    '/fetch-points',
+    '/user-beach-forecast',
     adaptMiddleware(makeEnsureAuthenticatedMiddleware()),
     adaptMiddleware(makeRateLimiterMiddleware()),
     adaptRoute(makeFetchPointController()),
