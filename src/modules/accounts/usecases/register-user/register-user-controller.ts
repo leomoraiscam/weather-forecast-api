@@ -8,14 +8,18 @@ import { IHttpResponse } from '@src/shared/http/dtos/http-response';
 import { badRequest, conflict, created, serverError } from '@src/shared/http/helpers/http-helper';
 
 import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
+import { RegisterUserResponse } from './register-user-response';
 
 export class RegisterUserController {
-  private readonly usecase: IUseCase;
+  private readonly usecase: IUseCase<IRegisterUserDTO, RegisterUserResponse>;
   private readonly validator: IValidator<IRegisterUserDTO>;
 
   readonly requiredParams = ['name', 'email', 'password'];
 
-  constructor(usecase: IUseCase, validator: IValidator<IRegisterUserDTO>) {
+  constructor(
+    usecase: IUseCase<IRegisterUserDTO, RegisterUserResponse>,
+    validator: IValidator<IRegisterUserDTO>,
+  ) {
     this.usecase = usecase;
     this.validator = validator;
   }

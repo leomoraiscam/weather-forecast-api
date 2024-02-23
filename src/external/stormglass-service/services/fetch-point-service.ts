@@ -1,15 +1,17 @@
+/* eslint-disable import/no-unresolved */
 import { TypesLogger } from '@config/constants/types-logger-enum';
 import { ICacheService } from '@src/external/cache-service/ports/cache-service';
 import { IRequestService } from '@src/external/http-service/ports/request-service';
 import { ILoggerService } from '@src/external/logger-service/ports/logger-service';
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
-import { Either, left, right } from '@src/shared/logic/either';
+import { left, right } from '@src/shared/logic/either';
 
 import { IFetchPointCoordinate } from '../dtos/fetch-point-coordinate';
 import { IFetchPointNormalize } from '../dtos/fetch-point-normalize';
 import { IStormGlassForecastResponse } from '../dtos/stormglass-response';
 import { StormGlassMapper } from '../mapper/stormglass-mapper';
 import { IStormGlassService } from '../ports/stormglass-service';
+import { FetchPointServiceResponse } from './fetch-point-service-response';
 
 export class FetchPointService implements IStormGlassService {
   constructor(
@@ -26,7 +28,7 @@ export class FetchPointService implements IStormGlassService {
     lat,
     lng,
     userId,
-  }: IFetchPointCoordinate): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
+  }: IFetchPointCoordinate): Promise<FetchPointServiceResponse> {
     try {
       const cacheKey = `provider-forecast-point: ${userId}:${lat}-${lng}`;
 
@@ -93,11 +95,7 @@ export class FetchPointService implements IStormGlassService {
         )} Code: ${err.response.status}`,
       });
 
-      return left(
-        new StormGlassResponseError(
-          `${JSON.stringify(err.response.data)} Code: ${err.response.status}`,
-        ),
-      );
+      return left(new StormGlassResponseError());
     }
   }
 }

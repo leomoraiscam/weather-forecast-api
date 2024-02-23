@@ -7,14 +7,18 @@ import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { IHttpResponse } from '@src/shared/http/dtos/http-response';
 import { badRequest, ok, serverError, unauthorized } from '@src/shared/http/helpers/http-helper';
 
+import { AuthenticateUserResponse } from './authenticate-user-response';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password-error';
 
 export class AuthenticateUserController {
-  private readonly usecase: IUseCase;
+  private readonly usecase: IUseCase<IAuthenticateUserDTO, AuthenticateUserResponse>;
   private readonly validator: IValidator<IAuthenticateUserDTO>;
   readonly requiredParams = ['email', 'password'];
 
-  constructor(usecase: IUseCase, validator: IValidator<IAuthenticateUserDTO>) {
+  constructor(
+    usecase: IUseCase<IAuthenticateUserDTO, AuthenticateUserResponse>,
+    validator: IValidator<IAuthenticateUserDTO>,
+  ) {
     this.usecase = usecase;
     this.validator = validator;
   }

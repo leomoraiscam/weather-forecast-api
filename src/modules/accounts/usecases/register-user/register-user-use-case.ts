@@ -1,30 +1,19 @@
+import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { Email } from '@src/modules/accounts/domain/user/email';
-import { InvalidEmailError } from '@src/modules/accounts/domain/user/errors/invalid-email-error';
-import { InvalidNameError } from '@src/modules/accounts/domain/user/errors/invalid-name-error';
-import { InvalidPasswordLengthError } from '@src/modules/accounts/domain/user/errors/invalid-password-length-error';
 import { Name } from '@src/modules/accounts/domain/user/name';
 import { Password } from '@src/modules/accounts/domain/user/password';
 import { User } from '@src/modules/accounts/domain/user/user';
 import { IRegisterUserDTO } from '@src/modules/accounts/dtos/register-user';
-import { IRegisteredUserDTO } from '@src/modules/accounts/dtos/registered-user';
 import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
-import { Either, left, right } from '@src/shared/logic/either';
+import { left, right } from '@src/shared/logic/either';
 
 import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
+import { RegisterUserResponse } from './register-user-response';
 
-export class RegisterUserUseCase {
+export class RegisterUserUseCase implements IUseCase<IRegisterUserDTO, RegisterUserResponse> {
   constructor(private userRepository: IUserRepository) {}
 
-  async execute({
-    name,
-    email,
-    password,
-  }: IRegisterUserDTO): Promise<
-    Either<
-      AccountAlreadyExistsError | InvalidNameError | InvalidEmailError | InvalidPasswordLengthError,
-      IRegisteredUserDTO
-    >
-  > {
+  async execute({ name, email, password }: IRegisterUserDTO): Promise<RegisterUserResponse> {
     const nameOrError = Name.create(name);
     const emailOrError = Email.create(email);
     const passwordOrError = Password.create(password);

@@ -8,6 +8,6 @@ export class StormGlassServicerErrorStub implements IStormGlassService {
   public async execute(
     _: IFetchPointCoordinate,
   ): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
-    return left(new StormGlassResponseError('Error fetching data'));
+    return left(new StormGlassResponseError());
   }
 }

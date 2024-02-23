@@ -15,13 +15,17 @@ import {
 
 import { UserNotFoundError } from '../user-beach-forecast-processing/errors/user-not-found-error';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
+import { RegisterBeachResponse } from './register-beach-response';
 
 export class RegisterBeachController {
-  private readonly usecase: IUseCase;
+  private readonly usecase: IUseCase<IRegisterBeachDTO, RegisterBeachResponse>;
   private readonly validator: IValidator<IRegisterBeachDTO>;
   readonly requiredParams = ['name', 'lat', 'lng', 'position'];
 
-  constructor(usecase: IUseCase, validator: IValidator<IRegisterBeachDTO>) {
+  constructor(
+    usecase: IUseCase<IRegisterBeachDTO, RegisterBeachResponse>,
+    validator: IValidator<IRegisterBeachDTO>,
+  ) {
     this.usecase = usecase;
     this.validator = validator;
   }

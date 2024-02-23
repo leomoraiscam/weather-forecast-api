@@ -1,23 +1,29 @@
 import { IUseCase } from '@src/main/adapters/ports/use-case';
-import { IBeachRatingForecastDTO } from '@src/modules/forecast/dtos/beach-rating-forecast';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { IHttpResponse } from '@src/shared/http/dtos/http-response';
-import { notFound, ok, serverError } from '@src/shared/http/helpers/http-helper';
+import {
+  notFound,
+  ok,
+  serverError,
+  unprocessableEntity,
+} from '@src/shared/http/helpers/http-helper';
 
+import { ITimeBeachRatingForecastDTO } from '../../dtos/time-beach-rating-forecast';
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';
 import { UserNotFoundError } from './errors/user-not-found-error';
+import { UserBeachForecastProcessingResponse } from './user-beach-forecast-processing-response';
 
 export class UserBeachForecastProcessingController {
-  private readonly usecase: IUseCase;
+  private readonly usecase: IUseCase<string, UserBeachForecastProcessingResponse>;
 
-  constructor(usecase: IUseCase) {
+  constructor(usecase: IUseCase<string, UserBeachForecastProcessingResponse>) {
     this.usecase = usecase;
   }
 
   async handle(
     request: IHttpRequest<{ userId: string }>,
-  ): Promise<IHttpResponse<IBeachRatingForecastDTO | IControllerError>> {
+  ): Promise<IHttpResponse<ITimeBeachRatingForecastDTO[] | IControllerError>> {
     try {
       const { userId } = request;
 
@@ -32,11 +38,11 @@ export class UserBeachForecastProcessingController {
           case UserNotFoundError:
             return notFound(error);
           default:
-            return notFound(error);
+            return unprocessableEntity(error);
         }
       }
 
-      return ok<IBeachRatingForecastDTO>(response.value);
+      return ok<ITimeBeachRatingForecastDTO[]>(response.value);
     } catch (error) {
       return serverError(error);
     }

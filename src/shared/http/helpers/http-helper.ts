@@ -66,9 +66,19 @@ export function conflict(data: IControllerError): IHttpResponse<IControllerError
   };
 }
 
-export function toManyRequests(data: IControllerError): IHttpResponse<IControllerError> {
+export function unprocessableEntity(data: IControllerError): IHttpResponse<IControllerError> {
   return {
     statusCode: 422,
+    body: {
+      name: data.name,
+      message: data.message,
+    },
+  };
+}
+
+export function toManyRequests(data: IControllerError): IHttpResponse<IControllerError> {
+  return {
+    statusCode: 429,
     body: {
       name: data.name,
       message: data.message,

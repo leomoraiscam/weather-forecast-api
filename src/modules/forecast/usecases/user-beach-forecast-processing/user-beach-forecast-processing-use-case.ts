@@ -3,31 +3,32 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { TypesLogger } from '@config/constants/types-logger-enum';
 import { ILoggerService } from '@src/external/logger-service/ports/logger-service';
+import { IFetchPointCoordinate } from '@src/external/stormglass-service/dtos/fetch-point-coordinate';
 import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
+import { FetchPointServiceResponse } from '@src/external/stormglass-service/services/fetch-point-service-response';
 import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
 import { IBeachRatingForecastDTO } from '@src/modules/forecast/dtos/beach-rating-forecast';
-import { ITimeBeachRatingForecastDTO } from '@src/modules/forecast/dtos/time-beach-rating-forecast';
 import { calculateRatingByPoint } from '@src/modules/forecast/helpers/calculate-rating-by-point';
 import { normalizeForecastByTime } from '@src/modules/forecast/helpers/normalize-forecast-by-time';
 import { IBeachRepository } from '@src/modules/forecast/repositories/beach-repository';
-import { StormGlassResponseError } from '@src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
-import { Either, left, right } from '@src/shared/logic/either';
+import { left, right } from '@src/shared/logic/either';
 
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';
 import { UserNotFoundError } from './errors/user-not-found-error';
+import { UserBeachForecastProcessingResponse } from './user-beach-forecast-processing-response';
 
-export class UserBeachForecastProcessingUseCase {
+export class UserBeachForecastProcessingUseCase
+  implements IUseCase<string, UserBeachForecastProcessingResponse>
+{
   constructor(
-    private stormGlassService: IUseCase,
+    private stormGlassService: IUseCase<IFetchPointCoordinate, FetchPointServiceResponse>,
     private userRepository: IUserRepository,
     private beachRepository: IBeachRepository,
     private loggerService: ILoggerService,
   ) {}
 
-  public async execute(
-    userId: string,
-  ): Promise<Either<StormGlassResponseError, ITimeBeachRatingForecastDTO[]>> {
+  public async execute(userId: string): Promise<UserBeachForecastProcessingResponse> {
     const userExisted = await this.userRepository.findById(userId);
 
     if (!userExisted) {
@@ -61,7 +62,7 @@ export class UserBeachForecastProcessingUseCase {
         userId: userExisted.id,
       });
 
-      if (!points.value.length) {
+      if (points.isLeft()) {
         return left(points.value);
       }
 
