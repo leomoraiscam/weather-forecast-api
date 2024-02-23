@@ -4,10 +4,10 @@ import { decode } from 'jsonwebtoken';
 import { IMiddleware } from '@src/main/adapters/ports/middleware';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
 
-import { IEnsureAuthenticatedMiddlewareRequest } from '../dtos/ensure-authenticated-middleware-request';
+import { IEnsureAuthenticatedMiddlewareRequestDTO } from '../dtos/ensure-authenticated-middleware-request';
 import { IHttpResponse } from '../dtos/http-response';
 import { ok, unauthorized } from '../helpers/http-helper';
-import { AccessDeniedError } from './errors/AccessDeniedError';
+import { AccessDeniedError } from './errors/access-denied-error';
 
 type DecodedJwt = {
   sub: string;
@@ -17,7 +17,7 @@ export class EnsureAuthenticatedMiddleware implements IMiddleware {
   constructor() {}
 
   async handle(
-    request: IEnsureAuthenticatedMiddlewareRequest,
+    request: IEnsureAuthenticatedMiddlewareRequestDTO,
   ): Promise<IHttpResponse<{ userId: string } | IControllerError>> {
     try {
       const { accessToken } = request;

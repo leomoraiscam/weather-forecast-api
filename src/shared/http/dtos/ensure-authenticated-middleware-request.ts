@@ -1,3 +1,3 @@
-export interface IEnsureAuthenticatedMiddlewareRequest {
+export interface IEnsureAuthenticatedMiddlewareRequestDTO {
   accessToken: string;
 }
