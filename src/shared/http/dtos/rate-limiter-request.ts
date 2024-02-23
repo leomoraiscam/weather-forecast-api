@@ -1,3 +1,3 @@
-export interface IRateLimiterMiddlewareRequest {
+export interface IRateLimiterDTO {
   ip: string;
 }

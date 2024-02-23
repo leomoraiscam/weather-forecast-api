@@ -5,7 +5,7 @@ import { IMiddleware } from './ports/middleware';
 export const adaptMiddleware = (middleware: IMiddleware) => {
   return async (request: Request, response: Response, next: NextFunction) => {
     const requestData = {
-      accesstoken: request.headers['x-access-token'],
+      accessToken: request.headers['x-access-token'],
       ...(request.headers || {}),
       ip: request.ip,
     };

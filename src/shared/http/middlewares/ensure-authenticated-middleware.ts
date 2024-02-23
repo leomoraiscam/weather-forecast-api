@@ -2,15 +2,16 @@
 import { decode } from 'jsonwebtoken';
 
 import { IMiddleware } from '@src/main/adapters/ports/middleware';
-import { InvalidJWTTokenError } from '@src/modules/accounts/domain/user/errors/invalid-jwt-token-error';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
 
-import {
-  IEnsureAuthenticatedMiddlewareRequest,
-  IDecodedJwt,
-} from '../dtos/ensure-authenticated-request';
+import { IEnsureAuthenticatedMiddlewareRequest } from '../dtos/ensure-authenticated-middleware-request';
 import { IHttpResponse } from '../dtos/http-response';
 import { ok, unauthorized } from '../helpers/http-helper';
+import { AccessDeniedError } from './errors/AccessDeniedError';
+
+type DecodedJwt = {
+  sub: string;
+};
 
 export class EnsureAuthenticatedMiddleware implements IMiddleware {
   constructor() {}
@@ -18,24 +19,28 @@ export class EnsureAuthenticatedMiddleware implements IMiddleware {
   async handle(
     request: IEnsureAuthenticatedMiddlewareRequest,
   ): Promise<IHttpResponse<{ userId: string } | IControllerError>> {
-    const { accesstoken } = request;
-
-    if (!accesstoken) {
-      return unauthorized(new InvalidJWTTokenError());
-    }
-
     try {
-      const decoded = decode(accesstoken) as IDecodedJwt;
+      const { accessToken } = request;
 
-      return ok({ userId: decoded.sub });
+      if (accessToken) {
+        try {
+          const decoded = decode(accessToken) as DecodedJwt;
+
+          return ok({ userId: decoded.sub });
+        } catch (err) {
+          return unauthorized(new AccessDeniedError());
+        }
+      }
+
+      return unauthorized(new AccessDeniedError());
     } catch (error) {
-      return unauthorized(new InvalidJWTTokenError());
+      return fail(error);
     }
   }
 }
 
 export namespace AuthMiddleware {
   export type Request = {
-    accesstoken?: string;
+    accessToken?: string;
   };
 }

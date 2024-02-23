@@ -2,10 +2,10 @@ import { RedisCacheService } from '@src/external/cache-service/services/redis-ca
 import { AxiosRequestService } from '@src/external/http-service/services/axios-request-service';
 import { WinstonLoggerService } from '@src/external/logger-service/services/pino-logger-service';
 import { FetchPointService } from '@src/external/stormglass-service/services/fetch-point-service';
-import { UserRepository } from '@src/modules/accounts/repositories/implementations/users-repository';
+import { UserRepository } from '@src/modules/accounts/repositories/implementations/user-repository';
 import { BeachRepository } from '@src/modules/forecast/repositories/implementations/beach-repository';
-import { FetchPointsController } from '@src/modules/forecast/usecases/user-beach-forecast-processing/process-forecast-for-beaches-controller';
-import { ProcessForecastBeachesUseCase } from '@src/modules/forecast/usecases/user-beach-forecast-processing/process-forecast-for-beaches-use-case';
+import { UserBeachForecastProcessingController } from '@src/modules/forecast/usecases/user-beach-forecast-processing/user-beach-forecast-processing-controller';
+import { UserBeachForecastProcessingUseCase } from '@src/modules/forecast/usecases/user-beach-forecast-processing/user-beach-forecast-processing-use-case';
 
 import { IController } from '../../adapters/ports/controller';
 
@@ -23,13 +23,15 @@ export const makeFetchPointController = (): IController => {
   const usersRepository = new UserRepository();
   const beachesRepository = new BeachRepository();
 
-  const processForecastBeachesUseCase = new ProcessForecastBeachesUseCase(
+  const userBeachForecastProcessingUseCase = new UserBeachForecastProcessingUseCase(
     stormGlassService,
     usersRepository,
     beachesRepository,
     loggerProvider,
   );
-  const fetchPointsController = new FetchPointsController(processForecastBeachesUseCase);
+  const userBeachForecastProcessingController = new UserBeachForecastProcessingController(
+    userBeachForecastProcessingUseCase,
+  );
 
-  return fetchPointsController;
+  return userBeachForecastProcessingController;
 };

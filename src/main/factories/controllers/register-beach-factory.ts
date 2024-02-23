@@ -1,4 +1,4 @@
-import { UserRepository } from '@src/modules/accounts/repositories/implementations/users-repository';
+import { UserRepository } from '@src/modules/accounts/repositories/implementations/user-repository';
 import { BeachRepository } from '@src/modules/forecast/repositories/implementations/beach-repository';
 import { RegisterBeachController } from '@src/modules/forecast/usecases/register-beach/register-beach-controller';
 import { RegisterBeachUseCase } from '@src/modules/forecast/usecases/register-beach/register-beach-use-case';

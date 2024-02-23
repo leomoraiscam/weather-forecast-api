@@ -1,4 +1,4 @@
-import { UserRepository } from '@src/modules/accounts/repositories/implementations/users-repository';
+import { UserRepository } from '@src/modules/accounts/repositories/implementations/user-repository';
 import { RegisterUserController } from '@src/modules/accounts/usecases/register-user/register-user-controller';
 import { RegisterUserUseCase } from '@src/modules/accounts/usecases/register-user/register-user-use-case';
 import { RequiredFieldsValidator } from '@src/shared/logic/validators/required-fields-validator';
