@@ -4,8 +4,12 @@ import { IValidator } from '@src/main/adapters/ports/validator';
 import { Either, left, right } from '../logic/either';
 import { MissingParamError } from './errors/missing-param-error';
 
+interface IData {
+  [key: string]: any;
+}
+
 export class RequiredFieldsValidator<T> implements IValidator<T> {
-  validate(data: T, requiredParams: string[]): Either<MissingParamError, null> {
+  validate(data: IData, requiredParams: string[]): Either<MissingParamError, null> {
     for (const field of requiredParams) {
       if (
         data[field] === null ||
