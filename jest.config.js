@@ -14,12 +14,18 @@ module.exports = {
   coverageProvider: 'v8',
   collectCoverageFrom: [
     'src/modules/**/usecases/**/*.ts',
+    '!src/modules/**/usecases/**/*response.ts',
     'src/modules/**/domain/**/*.ts',
     'src/modules/**/helpers/**/*.ts',
     '!src/modules/**/domain/**/dtos/*.ts',
-    'src/external/**/services/**/*.ts',
+    '!src/modules/**/domain/**/dtos/*.ts',
+    'src/external/**/services/*.ts',
+    '!src/external/**/services/**/*response.ts',
   ],
-  preset: 'ts-jest',
+  transform: {
+    '.+\\.ts$': 'ts-jest',
+  },
+  preset: '@shelf/jest-mongodb',
   moduleNameMapper: {
     '@src/(.*)': '<rootDir>/src/$1',
     '@config/(.*)': '<rootDir>/src/config/$1',
