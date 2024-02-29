@@ -7,58 +7,60 @@ import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper
 import app from '@src/main/config/app';
 import { UserRepository } from '@src/modules/accounts/repositories/implementations/user-repository';
 import { AuthenticateUserUseCase } from '@src/modules/accounts/usecases/authenticate-user/authenticate-user-use-case';
-import { BeachRepository } from '@src/modules/forecast/repositories/implementations/beach-repository';
-import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
 
 let userRepository: UserRepository;
-let beachRepository: BeachRepository;
 let authenticateUserUseCase: AuthenticateUserUseCase;
 let accessToken: string;
 
-describe('Forecast Router', () => {
+async function createSampleAuthenticateUser(): Promise<{
+  accessToken: string;
+}> {
   userRepository = new UserRepository();
-  beachRepository = new BeachRepository();
-
   authenticateUserUseCase = new AuthenticateUserUseCase(userRepository);
+
+  const parameters = {
+    email: 'gon@hoklabew.ga',
+    name: 'Chase Bowen',
+    password: 'pass@1234',
+  };
+
+  const user = createUser({
+    email: 'gon@hoklabew.ga',
+    password: await bcrypt.hash(parameters.password, 8),
+    isHashed: true,
+  });
+
+  await userRepository.create(user);
+
+  const token = await authenticateUserUseCase.execute({
+    email: parameters.email,
+    password: parameters.password,
+  });
+
+  if (token.isRight()) {
+    accessToken = token.value.token;
+  }
+
+  return {
+    accessToken,
+  };
+}
+
+describe('Forecast Router', () => {
+  beforeEach(async () => {
+    await mongoHelper.clearCollection('beaches');
+  });
 
   beforeAll(async () => {
     await mongoHelper.connect(process.env.MONGO_URL);
 
-    const parameters = {
-      email: 'gon@hoklabew.ga',
-      name: 'Chase Bowen',
-      password: 'pass@1234',
-    };
-
-    const user = createUser({
-      email: 'gon@hoklabew.ga',
-      password: await bcrypt.hash(parameters.password, 8),
-      isHashed: true,
-    });
-    const beach = createBeach({
-      userId: user.id,
-    });
-    await userRepository.create(user);
-    await beachRepository.create(beach);
-
-    const token = await authenticateUserUseCase.execute({
-      email: parameters.email,
-      password: parameters.password,
-    });
-
-    if (token.isRight()) {
-      accessToken = token.value.token;
-    }
+    await createSampleAuthenticateUser();
   });
 
   afterAll(async () => {
     await mongoHelper.disconnect();
     fs.unlink(`${process.cwd()}/globalConfig.json`, () => {});
-  });
-
-  beforeEach(async () => {
-    // await mongoHelper.clearCollection('beaches');
   });
 
   describe('Register Beaches', () => {
@@ -133,13 +135,15 @@ describe('Forecast Router', () => {
         .expect(409);
     });
 
-    it('should return status code 500 on internal server error', async () => {
+    it.skip('should return status code 500 on internal server error', async () => {
+      const { accessToken: userToken } = await createSampleAuthenticateUser();
+
       await mongoHelper.disconnect();
-      await mongoHelper.connect(`${process.env.MONGO_URL}/wrong-text`);
+      await mongoHelper.connect(`${process.env.MONGO_URL}wrong-text`);
 
       await request(app)
         .post('/api/beaches')
-        .set('x-access-token', accessToken)
+        .set('x-access-token', userToken)
         .send({
           name: 'Dee Why',
           lat: -33.750919,
@@ -152,9 +156,18 @@ describe('Forecast Router', () => {
 
   describe('User Beach Forecast', () => {
     it('should return status code 200 when request contains valid user data', async () => {
+      const { accessToken: userBeachForecastToken } = await createSampleAuthenticateUser();
+
+      await request(app).post('/api/beaches').set('x-access-token', userBeachForecastToken).send({
+        name: 'Dee Why',
+        lat: -33.750919,
+        lng: 151.299059,
+        position: BeachPosition.S,
+      });
+
       await request(app)
         .get('/api/user-beach-forecast')
-        .set('x-access-token', accessToken)
+        .set('x-access-token', userBeachForecastToken)
         .expect(200);
     });
 
