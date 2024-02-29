@@ -4,9 +4,10 @@ import request from 'supertest';
 import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
 import app from '@src/main/config/app';
 
-describe('Users Router', () => {
+describe.only('Users Router', () => {
   beforeAll(async () => {
     await mongoHelper.connect(process.env.MONGO_URL);
+    // await mongoHelper.clearCollection('users');
   });
 
   afterAll(async () => {
@@ -15,7 +16,7 @@ describe('Users Router', () => {
   });
 
   beforeEach(async () => {
-    await mongoHelper.clearCollection('users');
+    // await mongoHelper.clearCollection('users');
   });
 
   it('should return status code 201 when request contains valid user data', async () => {
