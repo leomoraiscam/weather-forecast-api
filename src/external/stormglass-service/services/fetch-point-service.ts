@@ -71,7 +71,7 @@ export class FetchPointService implements IStormGlassService {
           message: `${FetchPointService.name} Initializing data persistence in the cache`,
         });
 
-        await this.cacheService.save(cacheKey, normalizeStormGlassData);
+        await this.cacheService.save<IFetchPointNormalize[]>(cacheKey, normalizeStormGlassData);
 
         this.loggerService.log({
           level: TypesLogger.INFO,

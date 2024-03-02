@@ -4,7 +4,7 @@ import { ICacheService } from '../ports/cache-service';
 export class InMemoryCacheService implements ICacheService {
   private cache: ICacheData = {};
 
-  public async save(key: string, value: any): Promise<void> {
+  public async save<T>(key: string, value: T): Promise<void> {
     this.cache[key] = JSON.stringify(value);
   }
 

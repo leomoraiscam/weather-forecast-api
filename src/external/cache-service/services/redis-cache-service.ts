@@ -11,7 +11,7 @@ export class RedisCacheService implements ICacheService {
     this.client = new Redis(cacheConfig.config.redis);
   }
 
-  async save(key: string, value: any): Promise<void> {
+  async save<T>(key: string, value: T): Promise<void> {
     await this.client.set(key, JSON.stringify(value));
   }
 

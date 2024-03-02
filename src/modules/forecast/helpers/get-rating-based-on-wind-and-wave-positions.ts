@@ -1,6 +1,12 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 
-function isWindOffShore(beach: any, waveDirection: string, windDirection: string): boolean {
+import { IRegisterBeachDTO } from '../dtos/register-beach';
+
+function isWindOffShore(
+  beach: IRegisterBeachDTO,
+  waveDirection: string,
+  windDirection: string,
+): boolean {
   return (
     (waveDirection === BeachPosition.N &&
       windDirection === BeachPosition.S &&
@@ -20,7 +26,7 @@ function isWindOffShore(beach: any, waveDirection: string, windDirection: string
 export function getRatingBasedOnWindAndWavePositions(
   waveDirection: BeachPosition,
   windDirection: BeachPosition,
-  beach: any,
+  beach: IRegisterBeachDTO,
 ): number {
   if (waveDirection === windDirection) {
     return 1;
