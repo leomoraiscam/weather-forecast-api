@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Either } from '@src/shared/logic/either';
 
 import { IAuthenticationUserDTO } from '../../dtos/authentication-user';

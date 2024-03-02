@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable max-classes-per-file */
-
 import { IAuthenticateUserDTO } from '@src/modules/accounts/dtos/authenticate-user';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
@@ -9,6 +6,7 @@ import { ErrorDefaultThrowingUseCaseStub } from '@test/stubs/default-error-throw
 import { ErrorThrowingUseCaseStub } from '@test/stubs/error-throwing-stub';
 
 import { AuthenticateUserController } from './authenticate-user-controller';
+import { AuthenticateUserResponse } from './authenticate-user-response';
 import { AuthenticateUserUseCase } from './authenticate-user-use-case';
 
 let inMemoryUserRepository: InMemoryUserRepository;
@@ -94,7 +92,10 @@ describe('Authenticate user web controller', () => {
   });
 
   it('should return status code 401 when occurred an error a non mapped', async () => {
-    const errorDefaultThrowingUseCaseStub = new ErrorDefaultThrowingUseCaseStub();
+    const errorDefaultThrowingUseCaseStub = new ErrorDefaultThrowingUseCaseStub<
+      IAuthenticateUserDTO,
+      AuthenticateUserResponse
+    >();
 
     const user = createUser();
 
@@ -118,7 +119,10 @@ describe('Authenticate user web controller', () => {
   });
 
   it('should return status code 500 when server raises', async () => {
-    const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub();
+    const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub<
+      IAuthenticateUserDTO,
+      AuthenticateUserResponse
+    >();
 
     const user = createUser();
 

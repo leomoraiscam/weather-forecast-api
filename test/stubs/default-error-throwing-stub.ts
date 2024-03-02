@@ -1,9 +1,11 @@
+import { IUseCase } from '@src/main/adapters/ports/use-case';
+
 import { Either, left } from '../../src/shared/logic/either';
 
-export class ErrorDefaultThrowingUseCaseStub {
-  async execute(_: any): Promise<Either<any, any>> {
+export class ErrorDefaultThrowingUseCaseStub<T, R> implements IUseCase<T, R> {
+  async execute({}: T): Promise<R> {
     const error = new Error('Unexpected error occurred');
 
-    return left(error);
+    return left(error) as unknown as R;
   }
 }

@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable max-classes-per-file */
-
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';
@@ -11,6 +8,7 @@ import { ErrorThrowingConflictUseCaseStub } from '@test/stubs/beach-already-exis
 import { ErrorThrowingUseCaseStub } from '@test/stubs/error-throwing-stub';
 
 import { RegisterBeachController } from './register-beach-controller';
+import { RegisterBeachResponse } from './register-beach-response';
 import { RegisterBeachUseCase } from './register-beach-use-case';
 
 let inMemoryBeachRepository: InMemoryBeachRepository;
@@ -126,7 +124,10 @@ describe('Register beach web controller', () => {
   });
 
   it('should return status code 500 when server raises', async () => {
-    const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub();
+    const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub<
+      IRegisterBeachDTO,
+      RegisterBeachResponse
+    >();
 
     const request: IHttpRequest<IRegisterBeachDTO> = {
       body: {

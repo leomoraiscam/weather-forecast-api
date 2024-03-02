@@ -1,7 +1,7 @@
-import { Either } from '../../src/shared/logic/either';
+import { IUseCase } from '@src/main/adapters/ports/use-case';
 
-export class ErrorThrowingUseCaseStub {
-  async execute(_: any): Promise<Either<any, any>> {
+export class ErrorThrowingUseCaseStub<T, R> implements IUseCase<T, R> {
+  async execute({}: T): Promise<R> {
     throw Error();
   }
 }

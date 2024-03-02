@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable max-classes-per-file */
 import { IRegisterUserDTO } from '@src/modules/accounts/dtos/register-user';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
@@ -7,6 +5,7 @@ import { ErrorThrowingConflictUseCaseStub } from '@test/stubs/account-already-ex
 import { ErrorThrowingUseCaseStub } from '@test/stubs/error-throwing-stub';
 
 import { RegisterUserController } from './register-user-controller';
+import { RegisterUserResponse } from './register-user-response';
 import { RegisterUserUseCase } from './register-user-use-case';
 
 let inMemoryUserRepository: InMemoryUserRepository;
@@ -94,7 +93,10 @@ describe('Register user web controller', () => {
   });
 
   it('should return status code 500 when server raises', async () => {
-    const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub();
+    const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub<
+      IRegisterUserDTO,
+      RegisterUserResponse
+    >();
 
     const request: IHttpRequest<IRegisterUserDTO> = {
       body: {

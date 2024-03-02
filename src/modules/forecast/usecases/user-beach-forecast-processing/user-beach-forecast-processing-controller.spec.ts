@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable max-classes-per-file */
-
 import { InMemoryLoggerService } from '@src/external/logger-service/in-memory/in-memory-logger-service';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
@@ -11,6 +8,7 @@ import { StormGlassServiceMock } from '@test/mocks/storm-glass-service-mock';
 import { ErrorThrowingUseCaseStub } from '@test/stubs/error-throwing-stub';
 
 import { UserBeachForecastProcessingController } from './user-beach-forecast-processing-controller';
+import { UserBeachForecastProcessingResponse } from './user-beach-forecast-processing-response';
 import { UserBeachForecastProcessingUseCase } from './user-beach-forecast-processing-use-case';
 
 let inMemoryBeachRepository: InMemoryBeachRepository;
@@ -85,7 +83,10 @@ describe('Fetch points beach web controller', () => {
   });
 
   it('should return status code 500 when server raises', async () => {
-    const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub();
+    const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub<
+      string,
+      UserBeachForecastProcessingResponse
+    >();
 
     const request: IHttpRequest<{ userId: string }> = {
       userId,
