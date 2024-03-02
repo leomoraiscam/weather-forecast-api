@@ -5,10 +5,10 @@ import { InMemoryLoggerService } from '@src/external/logger-service/in-memory/in
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
-import { Either } from '@src/shared/logic/either';
 import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
 import { StormGlassServiceMock } from '@test/mocks/storm-glass-service-mock';
+import { ErrorThrowingUseCaseStub } from '@test/stubs/error-throwing-stub';
 
 import { UserBeachForecastProcessingController } from './user-beach-forecast-processing-controller';
 import { UserBeachForecastProcessingUseCase } from './user-beach-forecast-processing-use-case';
@@ -20,12 +20,6 @@ let stormGlassServiceMock: StormGlassServiceMock;
 let userBeachForecastProcessingController: UserBeachForecastProcessingController;
 let userBeachForecastProcessingUseCase: UserBeachForecastProcessingUseCase;
 let userId: string;
-
-export class ErrorThrowingUseCaseStub {
-  async execute(_: any): Promise<Either<any, any>> {
-    throw Error();
-  }
-}
 
 describe('Fetch points beach web controller', () => {
   beforeEach(async () => {

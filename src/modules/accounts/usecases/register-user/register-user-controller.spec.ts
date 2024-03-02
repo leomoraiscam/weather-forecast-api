@@ -3,9 +3,9 @@
 import { IRegisterUserDTO } from '@src/modules/accounts/dtos/register-user';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
-import { Either, left } from '@src/shared/logic/either';
+import { ErrorThrowingConflictUseCaseStub } from '@test/stubs/account-already-exists-error-stub';
+import { ErrorThrowingUseCaseStub } from '@test/stubs/error-throwing-stub';
 
-import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
 import { RegisterUserController } from './register-user-controller';
 import { RegisterUserUseCase } from './register-user-use-case';
 
@@ -15,20 +15,6 @@ const mockValidator = {
   validate: jest.fn().mockReturnValue({ isLeft: jest.fn().mockReturnValue(false) }),
 };
 let registerUserController: RegisterUserController;
-
-export class ErrorThrowingUseCaseStub {
-  async execute(_: any): Promise<Either<any, any>> {
-    throw Error();
-  }
-}
-
-export class ErrorThrowingConflictUseCaseStub {
-  async execute(_: any): Promise<Either<any, any>> {
-    const error = new AccountAlreadyExistsError('any_email@email.com');
-
-    return left(error);
-  }
-}
 
 describe('Register user web controller', () => {
   beforeEach(() => {

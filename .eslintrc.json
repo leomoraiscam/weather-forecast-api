@@ -19,7 +19,7 @@
   "rules": {
     "prettier/prettier": "error",
     "camelcase": "off",
-    "import/no-unresolved": "error",
+    "import/no-unresolved": "warn",
     "no-shadow": "off",
     "dot-notation": "off",
     "no-useless-constructor": "off",

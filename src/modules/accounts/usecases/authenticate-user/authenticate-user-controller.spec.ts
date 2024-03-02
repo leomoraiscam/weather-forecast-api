@@ -4,8 +4,9 @@
 import { IAuthenticateUserDTO } from '@src/modules/accounts/dtos/authenticate-user';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
-import { Either, left } from '@src/shared/logic/either';
 import { createUser } from '@test/factories/user-factory';
+import { ErrorDefaultThrowingUseCaseStub } from '@test/stubs/default-error-throwing-stub';
+import { ErrorThrowingUseCaseStub } from '@test/stubs/error-throwing-stub';
 
 import { AuthenticateUserController } from './authenticate-user-controller';
 import { AuthenticateUserUseCase } from './authenticate-user-use-case';
@@ -16,28 +17,6 @@ const mockValidator = {
   validate: jest.fn().mockReturnValue({ isLeft: jest.fn().mockReturnValue(false) }),
 };
 let authenticateUserController: AuthenticateUserController;
-
-export class ErrorThrowingUseCaseStub {
-  async execute(_: any): Promise<Either<any, any>> {
-    throw Error();
-  }
-}
-
-export class ErrorThrowingConflictUseCaseStub {
-  async execute(_: any): Promise<Either<any, any>> {
-    // const error = new AccountAlreadyExistsError('any_email@email.com');
-
-    return left('');
-  }
-}
-
-export class ErrorDefaultThrowingUseCaseStub {
-  async execute(_: any): Promise<Either<any, any>> {
-    const error = new Error('Unexpected error occurred');
-
-    return left(error);
-  }
-}
 
 describe('Authenticate user web controller', () => {
   beforeEach(() => {
