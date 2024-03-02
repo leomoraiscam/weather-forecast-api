@@ -1,9 +1,9 @@
-import { BeachPosition } from '../../src/config/constants/beach-position-enum';
-import { Beach } from '../../src/modules/forecast/domain/beach/beach';
-import { Latitude } from '../../src/modules/forecast/domain/beach/latitude';
-import { Longitude } from '../../src/modules/forecast/domain/beach/longitude';
-import { Name } from '../../src/modules/forecast/domain/beach/name';
-import { Position } from '../../src/modules/forecast/domain/beach/position';
+import { BeachPosition } from '@src/config/constants/beach-position-enum';
+import { Beach } from '@src/modules/forecast/domain/beach/beach';
+import { Latitude } from '@src/modules/forecast/domain/beach/latitude';
+import { Longitude } from '@src/modules/forecast/domain/beach/longitude';
+import { Name } from '@src/modules/forecast/domain/beach/name';
+import { Position } from '@src/modules/forecast/domain/beach/position';
 
 type BeachOverrides = {
   name?: string;

@@ -1,7 +1,8 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
-import swaggerFile from '../../shared/swagger.json';
+import swaggerFile from '@src/shared/swagger.json';
+
 import { bodyParser } from './body-parser';
 import { contentType } from './content-type';
 import { cors } from './cors';

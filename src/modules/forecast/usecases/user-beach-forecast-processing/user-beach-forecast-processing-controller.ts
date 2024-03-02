@@ -1,4 +1,5 @@
 import { IUseCase } from '@src/main/adapters/ports/use-case';
+import { ITimeBeachRatingForecastDTO } from '@src/modules/forecast/dtos/time-beach-rating-forecast';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { IHttpResponse } from '@src/shared/http/dtos/http-response';
@@ -9,7 +10,6 @@ import {
   unprocessableEntity,
 } from '@src/shared/http/helpers/http-helper';
 
-import { ITimeBeachRatingForecastDTO } from '../../dtos/time-beach-rating-forecast';
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';
 import { UserNotFoundError } from './errors/user-not-found-error';
 import { UserBeachForecastProcessingResponse } from './user-beach-forecast-processing-response';

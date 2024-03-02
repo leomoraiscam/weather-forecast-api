@@ -1,6 +1,5 @@
 import { IUseCase } from '@src/main/adapters/ports/use-case';
-
-import { Either, left } from '../../src/shared/logic/either';
+import { left } from '@src/shared/logic/either';
 
 export class ErrorDefaultThrowingUseCaseStub<T, R> implements IUseCase<T, R> {
   async execute({}: T): Promise<R> {

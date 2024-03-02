@@ -1,7 +1,7 @@
-import { Email } from '../../src/modules/accounts/domain/user/email';
-import { Name } from '../../src/modules/accounts/domain/user/name';
-import { Password } from '../../src/modules/accounts/domain/user/password';
-import { User } from '../../src/modules/accounts/domain/user/user';
+import { Email } from '@src/modules/accounts/domain/user/email';
+import { Name } from '@src/modules/accounts/domain/user/name';
+import { Password } from '@src/modules/accounts/domain/user/password';
+import { User } from '@src/modules/accounts/domain/user/user';
 
 type UserOverrides = {
   id?: string;
