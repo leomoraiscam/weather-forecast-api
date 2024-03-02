@@ -1,0 +1,8 @@
+{
+  "response": {
+    "status": 429,
+    "data": {
+      "errors": ["Rate Limit reached"]
+    }
+  }
+}
