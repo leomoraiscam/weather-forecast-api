@@ -4,8 +4,8 @@ import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';
 import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { createUser } from '@test/factories/user-factory';
-import { ErrorThrowingConflictUseCaseStub } from '@test/stubs/beach-already-exists-error-stub';
-import { ErrorThrowingUseCaseStub } from '@test/stubs/error-throwing-stub';
+import { ErrorThrowingConflictUseCaseStub } from '@test/fixtures/stubs/beach-already-exists-error-stub';
+import { ErrorThrowingUseCaseStub } from '@test/fixtures/stubs/error-throwing-stub';
 
 import { RegisterBeachController } from './register-beach-controller';
 import { RegisterBeachResponse } from './register-beach-response';

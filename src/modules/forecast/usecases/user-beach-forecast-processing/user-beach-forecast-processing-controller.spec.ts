@@ -4,8 +4,8 @@ import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-m
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
-import { StormGlassServiceMock } from '@test/mocks/storm-glass-service-mock';
-import { ErrorThrowingUseCaseStub } from '@test/stubs/error-throwing-stub';
+import { StormGlassServiceMock } from '@test/fixtures/mocks/storm-glass-service-mock';
+import { ErrorThrowingUseCaseStub } from '@test/fixtures/stubs/error-throwing-stub';
 
 import { UserBeachForecastProcessingController } from './user-beach-forecast-processing-controller';
 import { UserBeachForecastProcessingResponse } from './user-beach-forecast-processing-response';

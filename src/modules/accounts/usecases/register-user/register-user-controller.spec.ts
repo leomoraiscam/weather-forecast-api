@@ -1,8 +1,8 @@
 import { IRegisterUserDTO } from '@src/modules/accounts/dtos/register-user';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
-import { ErrorThrowingConflictUseCaseStub } from '@test/stubs/account-already-exists-error-stub';
-import { ErrorThrowingUseCaseStub } from '@test/stubs/error-throwing-stub';
+import { ErrorThrowingConflictUseCaseStub } from '@test/fixtures/stubs/account-already-exists-error-stub';
+import { ErrorThrowingUseCaseStub } from '@test/fixtures/stubs/error-throwing-stub';
 
 import { RegisterUserController } from './register-user-controller';
 import { RegisterUserResponse } from './register-user-response';

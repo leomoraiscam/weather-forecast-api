@@ -2,8 +2,8 @@ import { IAuthenticateUserDTO } from '@src/modules/accounts/dtos/authenticate-us
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { createUser } from '@test/factories/user-factory';
-import { ErrorDefaultThrowingUseCaseStub } from '@test/stubs/default-error-throwing-stub';
-import { ErrorThrowingUseCaseStub } from '@test/stubs/error-throwing-stub';
+import { ErrorDefaultThrowingUseCaseStub } from '@test/fixtures/stubs/default-error-throwing-stub';
+import { ErrorThrowingUseCaseStub } from '@test/fixtures/stubs/error-throwing-stub';
 
 import { AuthenticateUserController } from './authenticate-user-controller';
 import { AuthenticateUserResponse } from './authenticate-user-response';

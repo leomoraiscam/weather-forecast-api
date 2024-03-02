@@ -1,11 +1,11 @@
 import { InMemoryCacheService } from '@src/external/cache-service/in-memory/in-memory-cache-service';
 import { AxiosRequestService } from '@src/external/http-service/services/axios-request-service';
 import { InMemoryLoggerService } from '@src/external/logger-service/in-memory/in-memory-logger-service';
-import fetchPointsNormalizedResponse from '@test/fixtures/fetch-points-normalized-response.json';
-import stormGlassIncompleteResponse from '@test/fixtures/storm-glass-incomplete-response.json';
-import stormGlassResponseGenericError from '@test/fixtures/storm-glass-response-generic-error.json';
-import stormGlassResponseRateLimitError from '@test/fixtures/storm-glass-response-rate-limit-error.json';
-import stormGlassWeather3HoursResponse from '@test/fixtures/storm-glass-response-weather-3-hours.json';
+import fetchPointsNormalizedResponse from '@test/fixtures/data/fetch-points-normalized-response.json';
+import stormGlassIncompleteResponse from '@test/fixtures/data/storm-glass-incomplete-response.json';
+import stormGlassResponseGenericError from '@test/fixtures/data/storm-glass-response-generic-error.json';
+import stormGlassResponseRateLimitError from '@test/fixtures/data/storm-glass-response-rate-limit-error.json';
+import stormGlassWeather3HoursResponse from '@test/fixtures/data/storm-glass-response-weather-3-hours.json';
 
 import { IFetchPointCoordinate } from '../dtos/fetch-point-coordinate';
 import { FetchPointService } from './fetch-point-service';

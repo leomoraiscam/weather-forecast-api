@@ -4,10 +4,10 @@ import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-me
 import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
 import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
-import processForecastBeachesResponse from '@test/fixtures/process-forecast-beaches-response.json';
-import { StormGlassServiceMock } from '@test/mocks/storm-glass-service-mock';
-import { StormGlassServicerErrorStub } from '@test/stubs/storm-glass-service-error-stub';
-import { StormGlassServiceStub } from '@test/stubs/storm-glass-service-stub';
+import processForecastBeachesResponse from '@test/fixtures/data/process-forecast-beaches-response.json';
+import { StormGlassServiceMock } from '@test/fixtures/mocks/storm-glass-service-mock';
+import { StormGlassServicerErrorStub } from '@test/fixtures/stubs/storm-glass-service-error-stub';
+import { StormGlassServiceStub } from '@test/fixtures/stubs/storm-glass-service-stub';
 
 import { StormGlassResponseError } from './errors/stormglass-response-error';
 import { UserBeachForecastProcessingUseCase } from './user-beach-forecast-processing-use-case';
