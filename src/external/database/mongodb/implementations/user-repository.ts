@@ -2,8 +2,7 @@ import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper
 import { User } from '@src/modules/accounts/domain/user/user';
 import { PersistenceUserModel } from '@src/modules/accounts/mapper/dtos/user-model';
 import { UserMapper } from '@src/modules/accounts/mapper/user-mapper';
-
-import { IUserRepository } from '../user-repository';
+import { IUserRepository } from '@src/modules/accounts/repositories/ports/user-repository';
 
 export class UserRepository implements IUserRepository {
   async findById(id: string): Promise<User | undefined> {

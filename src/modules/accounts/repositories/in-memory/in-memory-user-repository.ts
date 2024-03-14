@@ -1,6 +1,6 @@
 import { User } from '@src/modules/accounts/domain/user/user';
 
-import { IUserRepository } from '../user-repository';
+import { IUserRepository } from '../ports/user-repository';
 
 export class InMemoryUserRepository implements IUserRepository {
   users: User[] = [];

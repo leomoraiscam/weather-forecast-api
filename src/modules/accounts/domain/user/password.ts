@@ -13,14 +13,6 @@ export class Password {
     this.hashed = hashed;
   }
 
-  static validate(password: string): boolean {
-    if (!password || password.trim().length < 6 || password.trim().length > 255) {
-      return false;
-    }
-
-    return true;
-  }
-
   public async getHashedValue(): Promise<string> {
     if (this.hashed) {
       return this.password;
@@ -39,6 +31,14 @@ export class Password {
     }
 
     return this.password === plainTextPassword;
+  }
+
+  static validate(password: string): boolean {
+    if (!password || password.trim().length < 6 || password.trim().length > 255) {
+      return false;
+    }
+
+    return true;
   }
 
   static create(

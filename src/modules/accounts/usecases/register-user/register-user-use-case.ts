@@ -4,7 +4,7 @@ import { Name } from '@src/modules/accounts/domain/user/name';
 import { Password } from '@src/modules/accounts/domain/user/password';
 import { User } from '@src/modules/accounts/domain/user/user';
 import { IRegisterUserDTO } from '@src/modules/accounts/dtos/register-user';
-import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
+import { IUserRepository } from '@src/modules/accounts/repositories/ports/user-repository';
 import { left, right } from '@src/shared/logic/either';
 
 import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
