@@ -7,11 +7,11 @@ import { IFetchPointCoordinate } from '@src/external/stormglass-service/dtos/fet
 import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
 import { FetchPointServiceResponse } from '@src/external/stormglass-service/services/fetch-point-service-response';
 import { IUseCase } from '@src/main/adapters/ports/use-case';
-import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
+import { IUserRepository } from '@src/modules/accounts/repositories/ports/user-repository';
 import { IBeachRatingForecastDTO } from '@src/modules/forecast/dtos/beach-rating-forecast';
 import { calculateRatingByPoint } from '@src/modules/forecast/helpers/calculate-rating-by-point';
 import { normalizeForecastByTime } from '@src/modules/forecast/helpers/normalize-forecast-by-time';
-import { IBeachRepository } from '@src/modules/forecast/repositories/beach-repository';
+import { IBeachRepository } from '@src/modules/forecast/repositories/ports/beach-repository';
 import { left, right } from '@src/shared/logic/either';
 
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';

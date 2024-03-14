@@ -1,12 +1,12 @@
 import { IUseCase } from '@src/main/adapters/ports/use-case';
-import { IUserRepository } from '@src/modules/accounts/repositories/user-repository';
+import { IUserRepository } from '@src/modules/accounts/repositories/ports/user-repository';
 import { Beach } from '@src/modules/forecast/domain/beach/beach';
 import { Latitude } from '@src/modules/forecast/domain/beach/latitude';
 import { Longitude } from '@src/modules/forecast/domain/beach/longitude';
 import { Name } from '@src/modules/forecast/domain/beach/name';
 import { Position } from '@src/modules/forecast/domain/beach/position';
 import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';
-import { IBeachRepository } from '@src/modules/forecast/repositories/beach-repository';
+import { IBeachRepository } from '@src/modules/forecast/repositories/ports/beach-repository';
 import { left, right } from '@src/shared/logic/either';
 
 import { UserNotFoundError } from '../user-beach-forecast-processing/errors/user-not-found-error';

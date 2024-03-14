@@ -2,8 +2,7 @@ import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper
 import { Beach } from '@src/modules/forecast/domain/beach/beach';
 import { IBeachCoordinatesDTO } from '@src/modules/forecast/dtos/beach-coordinates';
 import { BeachMapper } from '@src/modules/forecast/mapper/beach-mapper';
-
-import { IBeachRepository } from '../beach-repository';
+import { IBeachRepository } from '@src/modules/forecast/repositories/ports/beach-repository';
 
 export class BeachRepository implements IBeachRepository {
   async findByGeolocation({ lat, lng, userId }: IBeachCoordinatesDTO): Promise<Beach> {
