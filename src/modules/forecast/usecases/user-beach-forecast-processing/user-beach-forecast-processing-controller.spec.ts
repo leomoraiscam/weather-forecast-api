@@ -1,12 +1,12 @@
 import { InMemoryLoggerService } from '@src/external/logger-service/in-memory/in-memory-logger-service';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
-import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
 import { StormGlassServiceMock } from '@test/fixtures/mocks/storm-glass-service-mock';
 import { ErrorThrowingUseCaseStub } from '@test/fixtures/stubs/error-throwing-stub';
 
+import { IFindTimeBeachRatingForecastDTO } from '../../dtos/find-time-beaches-rating-forecast';
 import { UserBeachForecastProcessingController } from './user-beach-forecast-processing-controller';
 import { UserBeachForecastProcessingResponse } from './user-beach-forecast-processing-response';
 import { UserBeachForecastProcessingUseCase } from './user-beach-forecast-processing-use-case';
@@ -48,8 +48,18 @@ describe('Fetch points beach web controller', () => {
   });
 
   it('should return status code 200 when request contains valid user data', async () => {
-    const request: IHttpRequest<{ userId: string }> = {
+    const request: {
+      userId: string;
+      query: {
+        page: number;
+        pageSize: number;
+      };
+    } = {
       userId,
+      query: {
+        page: 1,
+        pageSize: 5,
+      },
     };
 
     const response = await userBeachForecastProcessingController.handle(request);
@@ -58,8 +68,18 @@ describe('Fetch points beach web controller', () => {
   });
 
   it('should return status code 404 when user does not exist', async () => {
-    const request: IHttpRequest<{ userId: string }> = {
+    const request: {
+      userId: string;
+      query: {
+        page: number;
+        pageSize: number;
+      };
+    } = {
       userId: 'id-non-exist',
+      query: {
+        page: 1,
+        pageSize: 5,
+      },
     };
 
     const response = await userBeachForecastProcessingController.handle(request);
@@ -73,8 +93,18 @@ describe('Fetch points beach web controller', () => {
     });
     await inMemoryUserRepository.create(user);
 
-    const request: IHttpRequest<{ userId: string }> = {
+    const request: {
+      userId: string;
+      query: {
+        page: number;
+        pageSize: number;
+      };
+    } = {
       userId: user.id,
+      query: {
+        page: 1,
+        pageSize: 5,
+      },
     };
 
     const response = await userBeachForecastProcessingController.handle(request);
@@ -84,12 +114,22 @@ describe('Fetch points beach web controller', () => {
 
   it('should return status code 500 when server raises', async () => {
     const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub<
-      string,
+      IFindTimeBeachRatingForecastDTO,
       UserBeachForecastProcessingResponse
     >();
 
-    const request: IHttpRequest<{ userId: string }> = {
+    const request: {
+      userId: string;
+      query: {
+        page: number;
+        pageSize: number;
+      };
+    } = {
       userId,
+      query: {
+        page: 1,
+        pageSize: 5,
+      },
     };
 
     const controller = new UserBeachForecastProcessingController(errorThrowingUseCaseStub);
