@@ -4,13 +4,15 @@ import { IController } from './ports/controller';
 
 export const adaptRoute = (controller: IController) => {
   return async (request: Request, response: Response): Promise<void> => {
-    const { body, userId } = {
+    const { body, userId, query } = {
       body: request.body,
+      query: request.query,
       userId: request.userId,
     };
 
     const httpResponse = await controller.handle({
       body,
+      query,
       userId,
     });
 
