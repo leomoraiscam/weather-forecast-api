@@ -4,23 +4,13 @@
     "module": "commonjs",
     "baseUrl": ".",
     "outDir": "./dist",
-    "lib": ["es2019"],
-    "sourceMap": true,
     "resolveJsonModule": true,
-    "declaration": true,
-    "incremental": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": false,
-    "strictFunctionTypes": true,
     "esModuleInterop": true,
-    "useUnknownInCatchVariables": false,
+    "allowJs": true,
     "paths": {
       "@config/*": ["./src/config/*"],
       "@src/*": ["./src/*"],
       "@test/*": ["./test/*"]
     }
-  },
-  "include": ["./src/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  }
 }

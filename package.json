@@ -4,13 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "build": "rimraf dist && tsc -p tsconfig-build.json && tsc-alias",
+    "start": "node dist/src/main/server.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/main/server.ts  | pino-pretty -c",
     "commit": "cz",
+    "lint": "eslint --ext .js,.ts .",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "test": "jest",
     "test-unit": "npm test -- -c ./jest-unit-config.js",
-    "test-integration": "npm test -- -c ./jest-integration-config.js",
-    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/main/server.ts  | pino-pretty -c",
-    "lint": "eslint --ext .js,.ts .",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+    "test-integration": "npm test -- -c ./jest-integration-config.js"
   },
   "dependencies": {
     "@shelf/jest-mongodb": "^4.2.0",
@@ -26,6 +28,7 @@
     "pino": "^8.16.2",
     "rate-limiter-flexible": "^2.1.15",
     "redis": "^3.0.2",
+    "rimraf": "^5.0.5",
     "supertest": "^6.3.4",
     "swagger-ui-express": "^4.1.6",
     "uuid": "^9.0.1"
