@@ -28,13 +28,17 @@ export class FetchPointService implements IStormGlassService {
     lat,
     lng,
     userId,
+    page,
+    pageSize,
   }: IFetchPointCoordinate): Promise<FetchPointServiceResponse> {
     try {
-      const cacheKey = `provider-forecast-point: ${userId}:${lat}-${lng}`;
+      const cacheKey = `provider-forecast-point: ${userId}:${lat}-${lng}:${page}-${pageSize}`;
 
       const wavesPoints = await this.cacheService.recover<IFetchPointNormalize[]>(cacheKey);
 
       if (!wavesPoints) {
+        const offset = (page - 1) * pageSize;
+
         this.loggerService.log({
           level: TypesLogger.INFO,
           message: `${FetchPointService.name} starting call the stormglass API`,
@@ -42,6 +46,9 @@ export class FetchPointService implements IStormGlassService {
             lat,
             lng,
             userId,
+            page,
+            pageSize,
+            offset,
           },
         });
 
@@ -66,24 +73,31 @@ export class FetchPointService implements IStormGlassService {
           message: `${FetchPointService.name} call StormGlassMapper to normalize the response successfully`,
         });
 
+        const paginatedData = normalizeStormGlassData.slice(offset, offset + pageSize);
+
+        this.loggerService.log({
+          level: TypesLogger.INFO,
+          message: `${FetchPointService.name} applying pagination to the normalized data`,
+        });
+
         this.loggerService.log({
           level: TypesLogger.INFO,
           message: `${FetchPointService.name} Initializing data persistence in the cache`,
         });
 
-        await this.cacheService.save<IFetchPointNormalize[]>(cacheKey, normalizeStormGlassData);
+        await this.cacheService.save<IFetchPointNormalize[]>(cacheKey, paginatedData);
 
         this.loggerService.log({
           level: TypesLogger.INFO,
-          message: `${FetchPointService.name} normalized data saved in cache completed`,
+          message: `${FetchPointService.name} paginated data saved in cache completed`,
         });
 
-        return right(normalizeStormGlassData);
+        return right(paginatedData);
       }
 
       this.loggerService.log({
         level: TypesLogger.INFO,
-        message: `${FetchPointService.name} normalized data obtained from cache with key ${cacheKey}`,
+        message: `${FetchPointService.name} paginated data obtained from cache with key ${cacheKey}`,
       });
 
       return right(wavesPoints);
