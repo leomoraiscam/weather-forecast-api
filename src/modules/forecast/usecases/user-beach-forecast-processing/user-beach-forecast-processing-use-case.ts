@@ -14,12 +14,13 @@ import { normalizeForecastByTime } from '@src/modules/forecast/helpers/normalize
 import { IBeachRepository } from '@src/modules/forecast/repositories/ports/beach-repository';
 import { left, right } from '@src/shared/logic/either';
 
+import { IFindTimeBeachRatingForecastDTO } from '../../dtos/find-time-beaches-rating-forecast';
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';
 import { UserNotFoundError } from './errors/user-not-found-error';
 import { UserBeachForecastProcessingResponse } from './user-beach-forecast-processing-response';
 
 export class UserBeachForecastProcessingUseCase
-  implements IUseCase<string, UserBeachForecastProcessingResponse>
+  implements IUseCase<IFindTimeBeachRatingForecastDTO, UserBeachForecastProcessingResponse>
 {
   constructor(
     private stormGlassService: IUseCase<IFetchPointCoordinate, FetchPointServiceResponse>,
@@ -28,7 +29,11 @@ export class UserBeachForecastProcessingUseCase
     private loggerService: ILoggerService,
   ) {}
 
-  public async execute(userId: string): Promise<UserBeachForecastProcessingResponse> {
+  public async execute({
+    page,
+    pageSize,
+    userId,
+  }: IFindTimeBeachRatingForecastDTO): Promise<UserBeachForecastProcessingResponse> {
     const userExisted = await this.userRepository.findById(userId);
 
     if (!userExisted) {
@@ -60,6 +65,8 @@ export class UserBeachForecastProcessingUseCase
         lat: lat.value,
         lng: lng.value,
         userId: userExisted.id,
+        page,
+        pageSize,
       });
 
       if (points.isLeft()) {
