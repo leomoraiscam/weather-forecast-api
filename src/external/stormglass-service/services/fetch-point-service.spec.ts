@@ -8,6 +8,7 @@ import stormGlassResponseRateLimitError from '@test/fixtures/data/storm-glass-re
 import stormGlassWeather3HoursResponse from '@test/fixtures/data/storm-glass-response-weather-3-hours.json';
 
 import { IFetchPointCoordinate } from '../dtos/fetch-point-coordinate';
+import { IFetchPointNormalize } from '../dtos/fetch-point-normalize';
 import { FetchPointService } from './fetch-point-service';
 
 jest.mock('@src/external/http-service/services/axios-request-service');
@@ -38,11 +39,17 @@ describe('StormGlass Service', () => {
       inMemoryLoggerService,
     );
 
-    const response = await fetchPointService.execute({ lat, lng });
+    const response = (
+      await fetchPointService.execute({
+        lat,
+        lng,
+        page: 1,
+        pageSize: 5,
+      })
+    ).value as IFetchPointNormalize[];
 
-    expect(response).toEqual({
-      value: fetchPointsNormalizedResponse,
-    });
+    expect(response).toEqual(fetchPointsNormalizedResponse);
+    expect(response.length).toBe(5);
   });
 
   it('should be able to exclude incomplete data points received from stormGlass service', async () => {
@@ -54,7 +61,7 @@ describe('StormGlass Service', () => {
       inMemoryLoggerService,
     );
 
-    const response = await fetchPointService.execute({ lat, lng });
+    const response = await fetchPointService.execute({ lat, lng, page: 1, pageSize: 5 });
 
     expect(response).toEqual({
       value: [],
@@ -70,7 +77,7 @@ describe('StormGlass Service', () => {
       inMemoryLoggerService,
     );
 
-    const response = await fetchPointService.execute({ lat, lng });
+    const response = await fetchPointService.execute({ lat, lng, page: 1, pageSize: 5 });
 
     expect(response.isLeft()).toBeTruthy();
   });
@@ -84,7 +91,7 @@ describe('StormGlass Service', () => {
       inMemoryLoggerService,
     );
 
-    const response = await fetchPointService.execute({ lat, lng });
+    const response = await fetchPointService.execute({ lat, lng, page: 1, pageSize: 5 });
 
     expect(response.isLeft()).toBeTruthy();
   });
@@ -102,40 +109,11 @@ describe('StormGlass Service', () => {
       lat: -33.792726,
       lng: 151.289824,
       userId: 'user123',
+      page: 1,
+      pageSize: 5,
     };
 
-    const cachedDataMock = [
-      {
-        time: '2020-04-26T00:00:00+00:00',
-        swellDirection: 64.26,
-        swellHeight: 0.15,
-        swellPeriod: 3.89,
-        waveDirection: 231.38,
-        waveHeight: 0.47,
-        windDirection: 299.45,
-        windSpeed: 100,
-      },
-      {
-        time: '2020-04-26T01:00:00+00:00',
-        swellDirection: 123.41,
-        swellHeight: 0.21,
-        swellPeriod: 3.67,
-        waveDirection: 232.12,
-        waveHeight: 0.46,
-        windDirection: 310.48,
-        windSpeed: 100,
-      },
-      {
-        time: '2020-04-26T02:00:00+00:00',
-        swellDirection: 182.56,
-        swellHeight: 0.28,
-        swellPeriod: 3.44,
-        waveDirection: 232.86,
-        waveHeight: 0.46,
-        windDirection: 321.5,
-        windSpeed: 100,
-      },
-    ];
+    const cachedDataMock = fetchPointsNormalizedResponse;
 
     await inMemoryCacheService.save(
       `provider-forecast-point: ${input.userId}:${lat}-${lng}`,
@@ -146,6 +124,8 @@ describe('StormGlass Service', () => {
       lat: input.lat,
       lng: input.lng,
       userId: input.userId,
+      page: input.page,
+      pageSize: input.pageSize,
     });
 
     expect(response.isRight()).toBeTruthy();
