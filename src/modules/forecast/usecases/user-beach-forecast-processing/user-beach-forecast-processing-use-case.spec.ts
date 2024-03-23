@@ -9,6 +9,7 @@ import { StormGlassServiceMock } from '@test/fixtures/mocks/storm-glass-service-
 import { StormGlassServicerErrorStub } from '@test/fixtures/stubs/storm-glass-service-error-stub';
 import { StormGlassServiceStub } from '@test/fixtures/stubs/storm-glass-service-stub';
 
+import { ITimeBeachRatingForecastDTO } from '../../dtos/time-beach-rating-forecast';
 import { StormGlassResponseError } from './errors/stormglass-response-error';
 import { UserBeachForecastProcessingUseCase } from './user-beach-forecast-processing-use-case';
 
@@ -32,7 +33,11 @@ describe('Process Forecast For Beaches Use Case', () => {
       inMemoryLoggerService,
     );
 
-    const response = await userBeachForecastProcessingUseCase.execute('any-user-id');
+    const response = await userBeachForecastProcessingUseCase.execute({
+      userId: 'any-user-id',
+      page: 1,
+      pageSize: 5,
+    });
 
     expect(response.isLeft()).toBeTruthy();
     expect(stormGlassServiceMock.timesSendWasCalled).toEqual(0);
@@ -51,7 +56,11 @@ describe('Process Forecast For Beaches Use Case', () => {
       inMemoryLoggerService,
     );
 
-    const response = await userBeachForecastProcessingUseCase.execute('fake-user-id');
+    const response = await userBeachForecastProcessingUseCase.execute({
+      userId: 'fake-user-id',
+      page: 1,
+      pageSize: 5,
+    });
 
     expect(response.isLeft()).toBeTruthy();
     expect(stormGlassServiceMock.timesSendWasCalled).toEqual(0);
@@ -72,7 +81,11 @@ describe('Process Forecast For Beaches Use Case', () => {
       inMemoryLoggerService,
     );
 
-    const response = await userBeachForecastProcessingUseCase.execute('fake-user-id');
+    const response = await userBeachForecastProcessingUseCase.execute({
+      userId: 'fake-user-id',
+      page: 1,
+      pageSize: 5,
+    });
 
     expect(response.isLeft()).toBeTruthy();
     expect(response.value).toBeInstanceOf(StormGlassResponseError);
@@ -98,11 +111,16 @@ describe('Process Forecast For Beaches Use Case', () => {
       inMemoryLoggerService,
     );
 
-    const beachesWithRating = await userBeachForecastProcessingUseCase.execute('fake-user-id');
+    const beachesWithRating = (
+      await userBeachForecastProcessingUseCase.execute({
+        userId: 'fake-user-id',
+        page: 1,
+        pageSize: 5,
+      })
+    ).value as ITimeBeachRatingForecastDTO[];
 
-    expect(beachesWithRating).toEqual({
-      value: processForecastBeachesResponse,
-    });
+    expect(beachesWithRating).toEqual(processForecastBeachesResponse);
+    expect(beachesWithRating.length).toEqual(5);
   });
 
   it.todo(

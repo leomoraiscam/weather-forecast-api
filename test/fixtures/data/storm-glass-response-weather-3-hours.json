@@ -71,6 +71,54 @@
       "windSpeed": {
         "noaa": 100
       }
+    },
+    {
+      "swellDirection": {
+        "noaa": 68.51
+      },
+      "swellHeight": {
+        "noaa": 0.53
+      },
+      "swellPeriod": {
+        "noaa": 9.07
+      },
+      "time": "2020-04-26T03:00:00+00:00",
+      "waveDirection": {
+        "noaa": 139.92
+      },
+      "waveHeight": {
+        "noaa": 1.37
+      },
+      "windDirection": {
+        "noaa": 33.03
+      },
+      "windSpeed": {
+        "noaa": 3.63
+      }
+    },
+    {
+      "swellDirection": {
+        "noaa": 65.34
+      },
+      "swellHeight": {
+        "noaa": 0.48
+      },
+      "swellPeriod": {
+        "noaa": 9.13
+      },
+      "time": "2020-04-26T04:00:00+00:00",
+      "waveDirection": {
+        "noaa": 134.04
+      },
+      "waveHeight": {
+        "noaa": 1.33
+      },
+      "windDirection": {
+        "noaa": 31.46
+      },
+      "windSpeed": {
+        "noaa": 5.67
+      }
     }
   ],
   "meta": {

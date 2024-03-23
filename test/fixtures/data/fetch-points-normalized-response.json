@@ -28,5 +28,25 @@
     "waveHeight": 0.46,
     "windDirection": 321.5,
     "windSpeed": 100
+  },
+  {
+    "time": "2020-04-26T03:00:00+00:00",
+    "swellDirection": 68.51,
+    "swellHeight": 0.53,
+    "swellPeriod": 9.07,
+    "waveDirection": 139.92,
+    "waveHeight": 1.37,
+    "windDirection": 33.03,
+    "windSpeed": 3.63
+  },
+  {
+    "time": "2020-04-26T04:00:00+00:00",
+    "swellDirection": 65.34,
+    "swellHeight": 0.48,
+    "swellPeriod": 9.13,
+    "waveDirection": 134.04,
+    "waveHeight": 1.33,
+    "windDirection": 31.46,
+    "windSpeed": 5.67
   }
 ]
