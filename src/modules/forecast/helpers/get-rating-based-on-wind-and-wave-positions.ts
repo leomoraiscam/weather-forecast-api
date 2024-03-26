@@ -1,12 +1,12 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 
-import { IRegisterBeachDTO } from '../dtos/register-beach';
+import { IWindWavesOffShoreDTO, IRatingByWindWavesDTO } from '../dtos/wind-waves-off-shore';
 
-function isWindOffShore(
-  beach: IRegisterBeachDTO,
-  waveDirection: string,
-  windDirection: string,
-): boolean {
+const isWindOffShore = ({
+  waveDirection,
+  windDirection,
+  beach,
+}: IWindWavesOffShoreDTO): boolean => {
   return (
     (waveDirection === BeachPosition.N &&
       windDirection === BeachPosition.S &&
@@ -21,18 +21,18 @@ function isWindOffShore(
       windDirection === BeachPosition.E &&
       beach.position === BeachPosition.W)
   );
-}
+};
 
-export function getRatingBasedOnWindAndWavePositions(
-  waveDirection: BeachPosition,
-  windDirection: BeachPosition,
-  beach: IRegisterBeachDTO,
-): number {
+export function getRatingBasedOnWindAndWavePositions({
+  waveDirection,
+  windDirection,
+  beach,
+}: IRatingByWindWavesDTO): number {
   if (waveDirection === windDirection) {
     return 1;
   }
 
-  if (isWindOffShore(beach, waveDirection, windDirection)) {
+  if (isWindOffShore({ beach, waveDirection, windDirection })) {
     return 5;
   }
 
