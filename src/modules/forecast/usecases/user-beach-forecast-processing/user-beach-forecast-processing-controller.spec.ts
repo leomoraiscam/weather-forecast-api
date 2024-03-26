@@ -1,4 +1,4 @@
-import { InMemoryLoggerService } from '@src/external/logger-service/in-memory/in-memory-logger-service';
+import { InMemoryLoggerService } from '@src/external/services/logger-service/in-memory/in-memory-logger-service';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';

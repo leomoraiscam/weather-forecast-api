@@ -1,9 +1,9 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { TypesLogger } from '@config/constants/types-logger-enum';
-import { ILoggerService } from '@src/external/logger-service/ports/logger-service';
-import { IFetchPointCoordinate } from '@src/external/stormglass-service/dtos/fetch-point-coordinate';
-import { IFetchPointNormalize } from '@src/external/stormglass-service/dtos/fetch-point-normalize';
-import { FetchPointServiceResponse } from '@src/external/stormglass-service/services/fetch-point-service-response';
+import { ILoggerService } from '@src/external/services/logger-service/ports/logger-service';
+import { IFetchPointCoordinate } from '@src/external/services/stormglass-service/dtos/fetch-point-coordinate';
+import { IFetchPointNormalize } from '@src/external/services/stormglass-service/dtos/fetch-point-normalize';
+import { FetchPointServiceResponse } from '@src/external/services/stormglass-service/services/fetch-point-service-response';
 import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IUserRepository } from '@src/modules/accounts/repositories/ports/user-repository';
 import { IBeachRatingForecastDTO } from '@src/modules/forecast/dtos/beach-rating-forecast';

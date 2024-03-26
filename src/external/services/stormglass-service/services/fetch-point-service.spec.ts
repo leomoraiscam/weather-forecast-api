@@ -1,6 +1,6 @@
-import { InMemoryCacheService } from '@src/external/cache-service/in-memory/in-memory-cache-service';
-import { AxiosRequestService } from '@src/external/http-service/services/axios-request-service';
-import { InMemoryLoggerService } from '@src/external/logger-service/in-memory/in-memory-logger-service';
+import { InMemoryCacheService } from '@src/external/services/cache-service/in-memory/in-memory-cache-service';
+import { AxiosRequestService } from '@src/external/services/http-service/services/axios-request-service';
+import { InMemoryLoggerService } from '@src/external/services/logger-service/in-memory/in-memory-logger-service';
 import fetchPointsNormalizedResponse from '@test/fixtures/data/fetch-points-normalized-response.json';
 import stormGlassIncompleteResponse from '@test/fixtures/data/storm-glass-incomplete-response.json';
 import stormGlassResponseGenericError from '@test/fixtures/data/storm-glass-response-generic-error.json';
