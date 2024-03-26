@@ -34,9 +34,9 @@ export class UserBeachForecastProcessingUseCase
     pageSize,
     userId,
   }: IFindTimeBeachRatingForecastDTO): Promise<UserBeachForecastProcessingResponse> {
-    const userExisted = await this.userRepository.findById(userId);
+    const user = await this.userRepository.findById(userId);
 
-    if (!userExisted) {
+    if (!user) {
       return left(new UserNotFoundError());
     }
 
@@ -46,25 +46,30 @@ export class UserBeachForecastProcessingUseCase
       return left(new BeachesNotFoundError());
     }
 
-    const beachRatingForecastsSources: IBeachRatingForecastDTO[] = [];
-
     this.loggerService.log({
       level: TypesLogger.INFO,
       message: `${UserBeachForecastProcessingUseCase.name} preparing the forecast for ${beaches.length} beaches`,
     });
 
+    const beachRatingForecastsSources: IBeachRatingForecastDTO[] = [];
+
     for (const beach of beaches) {
-      const { lat, lng, name, position } = beach;
+      const beachProperties = {
+        lat: beach.lat.value,
+        lng: beach.lng.value,
+        name: beach.name.value,
+        position: BeachPosition[beach.position.value as unknown as BeachPosition],
+      };
 
       this.loggerService.log({
         level: TypesLogger.INFO,
-        message: `${UserBeachForecastProcessingUseCase.name} Preparing the ${name.value} with lat: ${lat.value} and lng: ${lng.value} to user ${userExisted.id}`,
+        message: `${UserBeachForecastProcessingUseCase.name} Preparing the ${beachProperties.name} with lat: ${beachProperties.lat} and lng: ${beachProperties.lng} to user ${userId}`,
       });
 
       const points = await this.stormGlassService.execute({
-        lat: lat.value,
-        lng: lng.value,
-        userId: userExisted.id,
+        lat: beachProperties.lat,
+        lng: beachProperties.lng,
+        userId,
         page,
         pageSize,
       });
@@ -74,19 +79,18 @@ export class UserBeachForecastProcessingUseCase
       }
 
       const enrichedBeachRating = points.value.map(
-        (pointForecast: IFetchPointNormalize): IBeachRatingForecastDTO => ({
-          lat: lat.value,
-          lng: lng.value,
-          name: name.value,
-          position: BeachPosition[position.value as unknown as BeachPosition],
-          rating: calculateRatingByPoint(pointForecast, {
-            lat: lat.value,
-            lng: lng.value,
-            name: name.value,
-            position: BeachPosition[position.value as unknown as BeachPosition],
-          }),
-          ...pointForecast,
-        }),
+        (pointForecast: IFetchPointNormalize): IBeachRatingForecastDTO => {
+          const rating = calculateRatingByPoint({
+            point: pointForecast,
+            beach: beachProperties,
+          });
+
+          return {
+            ...beachProperties,
+            ...pointForecast,
+            rating,
+          };
+        },
       );
 
       beachRatingForecastsSources.push(...enrichedBeachRating);
