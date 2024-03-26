@@ -4,10 +4,9 @@ import request from 'supertest';
 import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
 import app from '@src/main/config/app';
 
-describe('Sessions Router', () => {
+describe('Sessions router', () => {
   beforeAll(async () => {
     await mongoHelper.connect(process.env.MONGO_URL);
-    // await mongoHelper.clearCollection('users');
   });
 
   afterAll(async () => {
@@ -15,11 +14,7 @@ describe('Sessions Router', () => {
     fs.unlink(`${process.cwd()}/globalConfig.json`, () => {});
   });
 
-  beforeEach(async () => {
-    // await mongoHelper.clearCollection('users');
-  });
-
-  it('should return status code 200 when request contains valid user data', async () => {
+  it('should be able to return status code 200 when request contains valid user data', async () => {
     await request(app).post('/api/users').send({
       name: 'Calvin Carson',
       email: 'izoac@om.rs',
@@ -35,7 +30,7 @@ describe('Sessions Router', () => {
       .expect(200);
   });
 
-  it('should return status code 401 when user a non exist and receive data the same', async () => {
+  it('should be able to return status code 401 when user a non exist and receive data the same', async () => {
     await request(app)
       .post('/api/sessions')
       .send({
@@ -45,7 +40,7 @@ describe('Sessions Router', () => {
       .expect(401);
   });
 
-  it('should return status code 401 when request contains invalid user email', async () => {
+  it('should be able to return status code 401 when request contains invalid user email', async () => {
     await request(app).post('/api/users').send({
       name: 'Walter Jacobs',
       email: 'low@lokafe.cz',
@@ -61,7 +56,7 @@ describe('Sessions Router', () => {
       .expect(401);
   });
 
-  it('should return status code 401 when request contains invalid user password', async () => {
+  it('should be able to return status code 401 when request contains invalid user password', async () => {
     await request(app).post('/api/users').send({
       name: 'Walter Jacobs',
       email: 'low@lokafe.cz',
@@ -77,7 +72,7 @@ describe('Sessions Router', () => {
       .expect(401);
   });
 
-  it('should return status code 500 on internal server error', async () => {
+  it('should be able to return status code 500 on internal server error', async () => {
     await mongoHelper.disconnect();
     await mongoHelper.connect(`${process.env.MONGO_URL}/wrong-text`);
 

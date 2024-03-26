@@ -47,7 +47,7 @@ async function createSampleAuthenticateUser(): Promise<{
   };
 }
 
-describe('Forecast Router', () => {
+describe('Forecast router', () => {
   beforeEach(async () => {
     await mongoHelper.clearCollection('beaches');
   });
@@ -63,8 +63,8 @@ describe('Forecast Router', () => {
     fs.unlink(`${process.cwd()}/globalConfig.json`, () => {});
   });
 
-  describe('Register Beaches', () => {
-    it('should return status code 201 when request contains valid user data', async () => {
+  describe('Register beaches', () => {
+    it('should be able to return status code 201 when request contains valid user data', async () => {
       await request(app)
         .post('/api/beaches')
         .set('x-access-token', accessToken)
@@ -77,7 +77,7 @@ describe('Forecast Router', () => {
         .expect(201);
     });
 
-    it('should return status code 400 when request contains invalid user name', async () => {
+    it('should be able to return status code 400 when request contains invalid user name', async () => {
       await request(app)
         .post('/api/beaches')
         .set('x-access-token', accessToken)
@@ -90,7 +90,7 @@ describe('Forecast Router', () => {
         .expect(400);
     });
 
-    it('should return status code 400 when request contains invalid position', async () => {
+    it('should be able to return status code 400 when request contains invalid position', async () => {
       await request(app)
         .post('/api/beaches')
         .set('x-access-token', accessToken)
@@ -103,7 +103,7 @@ describe('Forecast Router', () => {
         .expect(400);
     });
 
-    it('should return status code 401 when request not contains userId', async () => {
+    it('should be able to return status code 401 when request not contains userId', async () => {
       await request(app)
         .post('/api/beaches')
         .send({
@@ -115,7 +115,7 @@ describe('Forecast Router', () => {
         .expect(401);
     });
 
-    it('should return status code 409 when beach already exist', async () => {
+    it('should be able to return status code 409 when beach already exist', async () => {
       await request(app).post('/api/beaches').set('x-access-token', accessToken).send({
         name: 'Dee Why',
         lat: -33.750919,
@@ -135,7 +135,7 @@ describe('Forecast Router', () => {
         .expect(409);
     });
 
-    it.skip('should return status code 500 on internal server error', async () => {
+    it.skip('should be able to return status code 500 on internal server error', async () => {
       const { accessToken: userToken } = await createSampleAuthenticateUser();
 
       await mongoHelper.disconnect();
@@ -154,8 +154,8 @@ describe('Forecast Router', () => {
     });
   });
 
-  describe('User Beach Forecast', () => {
-    it('should return status code 200 when request contains valid user data', async () => {
+  describe('User beach forecast', () => {
+    it('should be able to return status code 200 when request contains valid user data', async () => {
       const { accessToken: userBeachForecastToken } = await createSampleAuthenticateUser();
 
       await request(app).post('/api/beaches').set('x-access-token', userBeachForecastToken).send({
@@ -171,7 +171,7 @@ describe('Forecast Router', () => {
         .expect(200);
     });
 
-    it('should return status code 401 when x-access-token not exist in headers', async () => {
+    it('should be able to return status code 401 when x-access-token not exist in headers', async () => {
       await request(app).get('/api/user-beach-forecast').expect(401);
     });
   });

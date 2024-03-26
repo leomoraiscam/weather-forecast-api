@@ -4,10 +4,9 @@ import request from 'supertest';
 import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
 import app from '@src/main/config/app';
 
-describe.only('Users Router', () => {
+describe('Users router', () => {
   beforeAll(async () => {
     await mongoHelper.connect(process.env.MONGO_URL);
-    // await mongoHelper.clearCollection('users');
   });
 
   afterAll(async () => {
@@ -15,11 +14,7 @@ describe.only('Users Router', () => {
     fs.unlink(`${process.cwd()}/globalConfig.json`, () => {});
   });
 
-  beforeEach(async () => {
-    // await mongoHelper.clearCollection('users');
-  });
-
-  it('should return status code 201 when request contains valid user data', async () => {
+  it('should be able to return status code 201 when request contains valid user data', async () => {
     await request(app)
       .post('/api/users')
       .send({
@@ -30,7 +25,7 @@ describe.only('Users Router', () => {
       .expect(201);
   });
 
-  it('should return status code 400 when request contains invalid user name', async () => {
+  it('should be able to return status code 400 when request contains invalid user name', async () => {
     await request(app)
       .post('/api/users')
       .send({
@@ -41,7 +36,7 @@ describe.only('Users Router', () => {
       .expect(400);
   });
 
-  it('should return status code 400 when request contains invalid user email', async () => {
+  it('should be able to return status code 400 when request contains invalid user email', async () => {
     await request(app)
       .post('/api/users')
       .send({
@@ -52,7 +47,7 @@ describe.only('Users Router', () => {
       .expect(400);
   });
 
-  it('should return status code 400 when request is missing user name', async () => {
+  it('should be able to return status code 400 when request is missing user name', async () => {
     await request(app)
       .post('/api/users')
       .send({
@@ -62,7 +57,7 @@ describe.only('Users Router', () => {
       .expect(400);
   });
 
-  it('should return status code 400 when request is missing user email', async () => {
+  it('should be able to return status code 400 when request is missing user email', async () => {
     await request(app)
       .post('/api/users')
       .send({
@@ -72,7 +67,7 @@ describe.only('Users Router', () => {
       .expect(400);
   });
 
-  it('should return status code 400 when request is missing user password', async () => {
+  it('should be able to return status code 400 when request is missing user password', async () => {
     await request(app)
       .post('/api/users')
       .send({
@@ -82,11 +77,11 @@ describe.only('Users Router', () => {
       .expect(400);
   });
 
-  it('should return status code 400 when request is missing user name, email and password', async () => {
+  it('should be able to return status code 400 when request is missing user name, email and password', async () => {
     await request(app).post('/api/users').send({}).expect(400);
   });
 
-  it('should return status code 409 when user already exist', async () => {
+  it('should be able to return status code 409 when user already exist', async () => {
     await request(app).post('/api/users').send({
       name: 'Cornelia Pena',
       email: 'mo@ebe.cf',
@@ -103,7 +98,7 @@ describe.only('Users Router', () => {
       .expect(409);
   });
 
-  it('should return status code 500 on internal server error', async () => {
+  it('should be able to return status code 500 on internal server error', async () => {
     await mongoHelper.disconnect();
     await mongoHelper.connect(`${process.env.MONGO_URL}/wrong-text`);
 
