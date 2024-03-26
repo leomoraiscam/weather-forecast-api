@@ -1,4 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
+import { InMemoryCacheService } from '@src/external/providers/cache-service/in-memory/in-memory-cache-service';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';
 import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
@@ -13,6 +14,7 @@ import { RegisterBeachUseCase } from './register-beach-use-case';
 
 let inMemoryBeachRepository: InMemoryBeachRepository;
 let inMemoryUserRepository: InMemoryUserRepository;
+let inMemoryCacheProvider: InMemoryCacheService;
 let registerBeachUseCase: RegisterBeachUseCase;
 let registerBeachController: RegisterBeachController;
 let userId: string;
@@ -24,9 +26,11 @@ describe('Register beach web controller', () => {
   beforeEach(async () => {
     inMemoryBeachRepository = new InMemoryBeachRepository();
     inMemoryUserRepository = new InMemoryUserRepository();
+    inMemoryCacheProvider = new InMemoryCacheService();
     registerBeachUseCase = new RegisterBeachUseCase(
       inMemoryBeachRepository,
       inMemoryUserRepository,
+      inMemoryCacheProvider,
     );
     registerBeachController = new RegisterBeachController(registerBeachUseCase, mockValidator);
 

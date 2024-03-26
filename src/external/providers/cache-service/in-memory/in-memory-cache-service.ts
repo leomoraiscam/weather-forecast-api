@@ -19,4 +19,12 @@ export class InMemoryCacheService implements ICacheService {
 
     return parsedData;
   }
+
+  public async invalidatePrefix(prefix: string): Promise<void> {
+    const keys = Object.keys(this.cache).filter((key) => key.startsWith(`${prefix}:`));
+
+    keys.forEach((key) => {
+      delete this.cache[key];
+    });
+  }
 }

@@ -1,4 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
+import { InMemoryCacheService } from '@src/external/providers/cache-service/in-memory/in-memory-cache-service';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { InvalidLatitudeError } from '@src/modules/forecast/domain/beach/errors/invalid-latitude-error';
 import { InvalidLongitudeError } from '@src/modules/forecast/domain/beach/errors/invalid-longitude-error';
@@ -13,6 +14,7 @@ import { RegisterBeachUseCase } from './register-beach-use-case';
 
 let inMemoryBeachRepository: InMemoryBeachRepository;
 let inMemoryUserRepository: InMemoryUserRepository;
+let inMemoryCacheProvider: InMemoryCacheService;
 let registerBeachUseCase: RegisterBeachUseCase;
 let beach: IRegisterBeachDTO;
 let userId: string;
@@ -21,9 +23,11 @@ describe('Register beach use case', () => {
   beforeEach(async () => {
     inMemoryBeachRepository = new InMemoryBeachRepository();
     inMemoryUserRepository = new InMemoryUserRepository();
+    inMemoryCacheProvider = new InMemoryCacheService();
     registerBeachUseCase = new RegisterBeachUseCase(
       inMemoryBeachRepository,
       inMemoryUserRepository,
+      inMemoryCacheProvider,
     );
 
     const user = createUser();
