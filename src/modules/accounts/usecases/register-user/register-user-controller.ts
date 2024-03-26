@@ -13,8 +13,7 @@ import { RegisterUserResponse } from './register-user-response';
 export class RegisterUserController {
   private readonly usecase: IUseCase<IRegisterUserDTO, RegisterUserResponse>;
   private readonly validator: IValidator<IRegisterUserDTO>;
-
-  readonly requiredParams = ['name', 'email', 'password'];
+  private readonly requiredParams = ['name', 'email', 'password'];
 
   constructor(
     usecase: IUseCase<IRegisterUserDTO, RegisterUserResponse>,

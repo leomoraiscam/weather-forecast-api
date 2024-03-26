@@ -20,7 +20,7 @@ import { RegisterBeachResponse } from './register-beach-response';
 export class RegisterBeachController {
   private readonly usecase: IUseCase<IRegisterBeachDTO, RegisterBeachResponse>;
   private readonly validator: IValidator<IRegisterBeachDTO>;
-  readonly requiredParams = ['name', 'lat', 'lng', 'position'];
+  private readonly requiredParams = ['name', 'lat', 'lng', 'position'];
 
   constructor(
     usecase: IUseCase<IRegisterBeachDTO, RegisterBeachResponse>,

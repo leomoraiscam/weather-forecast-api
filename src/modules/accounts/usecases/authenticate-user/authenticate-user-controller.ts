@@ -13,7 +13,7 @@ import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password-
 export class AuthenticateUserController {
   private readonly usecase: IUseCase<IAuthenticateUserDTO, AuthenticateUserResponse>;
   private readonly validator: IValidator<IAuthenticateUserDTO>;
-  readonly requiredParams = ['email', 'password'];
+  private readonly requiredParams = ['email', 'password'];
 
   constructor(
     usecase: IUseCase<IAuthenticateUserDTO, AuthenticateUserResponse>,
@@ -42,7 +42,7 @@ export class AuthenticateUserController {
           case InvalidEmailOrPasswordError:
             return unauthorized(error);
           default:
-            return unauthorized(error);
+            return badRequest(error);
         }
       }
 
