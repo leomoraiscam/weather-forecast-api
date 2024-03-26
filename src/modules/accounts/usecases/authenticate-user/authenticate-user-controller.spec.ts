@@ -91,7 +91,7 @@ describe('Authenticate user web controller', () => {
     expect(response.statusCode).toEqual(401);
   });
 
-  it('should be able to return status code 401 when occurred an error a non mapped', async () => {
+  it('should be able to return status code 400 when occurred an error a non mapped', async () => {
     const errorDefaultThrowingUseCaseStub = new ErrorDefaultThrowingUseCaseStub<
       IAuthenticateUserDTO,
       AuthenticateUserResponse
@@ -115,7 +115,7 @@ describe('Authenticate user web controller', () => {
 
     const response = await controller.handle(request);
 
-    expect(response.statusCode).toEqual(401);
+    expect(response.statusCode).toEqual(400);
   });
 
   it('should be able to return status code 500 when server raises', async () => {
