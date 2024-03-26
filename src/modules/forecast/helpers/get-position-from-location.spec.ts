@@ -2,7 +2,7 @@ import { BeachPosition } from '@config/constants/beach-position-enum';
 
 import { getPositionFromLocation } from './get-position-from-location';
 
-describe('Get Position From Location Helper', () => {
+describe('Get position from location helper', () => {
   it('should be able get the point based on a east location', () => {
     const position = getPositionFromLocation(92);
 
