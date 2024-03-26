@@ -36,7 +36,7 @@ describe('Register beach web controller', () => {
     userId = user.id;
   });
 
-  it('should return status code 201 when request contains valid user data', async () => {
+  it('should be able to return status code 201 when request contains valid user data', async () => {
     const request: IHttpRequest<IRegisterBeachDTO> = {
       body: {
         name: 'Dee Why',
@@ -53,7 +53,7 @@ describe('Register beach web controller', () => {
     expect(response.body).toHaveProperty('id');
   });
 
-  it('should return status code 400 when request contains invalid user name', async () => {
+  it('should be able to return status code 400 when request contains invalid user name', async () => {
     const requestWithInvalidName: IHttpRequest<IRegisterBeachDTO> = {
       body: {
         name: 'D',
@@ -69,7 +69,7 @@ describe('Register beach web controller', () => {
     expect(response.statusCode).toEqual(400);
   });
 
-  it('should return status code 400 when request contains invalid position', async () => {
+  it('should be able to return status code 400 when request contains invalid position', async () => {
     const requestWithInvalidPosition: IHttpRequest<IRegisterBeachDTO> = {
       body: {
         name: 'Dee Why',
@@ -85,7 +85,7 @@ describe('Register beach web controller', () => {
     expect(response.statusCode).toEqual(400);
   });
 
-  it('should return status code 401 when request not contains userId', async () => {
+  it('should be able to return status code 401 when request not contains userId', async () => {
     const request: IHttpRequest<IRegisterBeachDTO> = {
       body: {
         name: 'Dee Why',
@@ -100,7 +100,7 @@ describe('Register beach web controller', () => {
     expect(response.statusCode).toEqual(404);
   });
 
-  it('should return status code 409 when beach already exist', async () => {
+  it('should be able to return status code 409 when beach already exist', async () => {
     const errorThrowingConflictUseCaseStub = new ErrorThrowingConflictUseCaseStub();
 
     const request: IHttpRequest<IRegisterBeachDTO> = {
@@ -123,7 +123,7 @@ describe('Register beach web controller', () => {
     expect(response.statusCode).toEqual(409);
   });
 
-  it('should return status code 500 when server raises', async () => {
+  it('should be able to return status code 500 when server raises', async () => {
     const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub<
       IRegisterBeachDTO,
       RegisterBeachResponse

@@ -17,7 +17,7 @@ let registerBeachUseCase: RegisterBeachUseCase;
 let beach: IRegisterBeachDTO;
 let userId: string;
 
-describe('Register Beach Use Case', () => {
+describe('Register beach use case', () => {
   beforeEach(async () => {
     inMemoryBeachRepository = new InMemoryBeachRepository();
     inMemoryUserRepository = new InMemoryUserRepository();

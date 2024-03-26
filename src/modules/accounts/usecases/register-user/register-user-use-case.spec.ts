@@ -9,7 +9,7 @@ import { RegisterUserUseCase } from './register-user-use-case';
 let inMemoryUserRepository: InMemoryUserRepository;
 let registerUserUseCase: RegisterUserUseCase;
 
-describe('Register User Use Case', () => {
+describe('Register user use case', () => {
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository();
     registerUserUseCase = new RegisterUserUseCase(inMemoryUserRepository);

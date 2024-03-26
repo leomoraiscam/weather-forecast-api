@@ -1,5 +1,3 @@
-/* eslint-disable no-await-in-loop */
-/* eslint-disable no-restricted-syntax */
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { TypesLogger } from '@config/constants/types-logger-enum';
 import { ILoggerService } from '@src/external/logger-service/ports/logger-service';

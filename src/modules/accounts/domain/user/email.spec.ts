@@ -1,13 +1,13 @@
 import { Email } from './email';
 
 describe('User email value object', () => {
-  it('should accept valid email address', () => {
+  it('should be able to accept valid email address', () => {
     const emailOrError = Email.create('johndoe@example.com');
 
     expect(emailOrError.isRight()).toBeTruthy();
   });
 
-  it('should reject invalid email address', () => {
+  it('should be able to reject invalid email address', () => {
     const emailOrError1 = Email.create('johndoe');
     const emailOrError2 = Email.create('johndoe@example');
     const emailOrError3 = Email.create('@example.com');
@@ -19,7 +19,7 @@ describe('User email value object', () => {
     expect(emailOrError4.isLeft()).toBeTruthy();
   });
 
-  it('should reject emails with more than 255 characters', () => {
+  it('should be able to reject emails with more than 255 characters', () => {
     const domain = 'c'.repeat(260);
     const emailOrError = Email.create(`johndoe@${domain}.com`);
 

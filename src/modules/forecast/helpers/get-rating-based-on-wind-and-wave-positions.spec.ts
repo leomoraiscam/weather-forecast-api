@@ -16,7 +16,7 @@ describe('Get rating based on wind and wave position helper', () => {
     };
   });
 
-  it('should be able get rating 1 for a beach with onshore winds', () => {
+  it('should be able to get rating 1 for a beach with onshore winds', () => {
     const rating = getRatingBasedOnWindAndWavePositions({
       waveDirection: BeachPosition.E,
       windDirection: BeachPosition.E,
@@ -26,7 +26,7 @@ describe('Get rating based on wind and wave position helper', () => {
     expect(rating).toBe(1);
   });
 
-  it('should be able get rating 3 for a beach with cross winds', () => {
+  it('should be able to get rating 3 for a beach with cross winds', () => {
     const rating = getRatingBasedOnWindAndWavePositions({
       waveDirection: BeachPosition.E,
       windDirection: BeachPosition.S,
@@ -36,7 +36,7 @@ describe('Get rating based on wind and wave position helper', () => {
     expect(rating).toBe(3);
   });
 
-  it('should be able get rating 5 for a beach with offshore winds', () => {
+  it('should be able to get rating 5 for a beach with offshore winds', () => {
     const rating = getRatingBasedOnWindAndWavePositions({
       waveDirection: BeachPosition.E,
       windDirection: BeachPosition.W,

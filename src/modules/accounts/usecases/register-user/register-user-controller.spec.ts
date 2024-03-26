@@ -22,7 +22,7 @@ describe('Register user web controller', () => {
     registerUserController = new RegisterUserController(registerUserUseCase, mockValidator);
   });
 
-  it('should return status code 201 when request contains valid user data', async () => {
+  it('should be able to return status code 201 when request contains valid user data', async () => {
     const request: IHttpRequest<IRegisterUserDTO> = {
       body: {
         name: 'Evan Nelson',
@@ -43,7 +43,7 @@ describe('Register user web controller', () => {
     );
   });
 
-  it('should return status code 400 when request contains invalid user name', async () => {
+  it('should be able to return status code 400 when request contains invalid user name', async () => {
     const requestWithInvalidName: IHttpRequest<IRegisterUserDTO> = {
       body: {
         name: 'A',
@@ -57,7 +57,7 @@ describe('Register user web controller', () => {
     expect(response.statusCode).toEqual(400);
   });
 
-  it('should return status code 400 when request contains invalid user email', async () => {
+  it('should be able to return status code 400 when request contains invalid user email', async () => {
     const requestWithInvalidEmail: IHttpRequest<IRegisterUserDTO> = {
       body: {
         name: 'Cornelia Pena',
@@ -71,7 +71,7 @@ describe('Register user web controller', () => {
     expect(response.statusCode).toEqual(400);
   });
 
-  it('should return status code 409 when user already exist', async () => {
+  it('should be able to return status code 409 when user already exist', async () => {
     const errorThrowingConflictUseCaseStub = new ErrorThrowingConflictUseCaseStub();
 
     const request: IHttpRequest<IRegisterUserDTO> = {
@@ -92,7 +92,7 @@ describe('Register user web controller', () => {
     expect(response.statusCode).toEqual(409);
   });
 
-  it('should return status code 500 when server raises', async () => {
+  it('should be able to return status code 500 when server raises', async () => {
     const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub<
       IRegisterUserDTO,
       RegisterUserResponse

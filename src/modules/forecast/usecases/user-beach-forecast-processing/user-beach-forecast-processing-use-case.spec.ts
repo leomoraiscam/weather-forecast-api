@@ -17,7 +17,7 @@ let inMemoryUsersRepository: InMemoryUserRepository;
 let inMemoryBeachesRepository: InMemoryBeachRepository;
 let inMemoryLoggerService: InMemoryLoggerService;
 
-describe('Process Forecast For Beaches Use Case', () => {
+describe('User beach forecast processing use case', () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUserRepository();
     inMemoryBeachesRepository = new InMemoryBeachRepository();
@@ -91,7 +91,7 @@ describe('Process Forecast For Beaches Use Case', () => {
     expect(response.value).toBeInstanceOf(StormGlassResponseError);
   });
 
-  it('should return the forecast beaches in the same hour with different ratings', async () => {
+  it('should be able to return the forecast beaches in the same hour with different ratings', async () => {
     const user = createUser();
     await inMemoryUsersRepository.create(user);
 
@@ -122,8 +122,4 @@ describe('Process Forecast For Beaches Use Case', () => {
     expect(beachesWithRating).toEqual(processForecastBeachesResponse);
     expect(beachesWithRating.length).toEqual(5);
   });
-
-  it.todo(
-    'should return the forecast for multiple beaches in the same hour with different ratings',
-  );
 });

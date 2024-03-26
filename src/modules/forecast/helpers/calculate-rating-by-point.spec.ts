@@ -29,13 +29,13 @@ describe('Calculate rating by point helper', () => {
     };
   });
 
-  it('should get a rating less than 1 for a poor point', () => {
+  it('should be able to get a rating less than 1 for a poor point', () => {
     const rating = calculateRatingByPoint({ point: forecastPoint, beach });
 
     expect(rating).toBe(1);
   });
 
-  it('should get a rating of 1 for an ok point', () => {
+  it('should be able to get a rating of 1 for an ok point', () => {
     const pointData = {
       swellHeight: 0.4,
     };
@@ -47,7 +47,7 @@ describe('Calculate rating by point helper', () => {
     expect(rating).toBe(1);
   });
 
-  it('should get a rating of 3 for a point with offshore winds and a half overhead height', () => {
+  it('should be able to get a rating of 3 for a point with offshore winds and a half overhead height', () => {
     const point = {
       ...forecastPoint,
       ...{
@@ -60,7 +60,7 @@ describe('Calculate rating by point helper', () => {
     expect(rating).toBe(3);
   });
 
-  it('should get a rating of 4 for a point with offshore winds, half overhead high swell and good interval', () => {
+  it('should be able to get a rating of 4 for a point with offshore winds, half overhead high swell and good interval', () => {
     const point = {
       ...forecastPoint,
       ...{
@@ -74,7 +74,7 @@ describe('Calculate rating by point helper', () => {
     expect(rating).toBe(4);
   });
 
-  it('should get a rating of 4 for a point with offshore winds, shoulder high swell and good interval', () => {
+  it('should be able to get a rating of 4 for a point with offshore winds, shoulder high swell and good interval', () => {
     const point = {
       ...forecastPoint,
       ...{
@@ -88,7 +88,7 @@ describe('Calculate rating by point helper', () => {
     expect(rating).toBe(4);
   });
 
-  it('should get a rating of 5 classic day!', () => {
+  it('should be able to get a rating of 5 classic day!', () => {
     const point = {
       ...forecastPoint,
       ...{
@@ -102,7 +102,7 @@ describe('Calculate rating by point helper', () => {
     expect(rating).toBe(5);
   });
 
-  it('should get a rating of 4 a good condition but with crossshore winds', () => {
+  it('should be able to get a rating of 4 a good condition but with crossshore winds', () => {
     const point = {
       ...forecastPoint,
       ...{

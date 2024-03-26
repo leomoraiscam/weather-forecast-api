@@ -26,7 +26,7 @@ describe('Authenticate user web controller', () => {
     );
   });
 
-  it('should return status code 200 when request contains valid user data', async () => {
+  it('should be able to return status code 200 when request contains valid user data', async () => {
     const user = createUser();
 
     await inMemoryUserRepository.create(user);
@@ -44,7 +44,7 @@ describe('Authenticate user web controller', () => {
     expect(response.body).toHaveProperty('token');
   });
 
-  it('should return status code 401 when user a non exist and receive data the same', async () => {
+  it('should be able to return status code 401 when user a non exist and receive data the same', async () => {
     const request: IHttpRequest<IAuthenticateUserDTO> = {
       body: {
         email: 'hujeho@ocupa.so',
@@ -57,7 +57,7 @@ describe('Authenticate user web controller', () => {
     expect(response.statusCode).toEqual(401);
   });
 
-  it('should return status code 401 when request contains invalid user email', async () => {
+  it('should be able to return status code 401 when request contains invalid user email', async () => {
     const user = createUser();
 
     await inMemoryUserRepository.create(user);
@@ -74,7 +74,7 @@ describe('Authenticate user web controller', () => {
     expect(response.statusCode).toEqual(401);
   });
 
-  it('should return status code 401 when request contains invalid user password', async () => {
+  it('should be able to return status code 401 when request contains invalid user password', async () => {
     const user = createUser();
 
     await inMemoryUserRepository.create(user);
@@ -91,7 +91,7 @@ describe('Authenticate user web controller', () => {
     expect(response.statusCode).toEqual(401);
   });
 
-  it('should return status code 401 when occurred an error a non mapped', async () => {
+  it('should be able to return status code 401 when occurred an error a non mapped', async () => {
     const errorDefaultThrowingUseCaseStub = new ErrorDefaultThrowingUseCaseStub<
       IAuthenticateUserDTO,
       AuthenticateUserResponse
@@ -118,7 +118,7 @@ describe('Authenticate user web controller', () => {
     expect(response.statusCode).toEqual(401);
   });
 
-  it('should return status code 500 when server raises', async () => {
+  it('should be able to return status code 500 when server raises', async () => {
     const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub<
       IAuthenticateUserDTO,
       AuthenticateUserResponse

@@ -6,13 +6,13 @@ import { AuthenticateUserUseCase } from './authenticate-user-use-case';
 let inMemoryUserRepository: InMemoryUserRepository;
 let authenticateUserUseCase: AuthenticateUserUseCase;
 
-describe('Authenticate User Use case', () => {
+describe('Authenticate user use case', () => {
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository();
     authenticateUserUseCase = new AuthenticateUserUseCase(inMemoryUserRepository);
   });
 
-  it('should be able return token property to user when the same is authenticate with success', async () => {
+  it('should be able to return token property to user when the same is authenticate with success', async () => {
     const user = createUser();
 
     inMemoryUserRepository.create(user);
@@ -26,7 +26,7 @@ describe('Authenticate User Use case', () => {
     expect(response.value).toEqual(expect.objectContaining({ token: expect.any(String) }));
   });
 
-  it('should not be able return token property to user when received incorrect email for existing user', async () => {
+  it('should not be able to return token property to user when received incorrect email for existing user', async () => {
     const user = createUser();
 
     inMemoryUserRepository.create(user);
@@ -39,7 +39,7 @@ describe('Authenticate User Use case', () => {
     expect(response.isLeft()).toBeTruthy();
   });
 
-  it('should not be able return token property to user when received incorrect password for existing user', async () => {
+  it('should not be able to return token property to user when received incorrect password for existing user', async () => {
     const user = createUser();
 
     inMemoryUserRepository.create(user);

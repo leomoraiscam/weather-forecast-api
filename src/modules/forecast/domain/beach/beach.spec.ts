@@ -6,7 +6,7 @@ import { Longitude } from './longitude';
 import { Name } from './name';
 import { Position } from './position';
 
-describe('Domain Beach model', () => {
+describe('Beach domain entity', () => {
   it('should be able to create new beach', () => {
     const name = Name.create('Dee Why').value as Name;
     const lat = Latitude.create(-33.792726).value as Latitude;

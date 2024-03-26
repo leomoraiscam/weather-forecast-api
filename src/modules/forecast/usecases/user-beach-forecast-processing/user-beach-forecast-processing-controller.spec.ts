@@ -19,7 +19,7 @@ let userBeachForecastProcessingController: UserBeachForecastProcessingController
 let userBeachForecastProcessingUseCase: UserBeachForecastProcessingUseCase;
 let userId: string;
 
-describe('Fetch points beach web controller', () => {
+describe('User beach forecast processing web controller', () => {
   beforeEach(async () => {
     inMemoryBeachRepository = new InMemoryBeachRepository();
     inMemoryUserRepository = new InMemoryUserRepository();
@@ -47,7 +47,7 @@ describe('Fetch points beach web controller', () => {
     await inMemoryBeachRepository.create(beach);
   });
 
-  it('should return status code 200 when request contains valid user data', async () => {
+  it('should be able to return status code 200 when request contains valid user data', async () => {
     const request: {
       userId: string;
       query: {
@@ -67,7 +67,7 @@ describe('Fetch points beach web controller', () => {
     expect(response.statusCode).toEqual(200);
   });
 
-  it('should return status code 404 when user does not exist', async () => {
+  it('should be able to return status code 404 when user does not exist', async () => {
     const request: {
       userId: string;
       query: {
@@ -87,7 +87,7 @@ describe('Fetch points beach web controller', () => {
     expect(response.statusCode).toEqual(404);
   });
 
-  it('should return status code 404 when user does not exist', async () => {
+  it('should be able to return status code 404 when user does not exist', async () => {
     const user = createUser({
       id: 'other-id',
     });
@@ -112,7 +112,7 @@ describe('Fetch points beach web controller', () => {
     expect(response.statusCode).toEqual(404);
   });
 
-  it('should return status code 500 when server raises', async () => {
+  it('should be able to return status code 500 when server raises', async () => {
     const errorThrowingUseCaseStub = new ErrorThrowingUseCaseStub<
       IFindTimeBeachRatingForecastDTO,
       UserBeachForecastProcessingResponse
