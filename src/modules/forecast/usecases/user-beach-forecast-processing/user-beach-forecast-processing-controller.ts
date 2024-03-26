@@ -1,6 +1,7 @@
 import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { ITimeBeachRatingForecastDTO } from '@src/modules/forecast/dtos/time-beach-rating-forecast';
 import { IControllerError } from '@src/shared/errors/ports/controller-error';
+import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { IHttpResponse } from '@src/shared/http/dtos/http-response';
 import {
   notFound,
@@ -26,13 +27,9 @@ export class UserBeachForecastProcessingController {
     this.usecase = usecase;
   }
 
-  async handle(request: {
-    userId: string;
-    query: {
-      page: number;
-      pageSize: number;
-    };
-  }): Promise<IHttpResponse<ITimeBeachRatingForecastDTO[] | IControllerError>> {
+  async handle(
+    request: IHttpRequest<Partial<IFindTimeBeachRatingForecastDTO>>,
+  ): Promise<IHttpResponse<ITimeBeachRatingForecastDTO[] | IControllerError>> {
     try {
       const { userId } = request;
       const { query } = request;

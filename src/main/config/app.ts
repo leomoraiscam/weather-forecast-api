@@ -9,8 +9,7 @@ import setupRoute from './routes';
 const app = express();
 
 setupMiddleware(app);
+setupRoute(app);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-setupRoute(app);
-
-export default app;
+export { app };

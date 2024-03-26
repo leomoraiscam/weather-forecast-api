@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { IValidator } from '@src/main/adapters/ports/validator';
 
 import { Either, left, right } from '../logic/either';

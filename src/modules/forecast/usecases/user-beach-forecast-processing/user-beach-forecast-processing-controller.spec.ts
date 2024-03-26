@@ -1,6 +1,7 @@
 import { InMemoryLoggerService } from '@src/external/logger-service/in-memory/in-memory-logger-service';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
+import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { createBeach } from '@test/factories/beach-factory';
 import { createUser } from '@test/factories/user-factory';
 import { StormGlassServiceMock } from '@test/fixtures/mocks/storm-glass-service-mock';
@@ -48,13 +49,7 @@ describe('User beach forecast processing web controller', () => {
   });
 
   it('should be able to return status code 200 when request contains valid user data', async () => {
-    const request: {
-      userId: string;
-      query: {
-        page: number;
-        pageSize: number;
-      };
-    } = {
+    const request: IHttpRequest<Partial<IFindTimeBeachRatingForecastDTO>> = {
       userId,
       query: {
         page: 1,
@@ -68,13 +63,7 @@ describe('User beach forecast processing web controller', () => {
   });
 
   it('should be able to return status code 404 when user does not exist', async () => {
-    const request: {
-      userId: string;
-      query: {
-        page: number;
-        pageSize: number;
-      };
-    } = {
+    const request: IHttpRequest<Partial<IFindTimeBeachRatingForecastDTO>> = {
       userId: 'id-non-exist',
       query: {
         page: 1,
@@ -93,13 +82,7 @@ describe('User beach forecast processing web controller', () => {
     });
     await inMemoryUserRepository.create(user);
 
-    const request: {
-      userId: string;
-      query: {
-        page: number;
-        pageSize: number;
-      };
-    } = {
+    const request: IHttpRequest<Partial<IFindTimeBeachRatingForecastDTO>> = {
       userId: user.id,
       query: {
         page: 1,
@@ -118,13 +101,7 @@ describe('User beach forecast processing web controller', () => {
       UserBeachForecastProcessingResponse
     >();
 
-    const request: {
-      userId: string;
-      query: {
-        page: number;
-        pageSize: number;
-      };
-    } = {
+    const request: IHttpRequest<Partial<IFindTimeBeachRatingForecastDTO>> = {
       userId,
       query: {
         page: 1,

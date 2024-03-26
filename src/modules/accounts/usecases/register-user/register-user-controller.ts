@@ -26,14 +26,16 @@ export class RegisterUserController {
   async handle(
     request: IHttpRequest<IRegisterUserDTO>,
   ): Promise<IHttpResponse<IRegisteredUserDTO | IControllerError>> {
-    const validator = this.validator.validate(request.body, this.requiredParams);
+    const { body } = request;
+
+    const validator = this.validator.validate(body, this.requiredParams);
 
     if (validator.isLeft()) {
       return badRequest(validator.value);
     }
 
     try {
-      const response = await this.usecase.execute(request.body);
+      const response = await this.usecase.execute(body);
 
       if (response.isLeft()) {
         const error = response.value;

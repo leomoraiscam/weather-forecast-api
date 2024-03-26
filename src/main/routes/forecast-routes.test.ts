@@ -5,7 +5,7 @@ import request from 'supertest';
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
 import { UserRepository } from '@src/external/database/mongodb/implementations/user-repository';
-import app from '@src/main/config/app';
+import { app } from '@src/main/config/app';
 import { AuthenticateUserUseCase } from '@src/modules/accounts/usecases/authenticate-user/authenticate-user-use-case';
 import { createUser } from '@test/factories/user-factory';
 

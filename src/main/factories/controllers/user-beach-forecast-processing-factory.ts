@@ -8,7 +8,7 @@ import { IController } from '@src/main/adapters/ports/controller';
 import { UserBeachForecastProcessingController } from '@src/modules/forecast/usecases/user-beach-forecast-processing/user-beach-forecast-processing-controller';
 import { UserBeachForecastProcessingUseCase } from '@src/modules/forecast/usecases/user-beach-forecast-processing/user-beach-forecast-processing-use-case';
 
-export const makeFetchPointController = (): IController => {
+export const makeUserBeachForecastProcessingController = (): IController => {
   const cacheService = new RedisCacheService();
   const axiosRequestService = new AxiosRequestService();
   const loggerProvider = new WinstonLoggerService();
