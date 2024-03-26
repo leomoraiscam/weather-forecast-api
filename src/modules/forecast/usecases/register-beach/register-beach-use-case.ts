@@ -1,3 +1,4 @@
+import { ICacheService } from '@src/external/providers/cache-service/ports/cache-service';
 import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { IUserRepository } from '@src/modules/accounts/repositories/ports/user-repository';
 import { Beach } from '@src/modules/forecast/domain/beach/beach';
@@ -14,7 +15,11 @@ import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';
 import { RegisterBeachResponse } from './register-beach-response';
 
 export class RegisterBeachUseCase implements IUseCase<IRegisterBeachDTO, RegisterBeachResponse> {
-  constructor(private beachRepository: IBeachRepository, private userRepository: IUserRepository) {}
+  constructor(
+    private beachRepository: IBeachRepository,
+    private userRepository: IUserRepository,
+    private cacheService: ICacheService,
+  ) {}
 
   async execute({
     name,
@@ -75,6 +80,9 @@ export class RegisterBeachUseCase implements IUseCase<IRegisterBeachDTO, Registe
     }
 
     await this.beachRepository.create(beach);
+
+    const prefix = `provider-forecast-point: ${userId}`;
+    await this.cacheService.invalidatePrefix(prefix);
 
     return right({
       id: beach.id,

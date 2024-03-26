@@ -24,4 +24,14 @@ export class RedisCacheService implements ICacheService {
 
     return JSON.parse(data) as T;
   }
+
+  async invalidatePrefix(prefix: string): Promise<void> {
+    const keys = await this.client.keys(`${prefix}:*`);
+
+    const pipeline = await this.client.pipeline();
+
+    keys.forEach((key) => pipeline.del(key));
+
+    await pipeline.exec();
+  }
 }
