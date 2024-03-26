@@ -10,10 +10,10 @@ import { RegisterUserUseCase } from './register-user-use-case';
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let registerUserUseCase: RegisterUserUseCase;
+let registerUserController: RegisterUserController;
 const mockValidator = {
   validate: jest.fn().mockReturnValue({ isLeft: jest.fn().mockReturnValue(false) }),
 };
-let registerUserController: RegisterUserController;
 
 describe('Register user web controller', () => {
   beforeEach(() => {

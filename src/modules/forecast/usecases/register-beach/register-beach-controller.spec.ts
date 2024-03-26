@@ -14,11 +14,11 @@ import { RegisterBeachUseCase } from './register-beach-use-case';
 let inMemoryBeachRepository: InMemoryBeachRepository;
 let inMemoryUserRepository: InMemoryUserRepository;
 let registerBeachUseCase: RegisterBeachUseCase;
+let registerBeachController: RegisterBeachController;
+let userId: string;
 const mockValidator = {
   validate: jest.fn().mockReturnValue({ isLeft: jest.fn().mockReturnValue(false) }),
 };
-let registerBeachController: RegisterBeachController;
-let userId: string;
 
 describe('Register beach web controller', () => {
   beforeEach(async () => {

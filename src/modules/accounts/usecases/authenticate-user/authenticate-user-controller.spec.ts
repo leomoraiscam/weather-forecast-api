@@ -11,10 +11,10 @@ import { AuthenticateUserUseCase } from './authenticate-user-use-case';
 
 let inMemoryUserRepository: InMemoryUserRepository;
 let authenticateUserUseCase: AuthenticateUserUseCase;
+let authenticateUserController: AuthenticateUserController;
 const mockValidator = {
   validate: jest.fn().mockReturnValue({ isLeft: jest.fn().mockReturnValue(false) }),
 };
-let authenticateUserController: AuthenticateUserController;
 
 describe('Authenticate user web controller', () => {
   beforeEach(() => {
