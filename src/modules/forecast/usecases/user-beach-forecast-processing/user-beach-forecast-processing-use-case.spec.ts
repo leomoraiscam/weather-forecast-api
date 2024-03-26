@@ -1,5 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { InMemoryLoggerService } from '@src/external/services/logger-service/in-memory/in-memory-logger-service';
+import { InMemoryLoggerService } from '@src/external/providers/logger-service/in-memory/in-memory-logger-service';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { InMemoryBeachRepository } from '@src/modules/forecast/repositories/in-memory/in-memory-beach-repository';
 import { createBeach } from '@test/factories/beach-factory';

@@ -1,8 +1,8 @@
 /* eslint-disable import/no-unresolved */
 import { TypesLogger } from '@config/constants/types-logger-enum';
-import { ICacheService } from '@src/external/services/cache-service/ports/cache-service';
-import { IRequestService } from '@src/external/services/http-service/ports/request-service';
-import { ILoggerService } from '@src/external/services/logger-service/ports/logger-service';
+import { ICacheService } from '@src/external/providers/cache-service/ports/cache-service';
+import { IRequestService } from '@src/external/providers/http-service/ports/request-service';
+import { ILoggerService } from '@src/external/providers/logger-service/ports/logger-service';
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
 import { left, right } from '@src/shared/logic/either';
 

@@ -19,7 +19,7 @@ module.exports = {
     'src/modules/**/helpers/**/*.ts',
     '!src/modules/**/domain/**/dtos/*.ts',
     '!src/modules/**/domain/**/dtos/*.ts',
-    'src/external/**/services/*.ts',
+    'src/external/providers/**/services/*.ts',
     '!src/external/**/services/**/*response.ts',
     'src/main/**/routes/*.ts',
   ],

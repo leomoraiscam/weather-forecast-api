@@ -1,5 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { IFetchPointNormalize } from '@src/external/services/stormglass-service/dtos/fetch-point-normalize';
+import { IFetchPointNormalize } from '@src/external/providers/stormglass-service/dtos/fetch-point-normalize';
 
 import { IRegisterBeachDTO } from '../dtos/register-beach';
 import { calculateRatingByPoint } from './calculate-rating-by-point';

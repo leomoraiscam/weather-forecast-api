@@ -1,6 +1,6 @@
-import { InMemoryCacheService } from '@src/external/services/cache-service/in-memory/in-memory-cache-service';
-import { AxiosRequestService } from '@src/external/services/http-service/services/axios-request-service';
-import { InMemoryLoggerService } from '@src/external/services/logger-service/in-memory/in-memory-logger-service';
+import { InMemoryCacheService } from '@src/external/providers/cache-service/in-memory/in-memory-cache-service';
+import { AxiosRequestService } from '@src/external/providers/http-service/services/axios-request-service';
+import { InMemoryLoggerService } from '@src/external/providers/logger-service/in-memory/in-memory-logger-service';
 import fetchPointsNormalizedResponse from '@test/fixtures/data/fetch-points-normalized-response.json';
 import stormGlassIncompleteResponse from '@test/fixtures/data/storm-glass-incomplete-response.json';
 import stormGlassResponseGenericError from '@test/fixtures/data/storm-glass-response-generic-error.json';
@@ -11,7 +11,7 @@ import { IFetchPointCoordinate } from '../dtos/fetch-point-coordinate';
 import { IFetchPointNormalize } from '../dtos/fetch-point-normalize';
 import { FetchPointService } from './fetch-point-service';
 
-jest.mock('@src/external/http-service/services/axios-request-service');
+jest.mock('@src/external/providers/http-service/services/axios-request-service');
 
 let inMemoryCacheService: InMemoryCacheService;
 let inMemoryLoggerService: InMemoryLoggerService;
