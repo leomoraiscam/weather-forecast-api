@@ -32,7 +32,7 @@ export class FetchPointService implements IStormGlassService {
     pageSize,
   }: IFetchPointCoordinate): Promise<FetchPointServiceResponse> {
     try {
-      const cacheKey = `provider-forecast-point: ${userId}:${lat}-${lng}:${page}-${pageSize}`;
+      const cacheKey = `provider-forecast-point:${userId}:${lat}:${lng}:${page}-${pageSize}`;
 
       const wavesPoints = await this.cacheService.recover<IFetchPointNormalize[]>(cacheKey);
 
