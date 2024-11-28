@@ -1,14 +1,12 @@
-import { UserRepository } from '@src/external/database/mongodb/implementations/user-repository';
+import { RegisterUserUseCase } from '@src/application/usecases/users/register-user/register-user-use-case';
+import { UserRepository } from '@src/infrastructure/database/mongo/repositories/users/user-repository';
 import { IController } from '@src/main/adapters/ports/controller';
-import { RegisterUserController } from '@src/modules/accounts/usecases/register-user/register-user-controller';
-import { RegisterUserUseCase } from '@src/modules/accounts/usecases/register-user/register-user-use-case';
-import { RequiredFieldsValidator } from '@src/shared/validators/required-fields-validator';
+import { RegisterUserController } from '@src/presentation/controllers/register-user-controller';
 
 export const makeRegisterUserController = (): IController => {
   const userRepository = new UserRepository();
   const registerUserUseCase = new RegisterUserUseCase(userRepository);
-  const validator = new RequiredFieldsValidator();
-  const registerUserController = new RegisterUserController(registerUserUseCase, validator);
+  const registerUserController = new RegisterUserController(registerUserUseCase);
 
   return registerUserController;
 };
