@@ -1,8 +1,8 @@
+import { IUserRepository } from '@src/application/interfaces/repositories/user-repository';
 import { Email } from '@src/entities/user/email';
 import { Name } from '@src/entities/user/name';
 import { Password } from '@src/entities/user/password';
 import { User } from '@src/entities/user/user';
-import { IUserRepository } from '@src/modules/accounts/repositories/ports/user-repository';
 import { left, right } from '@src/shared/logic/either';
 
 import { RegisterUserInput } from './dtos/register-user-input';
