@@ -1,14 +1,14 @@
-import { UserRepository } from '@src/external/database/mongodb/implementations/user-repository';
+import { AuthenticateUserUseCase } from '@src/application/usecases/users/authenticate-user/authenticate-user-use-case';
+import { UserRepository } from '@src/infrastructure/database/mongo/repositories/users/user-repository';
+import { JWTTokenManagerProvider } from '@src/infrastructure/providers/token-manager/jwt-token-manager-provider';
 import { IController } from '@src/main/adapters/ports/controller';
-import { AuthenticateUserController } from '@src/modules/accounts/usecases/authenticate-user/authenticate-user-controller';
-import { AuthenticateUserUseCase } from '@src/modules/accounts/usecases/authenticate-user/authenticate-user-use-case';
-import { RequiredFieldsValidator } from '@src/shared/validators/required-fields-validator';
+import { AuthenticateUserController } from '@src/presentation/controllers/authenticate-user-controller';
 
 export const makeAuthenticateUserController = (): IController => {
   const userRepository = new UserRepository();
-  const authenticateUser = new AuthenticateUserUseCase(userRepository);
-  const validator = new RequiredFieldsValidator();
-  const authenticateUserController = new AuthenticateUserController(authenticateUser, validator);
+  const jWTTokenManagerProvider = new JWTTokenManagerProvider();
+  const authenticateUser = new AuthenticateUserUseCase(userRepository, jWTTokenManagerProvider);
+  const authenticateUserController = new AuthenticateUserController(authenticateUser);
 
   return authenticateUserController;
 };
