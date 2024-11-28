@@ -1,5 +1,10 @@
 import { IHttpResponse } from '../../interfaces/http-response';
 
+export const ok = <T>(data: T): IHttpResponse<T> => ({
+  statusCode: 200,
+  body: data,
+});
+
 export const created = <T>(data: T): IHttpResponse<T> => ({
   statusCode: 201,
   body: data,
@@ -7,6 +12,11 @@ export const created = <T>(data: T): IHttpResponse<T> => ({
 
 export const badRequest = (error: Error): IHttpResponse<Error> => ({
   statusCode: 400,
+  body: error,
+});
+
+export const unauthorized = (error: Error): IHttpResponse<Error> => ({
+  statusCode: 401,
   body: error,
 });
 
