@@ -1,4 +1,4 @@
-import { IUserRepository } from '@src/modules/accounts/repositories/ports/user-repository';
+import { IUserRepository } from '@src/application/interfaces/repositories/user-repository';
 import { left, right } from '@src/shared/logic/either';
 
 import { ITokenManagerProvider } from '../../../interfaces/providers/token-manager-provider';
