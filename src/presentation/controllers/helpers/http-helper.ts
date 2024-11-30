@@ -20,6 +20,11 @@ export const unauthorized = (error: Error): IHttpResponse<Error> => ({
   body: error,
 });
 
+export const notFound = (error: Error): IHttpResponse<Error> => ({
+  statusCode: 404,
+  body: error,
+});
+
 export const conflict = (error: Error): IHttpResponse<Error> => ({
   statusCode: 409,
   body: error,
