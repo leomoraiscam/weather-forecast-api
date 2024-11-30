@@ -10,7 +10,7 @@ import { ok, unauthorized } from '../helpers/http-helper';
 import { AccessDeniedError } from './errors/access-denied-error';
 
 type DecodedJwt = {
-  sub: string;
+  id: string;
 };
 
 export class EnsureAuthenticateMiddleware implements IMiddleware {
@@ -26,7 +26,7 @@ export class EnsureAuthenticateMiddleware implements IMiddleware {
         try {
           const decoded = decode(accessToken) as DecodedJwt;
 
-          return ok({ userId: decoded.sub });
+          return ok({ userId: decoded.id });
         } catch (err) {
           return unauthorized(new AccessDeniedError());
         }
