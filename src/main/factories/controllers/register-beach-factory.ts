@@ -1,10 +1,9 @@
-import { BeachRepository } from '@src/external/database/mongodb/implementations/beach-repository';
-import { UserRepository } from '@src/external/database/mongodb/implementations/user-repository';
-import { RedisCacheService } from '@src/external/providers/cache-service/services/redis-cache-service';
+import { RegisterBeachUseCase } from '@src/application/usecases/beaches/register-beach/register-beach-use-case';
+import { BeachRepository } from '@src/infrastructure/database/mongo/repositories/beaches/beach-repository';
+import { UserRepository } from '@src/infrastructure/database/mongo/repositories/users/user-repository';
+import { RedisCacheService } from '@src/infrastructure/providers/cache-provider/redis-cache-provider';
 import { IController } from '@src/main/adapters/ports/controller';
-import { RegisterBeachController } from '@src/modules/forecast/usecases/register-beach/register-beach-controller';
-import { RegisterBeachUseCase } from '@src/modules/forecast/usecases/register-beach/register-beach-use-case';
-import { RequiredFieldsValidator } from '@src/shared/validators/required-fields-validator';
+import { RegisterBeachController } from '@src/presentation/controllers/register-beach-controller';
 
 export const makeRegisterBeachController = (): IController => {
   const beachRepository = new BeachRepository();
@@ -15,8 +14,7 @@ export const makeRegisterBeachController = (): IController => {
     userRepository,
     cacheService,
   );
-  const validator = new RequiredFieldsValidator();
-  const registerBeachController = new RegisterBeachController(registerBeachUseCase, validator);
+  const registerBeachController = new RegisterBeachController(registerBeachUseCase);
 
   return registerBeachController;
 };
