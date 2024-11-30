@@ -5,7 +5,7 @@ import { InvalidLatitudeError } from '@src/entities/beach/errors/invalid-latitud
 import { InvalidLongitudeError } from '@src/entities/beach/errors/invalid-longitude-error';
 import { InvalidNameError } from '@src/entities/beach/errors/invalid-name-error';
 import { InvalidPositionError } from '@src/entities/beach/errors/invalid-position-error';
-import { InMemoryCacheProvider } from '@src/external/providers/cache-service/in-memory/in-memory-cache-service';
+import { InMemoryCacheProvider } from '@test/doubles/providers/cache-provider/in-memory-cache-provider';
 import { InMemoryBeachRepository } from '@test/doubles/repositories/in-memory-beach-repository';
 import { InMemoryUserRepository } from '@test/doubles/repositories/in-memory-user-repository';
 import { createBeach } from '@test/factories/beach-factory';
