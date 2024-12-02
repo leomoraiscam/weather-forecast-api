@@ -25,17 +25,11 @@ export class Name {
     return true;
   }
 
-  static format(name: string): string {
-    return name.trim().toLowerCase();
-  }
-
   static create(name: string): Either<InvalidNameError, Name> {
     if (!this.validate(name)) {
       return left(new InvalidNameError(name));
     }
 
-    const formattedName = this.format(name);
-
-    return right(new Name(formattedName));
+    return right(new Name(name));
   }
 }

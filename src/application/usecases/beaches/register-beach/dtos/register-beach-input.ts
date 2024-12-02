@@ -5,5 +5,5 @@ export interface RegisterBeachInput {
   lat: number;
   lng: number;
   position: BeachPosition;
-  userId: string;
+  userId?: string;
 }
