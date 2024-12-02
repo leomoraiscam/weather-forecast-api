@@ -1,8 +1,8 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { TypesLogger } from '@config/constants/types-logger-enum';
+import { ILoggerProvider } from '@src/application/interfaces/providers/logger-provider';
 import { IBeachRepository } from '@src/application/interfaces/repositories/beach-repository';
 import { IUserRepository } from '@src/application/interfaces/repositories/user-repository';
-import { ILoggerService } from '@src/external/providers/logger-service/ports/logger-service';
 import { left, right } from '@src/shared/logic/either';
 
 import { BeachNotFoundError } from '../errors/beach-not-found-error';
@@ -22,7 +22,7 @@ export class GetUserBeachesForecastUseCase implements IGetUserBeachesForecastInt
     private stormGlassService: any,
     private userRepository: IUserRepository,
     private beachRepository: IBeachRepository,
-    private loggerService: ILoggerService,
+    private loggerProvider: ILoggerProvider,
   ) {}
 
   public async execute(input: IGetBeachForecastInput): Promise<GetUserBeachesForecastResponse> {
@@ -39,7 +39,7 @@ export class GetUserBeachesForecastUseCase implements IGetUserBeachesForecastInt
       return left(new BeachNotFoundError());
     }
 
-    this.loggerService.log({
+    this.loggerProvider.log({
       level: TypesLogger.INFO,
       message: `${GetUserBeachesForecastUseCase.name} preparing the forecast for ${beaches.length} beaches`,
     });
@@ -53,7 +53,7 @@ export class GetUserBeachesForecastUseCase implements IGetUserBeachesForecastInt
         position: BeachPosition[beach.position.value as unknown as BeachPosition],
       };
 
-      this.loggerService.log({
+      this.loggerProvider.log({
         level: TypesLogger.INFO,
         message: `${GetUserBeachesForecastUseCase.name} Preparing the ${userBeach.name} with lat: ${userBeach.lat} and lng: ${userBeach.lng} to user ${userId}`,
       });
@@ -87,7 +87,7 @@ export class GetUserBeachesForecastUseCase implements IGetUserBeachesForecastInt
 
     const beachForecastPointDetailsGrouped = groupForecastByTime(beachesForecastWithRating);
 
-    this.loggerService.log({
+    this.loggerProvider.log({
       level: TypesLogger.INFO,
       message: `${GetUserBeachesForecastUseCase.name} all forecast normalized data obtained with success`,
     });
