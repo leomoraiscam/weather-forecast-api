@@ -30,6 +30,11 @@ export const conflict = (error: Error): IHttpResponse<Error> => ({
   body: error,
 });
 
+export const unprocessableEntity = (error: Error): IHttpResponse<Error> => ({
+  statusCode: 422,
+  body: error,
+});
+
 export const serverError = (error: Error): IHttpResponse<Error> => ({
   statusCode: 500,
   body: error,
