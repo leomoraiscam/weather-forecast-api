@@ -1,8 +1,8 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { TimeGroupedBeachForecast } from '@src/application/usecases/beaches/get-user-beaches-forecast/dtos/timed-grouped-beach-forecast';
 import { GetUserBeachesForecastUseCase } from '@src/application/usecases/beaches/get-user-beaches-forecast/get-user-beaches-forecast-use-case';
-import { InMemoryLoggerService } from '@src/external/providers/logger-service/in-memory/in-memory-logger-service';
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
+import { InMemoryLoggerProvider } from '@test/doubles/providers/logger-provider/in-memory-logger-service';
 import { InMemoryBeachRepository } from '@test/doubles/repositories/in-memory-beach-repository';
 import { InMemoryUserRepository } from '@test/doubles/repositories/in-memory-user-repository';
 import { createBeach } from '@test/factories/beach-factory';
@@ -15,12 +15,12 @@ import { StormGlassServiceStub } from '@test/fixtures/stubs/storm-glass-service-
 describe('GetUserBeachesForecastUseCase', () => {
   let inMemoryUserRepository: InMemoryUserRepository;
   let inMemoryBeachRepository: InMemoryBeachRepository;
-  let inMemoryLoggerService: InMemoryLoggerService;
+  let inMemoryLoggerProvider: InMemoryLoggerProvider;
 
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository();
     inMemoryBeachRepository = new InMemoryBeachRepository();
-    inMemoryLoggerService = new InMemoryLoggerService();
+    inMemoryLoggerProvider = new InMemoryLoggerProvider();
   });
 
   it('should not be able to return list the forecast of beaches array when user does not exist', async () => {
@@ -29,7 +29,7 @@ describe('GetUserBeachesForecastUseCase', () => {
       stormGlassServiceMock,
       inMemoryUserRepository,
       inMemoryBeachRepository,
-      inMemoryLoggerService,
+      inMemoryLoggerProvider,
     );
     const response = await userBeachForecastProcessingUseCase.execute({
       userId: 'any-user-id',
@@ -50,7 +50,7 @@ describe('GetUserBeachesForecastUseCase', () => {
       stormGlassServiceMock,
       inMemoryUserRepository,
       inMemoryBeachRepository,
-      inMemoryLoggerService,
+      inMemoryLoggerProvider,
     );
     const response = await userBeachForecastProcessingUseCase.execute({
       userId: 'fake-user-id',
@@ -74,7 +74,7 @@ describe('GetUserBeachesForecastUseCase', () => {
       stormGlassServicerErrorStub,
       inMemoryUserRepository,
       inMemoryBeachRepository,
-      inMemoryLoggerService,
+      inMemoryLoggerProvider,
     );
     const response = await userBeachForecastProcessingUseCase.execute({
       userId: 'fake-user-id',
@@ -103,7 +103,7 @@ describe('GetUserBeachesForecastUseCase', () => {
       stormGlassServiceStub,
       inMemoryUserRepository,
       inMemoryBeachRepository,
-      inMemoryLoggerService,
+      inMemoryLoggerProvider,
     );
 
     const beachesWithRating = (
