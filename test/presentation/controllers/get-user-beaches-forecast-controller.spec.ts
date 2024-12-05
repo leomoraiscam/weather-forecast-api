@@ -1,4 +1,4 @@
-import { IGetBeachForecastInput } from '@src/application/usecases/beaches/get-user-beaches-forecast/dtos/get-beach-forecast-input';
+import { IGetBeachForecastInput } from '@src/application/usecases/beaches/dtos/get-beach-forecast-input';
 import { GetUserBeachesForecastUseCase } from '@src/application/usecases/beaches/get-user-beaches-forecast/get-user-beaches-forecast-use-case';
 import { InMemoryLoggerService } from '@src/external/providers/logger-service/in-memory/in-memory-logger-service';
 import { GetUserBeachesForecastController } from '@src/presentation/controllers/get-user-beaches-forecast-controller';

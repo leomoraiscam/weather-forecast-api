@@ -1,6 +1,6 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
+import { RegisterBeachInput } from '@src/application/usecases/beaches/dtos/register-beach-input';
 import { getRatingWindAndWave } from '@src/application/usecases/beaches/get-user-beaches-forecast/helpers/get-rating-wind-and-wave';
-import { RegisterBeachInput } from '@src/application/usecases/beaches/register-beach/dtos/register-beach-input';
 
 describe('Get rating based on wind and wave position helper', () => {
   let beach: RegisterBeachInput;

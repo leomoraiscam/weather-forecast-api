@@ -1,11 +1,11 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { BeachForecastPointDetails } from '@src/application/usecases/beaches/get-user-beaches-forecast/dtos/beach-forecast-point-details';
+import { BeachForecastPointDetails } from '@src/application/usecases/beaches/dtos/beach-forecast-point-details';
+import { RegisterBeachInput } from '@src/application/usecases/beaches/dtos/register-beach-input';
 import { getBeachForecastPointRatings } from '@src/application/usecases/beaches/get-user-beaches-forecast/helpers/get-beach-forecast-point-ratings';
 import { getDirectionPosition } from '@src/application/usecases/beaches/get-user-beaches-forecast/helpers/get-direction-position';
 import { getRatingSwellPeriod } from '@src/application/usecases/beaches/get-user-beaches-forecast/helpers/get-rating-swell-period';
 import { getRatingSwellSize } from '@src/application/usecases/beaches/get-user-beaches-forecast/helpers/get-rating-swell-size';
 import { getRatingWindAndWave } from '@src/application/usecases/beaches/get-user-beaches-forecast/helpers/get-rating-wind-and-wave';
-import { RegisterBeachInput } from '@src/application/usecases/beaches/register-beach/dtos/register-beach-input';
 
 jest.mock(
   '@src/application/usecases/beaches/get-user-beaches-forecast/helpers/get-direction-position',

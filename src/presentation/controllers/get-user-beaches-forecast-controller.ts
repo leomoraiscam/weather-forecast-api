@@ -1,8 +1,8 @@
+import { IGetBeachForecastInput } from '@src/application/usecases/beaches/dtos/get-beach-forecast-input';
+import { TimeGroupedBeachForecast } from '@src/application/usecases/beaches/dtos/timed-grouped-beach-forecast';
 import { BeachNotFoundError } from '@src/application/usecases/beaches/errors/beach-not-found-error';
 import { UserNotFoundError } from '@src/application/usecases/beaches/errors/user-not-found-error';
-import { IGetBeachForecastInput } from '@src/application/usecases/beaches/get-user-beaches-forecast/dtos/get-beach-forecast-input';
-import { TimeGroupedBeachForecast } from '@src/application/usecases/beaches/get-user-beaches-forecast/dtos/timed-grouped-beach-forecast';
-import { IGetUserBeachesForecastInterface } from '@src/application/usecases/beaches/get-user-beaches-forecast/interfaces/get-user-beaches-forecast-interface';
+import { IGetUserBeachesForecast } from '@src/application/usecases/beaches/get-user-beaches-forecast/contracts/get-user-beaches-interface';
 import {
   ok,
   notFound,
@@ -10,17 +10,17 @@ import {
   serverError,
 } from '@src/presentation/controllers/helpers/http-helper';
 
-import { IHttpRequest } from '../interfaces/http-request';
-import { IHttpResponse } from '../interfaces/http-response';
+import { IHttpRequest } from './contracts/http-request';
+import { IHttpResponse } from './contracts/http-response';
 
 export class GetUserBeachesForecastController {
-  constructor(private getUserBeachesForecastInterface: IGetUserBeachesForecastInterface) {}
+  constructor(private getUserBeachesForecastUseCase: IGetUserBeachesForecast) {}
 
   async handle(request: IHttpRequest<IGetBeachForecastInput>): Promise<IHttpResponse> {
     try {
       const { userId } = request;
       const { query } = request;
-      const response = await this.getUserBeachesForecastInterface.execute({
+      const response = await this.getUserBeachesForecastUseCase.execute({
         userId,
         page: Number(query.page),
         pageSize: Number(query.pageSize),

@@ -5,7 +5,3 @@ export interface ILoggerData {
   message: string;
   metadata?: object;
 }
-
-export interface ILoggerProvider {
-  log({ level, message, metadata }: ILoggerData): void;
-}

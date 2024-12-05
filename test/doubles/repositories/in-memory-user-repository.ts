@@ -1,4 +1,4 @@
-import { IUserRepository } from '@src/application/interfaces/repositories/user-repository';
+import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';
 import { User } from '@src/entities/user/user';
 
 export class InMemoryUserRepository implements IUserRepository {

@@ -1,5 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { TimeGroupedBeachForecast } from '@src/application/usecases/beaches/get-user-beaches-forecast/dtos/timed-grouped-beach-forecast';
+import { TimeGroupedBeachForecast } from '@src/application/usecases/beaches/dtos/timed-grouped-beach-forecast';
 import { GetUserBeachesForecastUseCase } from '@src/application/usecases/beaches/get-user-beaches-forecast/get-user-beaches-forecast-use-case';
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
 import { InMemoryLoggerProvider } from '@test/doubles/providers/logger-provider/in-memory-logger-service';

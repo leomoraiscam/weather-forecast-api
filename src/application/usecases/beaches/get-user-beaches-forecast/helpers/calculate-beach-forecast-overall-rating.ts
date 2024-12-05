@@ -1,5 +1,5 @@
-import { RegisterBeachInput } from '../../register-beach/dtos/register-beach-input';
-import { BeachForecastPointDetails } from '../dtos/beach-forecast-point-details';
+import { BeachForecastPointDetails } from '../../dtos/beach-forecast-point-details';
+import { RegisterBeachInput } from '../../dtos/register-beach-input';
 import { getBeachForecastPointRatings } from './get-beach-forecast-point-ratings';
 
 export function calculateBeachForecastOverallRating(

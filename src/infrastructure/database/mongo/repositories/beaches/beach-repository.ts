@@ -1,7 +1,7 @@
-import { IBeachRepository } from '@src/application/interfaces/repositories/beach-repository';
+import { IBeachRepository } from '@src/application/contracts/repositories/beaches/beach-repository';
 import { Beach } from '@src/entities/beach/beach';
 import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
-import { BeachMapper } from '@src/infrastructure/database/mongo/mappers/beaches/beach-mapper';
+import { BeachMapper } from '@src/infrastructure/database/mongo/repositories/beaches/mappers/beach-mapper';
 import { IBeachCoordinatesDTO } from '@src/modules/forecast/dtos/beach-coordinates';
 
 export class BeachRepository implements IBeachRepository {

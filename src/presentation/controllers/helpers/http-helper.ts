@@ -1,4 +1,4 @@
-import { IHttpResponse } from '../../interfaces/http-response';
+import { IHttpResponse } from '../contracts/http-response';
 
 export const ok = <T>(data: T): IHttpResponse<T> => ({
   statusCode: 200,

@@ -1,7 +1,7 @@
-import { ICacheProvider } from '@src/application/interfaces/providers/cache-provider';
-import { IBeachRepository } from '@src/application/interfaces/repositories/beach-repository';
-import { IUserRepository } from '@src/application/interfaces/repositories/user-repository';
-import { RegisterBeachInput } from '@src/application/usecases/beaches/register-beach/dtos/register-beach-input';
+import { ICacheProvider } from '@src/application/contracts/providers/cache-provider/cache-provider';
+import { IBeachRepository } from '@src/application/contracts/repositories/beaches/beach-repository';
+import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';
+import { RegisterBeachInput } from '@src/application/usecases/beaches/dtos/register-beach-input';
 import { Beach } from '@src/entities/beach/beach';
 import { Latitude } from '@src/entities/beach/latitude';
 import { Longitude } from '@src/entities/beach/longitude';
@@ -11,12 +11,9 @@ import { left, right } from '@src/shared/logic/either';
 
 import { BeachAlreadyExistsError } from '../errors/beach-already-exists-error';
 import { UserNotFoundError } from '../errors/user-not-found-error';
-import {
-  RegisterBeachResponse,
-  IRegisterBeachInterface,
-} from './interfaces/register-beach-interface';
+import { RegisterBeachResponse, IRegisterBeach } from './contracts/register-beach-interface';
 
-export class RegisterBeachUseCase implements IRegisterBeachInterface {
+export class RegisterBeachUseCase implements IRegisterBeach {
   constructor(
     private beachRepository: IBeachRepository,
     private userRepository: IUserRepository,

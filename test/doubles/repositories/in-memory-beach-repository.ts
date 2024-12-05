@@ -1,4 +1,4 @@
-import { IBeachRepository } from '@src/application/interfaces/repositories/beach-repository';
+import { IBeachRepository } from '@src/application/contracts/repositories/beaches/beach-repository';
 import { Beach } from '@src/entities/beach/beach';
 import { IBeachCoordinatesDTO } from '@src/modules/forecast/dtos/beach-coordinates';
 import { BeachMapper } from '@src/modules/forecast/mapper/beach-mapper';

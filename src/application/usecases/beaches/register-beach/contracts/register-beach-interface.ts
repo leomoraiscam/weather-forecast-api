@@ -5,9 +5,9 @@ import { InvalidNameError } from '@src/entities/beach/errors/invalid-name-error'
 import { InvalidPositionError } from '@src/entities/beach/errors/invalid-position-error';
 import { Either } from '@src/shared/logic/either';
 
+import { RegisterBeachInput } from '../../dtos/register-beach-input';
+import { RegisterBeachOutput } from '../../dtos/register-beach-output';
 import { BeachAlreadyExistsError } from '../../errors/beach-already-exists-error';
-import { RegisterBeachInput } from '../dtos/register-beach-input';
-import { RegisterBeachOutput } from '../dtos/register-beach-output';
 
 export type RegisterBeachResponse = Either<
   | InvalidNameError
@@ -18,7 +18,6 @@ export type RegisterBeachResponse = Either<
   | UserNotFoundError,
   RegisterBeachOutput
 >;
-
-export interface IRegisterBeachInterface {
+export interface IRegisterBeach {
   execute: (registerBeachInput: RegisterBeachInput) => Promise<RegisterBeachResponse>;
 }

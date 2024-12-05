@@ -1,4 +1,5 @@
-import { ICacheProvider, ICacheData } from '@src/application/interfaces/providers/cache-provider';
+import { ICacheProvider } from '@src/application/contracts/providers/cache-provider/cache-provider';
+import { ICacheData } from '@src/application/contracts/providers/cache-provider/dtos/cache-data';
 
 export class InMemoryCacheProvider implements ICacheProvider {
   private cache: ICacheData = {};

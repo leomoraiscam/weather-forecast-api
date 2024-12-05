@@ -1,5 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { RegisterBeachInput } from '@src/application/usecases/beaches/register-beach/dtos/register-beach-input';
+import { RegisterBeachInput } from '@src/application/usecases/beaches/dtos/register-beach-input';
 import { RegisterBeachUseCase } from '@src/application/usecases/beaches/register-beach/register-beach-use-case';
 import { InMemoryCacheService } from '@src/external/providers/cache-service/in-memory/in-memory-cache-service';
 import { RegisterBeachController } from '@src/presentation/controllers/register-beach-controller';

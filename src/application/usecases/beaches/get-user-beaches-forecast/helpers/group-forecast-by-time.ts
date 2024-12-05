@@ -1,5 +1,5 @@
-import { BeachForecastWithRating } from '../dtos/beach-forecast-with-rating';
-import { TimeGroupedBeachForecast } from '../dtos/timed-grouped-beach-forecast';
+import { BeachForecastWithRating } from '../../dtos/beach-forecast-with-rating';
+import { TimeGroupedBeachForecast } from '../../dtos/timed-grouped-beach-forecast';
 
 export function groupForecastByTime(
   forecast: BeachForecastWithRating[],

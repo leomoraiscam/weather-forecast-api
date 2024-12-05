@@ -1,5 +1,5 @@
 import { AuthenticateUserUseCase } from '@src/application/usecases/users/authenticate-user/authenticate-user-use-case';
-import { AuthenticateUserInput } from '@src/application/usecases/users/authenticate-user/dtos/authenticate-user-input';
+import { AuthenticateUserInput } from '@src/application/usecases/users/dtos/authenticate-user-input';
 import { AuthenticateUserController } from '@src/presentation/controllers/authenticate-user-controller';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 import { left } from '@src/shared/logic/either';

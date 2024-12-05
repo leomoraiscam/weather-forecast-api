@@ -1,15 +1,15 @@
-import { RegisterUserInput } from '@src/application/usecases/users/register-user/dtos/register-user-input';
-import { AccountAlreadyExistsError } from '@src/application/usecases/users/register-user/errors/account-already-exists-error';
-import { IRegisterUserInterface } from '@src/application/usecases/users/register-user/interfaces/register-user-interface';
-import { IControllerOperation } from '@src/presentation/controllers/interfaces/controller-operation';
+import { RegisterUserInput } from '@src/application/usecases/users/dtos/register-user-input';
+import { AccountAlreadyExistsError } from '@src/application/usecases/users/errors/account-already-exists-error';
+import { IRegisterUser } from '@src/application/usecases/users/register-user/contracts/register-user-interface';
+import { IControllerOperation } from '@src/presentation/controllers/contracts/controller-operation';
 
-import { IHttpRequest } from '../interfaces/http-request';
-import { IHttpResponse } from '../interfaces/http-response';
+import { IHttpRequest } from './contracts/http-request';
+import { IHttpResponse } from './contracts/http-response';
 import { conflict, badRequest, created, serverError } from './helpers/http-helper';
 
 export class RegisterUserController implements IControllerOperation {
   public readonly requiredParams: string[] = ['name', 'email', 'password'];
-  public constructor(private readonly registerUserUseCase: IRegisterUserInterface) {}
+  public constructor(private readonly registerUserUseCase: IRegisterUser) {}
 
   async handle(request: IHttpRequest<RegisterUserInput>): Promise<IHttpResponse> {
     const { body: registerUserRequest } = request;

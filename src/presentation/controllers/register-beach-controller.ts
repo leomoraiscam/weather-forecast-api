@@ -1,14 +1,14 @@
+import { RegisterBeachInput } from '@src/application/usecases/beaches/dtos/register-beach-input';
 import { BeachAlreadyExistsError } from '@src/application/usecases/beaches/errors/beach-already-exists-error';
 import { UserNotFoundError } from '@src/application/usecases/beaches/errors/user-not-found-error';
-import { RegisterBeachInput } from '@src/application/usecases/beaches/register-beach/dtos/register-beach-input';
-import { IRegisterBeachInterface } from '@src/application/usecases/beaches/register-beach/interfaces/register-beach-interface';
+import { IRegisterBeach } from '@src/application/usecases/beaches/register-beach/contracts/register-beach-interface';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 
-import { IHttpResponse } from '../interfaces/http-response';
+import { IHttpResponse } from './contracts/http-response';
 import { badRequest, conflict, created, serverError, notFound } from './helpers/http-helper';
 
 export class RegisterBeachController {
-  constructor(private readonly registerBeachUseCase: IRegisterBeachInterface) {}
+  constructor(private readonly registerBeachUseCase: IRegisterBeach) {}
 
   async handle(request: IHttpRequest<RegisterBeachInput>): Promise<IHttpResponse> {
     try {

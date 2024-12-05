@@ -1,5 +1,5 @@
-import { IHttpRequest } from '../../interfaces/http-request';
-import { IHttpResponse } from '../../interfaces/http-response';
+import { IHttpRequest } from './http-request';
+import { IHttpResponse } from './http-response';
 
 export interface IControllerOperation {
   readonly requiredParams?: string[];

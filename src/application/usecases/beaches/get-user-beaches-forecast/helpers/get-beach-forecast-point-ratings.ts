@@ -1,5 +1,5 @@
-import { RegisterBeachInput } from '../../register-beach/dtos/register-beach-input';
-import { BeachForecastPointDetails } from '../dtos/beach-forecast-point-details';
+import { BeachForecastPointDetails } from '../../dtos/beach-forecast-point-details';
+import { RegisterBeachInput } from '../../dtos/register-beach-input';
 import { getDirectionPosition } from './get-direction-position';
 import { getRatingSwellPeriod } from './get-rating-swell-period';
 import { getRatingSwellSize } from './get-rating-swell-size';

@@ -1,5 +1,5 @@
-import { RegisterBeachInput } from '../../register-beach/dtos/register-beach-input';
 import { BeachForecastPointDetails } from './beach-forecast-point-details';
+import { RegisterBeachInput } from './register-beach-input';
 
 export interface BeachForecastWithRating
   extends Omit<RegisterBeachInput, 'userId'>,

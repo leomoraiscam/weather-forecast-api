@@ -1,5 +1,5 @@
-import { RegisterUserInput } from '@src/application/usecases/users/register-user/dtos/register-user-input';
-import { AccountAlreadyExistsError } from '@src/application/usecases/users/register-user/errors/account-already-exists-error';
+import { RegisterUserInput } from '@src/application/usecases/users/dtos/register-user-input';
+import { AccountAlreadyExistsError } from '@src/application/usecases/users/errors/account-already-exists-error';
 import { RegisterUserUseCase } from '@src/application/usecases/users/register-user/register-user-use-case';
 import { RegisterUserController } from '@src/presentation/controllers/register-user-controller';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';

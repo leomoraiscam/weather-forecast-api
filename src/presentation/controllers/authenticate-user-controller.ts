@@ -1,15 +1,15 @@
-import { AuthenticateUserInput } from '@src/application/usecases/users/authenticate-user/dtos/authenticate-user-input';
-import { AuthenticateUserOutput } from '@src/application/usecases/users/authenticate-user/dtos/authenticate-user-output';
-import { InvalidEmailOrPasswordError } from '@src/application/usecases/users/authenticate-user/errors/invalid-email-or-password-error';
-import { IAuthenticateUserInterface } from '@src/application/usecases/users/authenticate-user/interfaces/authenticate-user-interface';
+import { IAuthenticateUser } from '@src/application/usecases/users/authenticate-user/contracts/authenticate-user-interface';
+import { AuthenticateUserInput } from '@src/application/usecases/users/dtos/authenticate-user-input';
+import { AuthenticateUserOutput } from '@src/application/usecases/users/dtos/authenticate-user-output';
+import { InvalidEmailOrPasswordError } from '@src/application/usecases/users/errors/invalid-email-or-password-error';
 
-import { IHttpRequest } from '../interfaces/http-request';
-import { IHttpResponse } from '../interfaces/http-response';
+import { IHttpRequest } from './contracts/http-request';
+import { IHttpResponse } from './contracts/http-response';
 import { badRequest, ok, serverError, unauthorized } from './helpers/http-helper';
 
 export class AuthenticateUserController {
   public readonly requiredParams = ['email', 'password'];
-  public constructor(private readonly authenticateUserUseCase: IAuthenticateUserInterface) {}
+  public constructor(private readonly authenticateUserUseCase: IAuthenticateUser) {}
 
   async handle(request: IHttpRequest<AuthenticateUserInput>): Promise<IHttpResponse> {
     const { body: authenticateUserRequest } = request;

@@ -1,15 +1,15 @@
-import { IUserRepository } from '@src/application/interfaces/repositories/user-repository';
+import { ITokenManagerProvider } from '@src/application/contracts/providers/token-manager/token-manager-provider';
+import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';
 import { left, right } from '@src/shared/logic/either';
 
-import { ITokenManagerProvider } from '../../../interfaces/providers/token-manager-provider';
-import { AuthenticateUserInput } from './dtos/authenticate-user-input';
-import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password-error';
+import { AuthenticateUserInput } from '../dtos/authenticate-user-input';
+import { InvalidEmailOrPasswordError } from '../errors/invalid-email-or-password-error';
 import {
-  IAuthenticateUserInterface,
+  IAuthenticateUser,
   AuthenticateUserResponse,
-} from './interfaces/authenticate-user-interface';
+} from './contracts/authenticate-user-interface';
 
-export class AuthenticateUserUseCase implements IAuthenticateUserInterface {
+export class AuthenticateUserUseCase implements IAuthenticateUser {
   constructor(
     private userRepository: IUserRepository,
     private tokenManagerProvider: ITokenManagerProvider,

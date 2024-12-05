@@ -1,15 +1,15 @@
-import { IUserRepository } from '@src/application/interfaces/repositories/user-repository';
+import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';
 import { Email } from '@src/entities/user/email';
 import { Name } from '@src/entities/user/name';
 import { Password } from '@src/entities/user/password';
 import { User } from '@src/entities/user/user';
 import { left, right } from '@src/shared/logic/either';
 
-import { RegisterUserInput } from './dtos/register-user-input';
-import { AccountAlreadyExistsError } from './errors/account-already-exists-error';
-import { IRegisterUserInterface, RegisterUserResponse } from './interfaces/register-user-interface';
+import { RegisterUserInput } from '../dtos/register-user-input';
+import { AccountAlreadyExistsError } from '../errors/account-already-exists-error';
+import { IRegisterUser, RegisterUserResponse } from './contracts/register-user-interface';
 
-export class RegisterUserUseCase implements IRegisterUserInterface {
+export class RegisterUserUseCase implements IRegisterUser {
   constructor(private userRepository: IUserRepository) {}
 
   async execute(input: RegisterUserInput): Promise<RegisterUserResponse> {

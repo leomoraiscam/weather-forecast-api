@@ -27,7 +27,7 @@
     "no-restricted-syntax": "off",
     "no-await-in-loop": "off",
     "@typescript-eslint/naming-convention": [
-      "error",
+      "off",
       {
         "selector": "interface",
         "format": ["PascalCase"],

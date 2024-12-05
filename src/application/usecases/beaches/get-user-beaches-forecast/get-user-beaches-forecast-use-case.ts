@@ -1,23 +1,23 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { TypesLogger } from '@config/constants/types-logger-enum';
-import { ILoggerProvider } from '@src/application/interfaces/providers/logger-provider';
-import { IBeachRepository } from '@src/application/interfaces/repositories/beach-repository';
-import { IUserRepository } from '@src/application/interfaces/repositories/user-repository';
+import { ILoggerProvider } from '@src/application/contracts/providers/logger-provider/logger-provider';
+import { IBeachRepository } from '@src/application/contracts/repositories/beaches/beach-repository';
+import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';
 import { left, right } from '@src/shared/logic/either';
 
+import { BeachForecastPointDetails } from '../dtos/beach-forecast-point-details';
+import { BeachForecastWithRating } from '../dtos/beach-forecast-with-rating';
+import { IGetBeachForecastInput } from '../dtos/get-beach-forecast-input';
 import { BeachNotFoundError } from '../errors/beach-not-found-error';
 import { UserNotFoundError } from '../errors/user-not-found-error';
-import { BeachForecastPointDetails } from './dtos/beach-forecast-point-details';
-import { BeachForecastWithRating } from './dtos/beach-forecast-with-rating';
-import { IGetBeachForecastInput } from './dtos/get-beach-forecast-input';
+import {
+  IGetUserBeachesForecast,
+  GetUserBeachesForecastResponse,
+} from './contracts/get-user-beaches-interface';
 import { calculateBeachForecastOverallRating } from './helpers/calculate-beach-forecast-overall-rating';
 import { groupForecastByTime } from './helpers/group-forecast-by-time';
-import {
-  IGetUserBeachesForecastInterface,
-  GetUserBeachesForecastResponse,
-} from './interfaces/get-user-beaches-forecast-interface';
 
-export class GetUserBeachesForecastUseCase implements IGetUserBeachesForecastInterface {
+export class GetUserBeachesForecastUseCase implements IGetUserBeachesForecast {
   constructor(
     private stormGlassService: any,
     private userRepository: IUserRepository,
