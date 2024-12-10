@@ -3,6 +3,7 @@ import { TypesLogger } from '@config/constants/types-logger-enum';
 import { ILoggerProvider } from '@src/application/contracts/providers/logger-provider/logger-provider';
 import { IBeachRepository } from '@src/application/contracts/repositories/beaches/beach-repository';
 import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';
+import { IStormGlassService } from '@src/application/contracts/services/stormglass/stormglass-service-interface';
 import { left, right } from '@src/shared/logic/either';
 
 import { BeachForecastPointDetails } from '../dtos/beach-forecast-point-details';
@@ -19,14 +20,14 @@ import { groupForecastByTime } from './helpers/group-forecast-by-time';
 
 export class GetUserBeachesForecastUseCase implements IGetUserBeachesForecast {
   constructor(
-    private stormGlassService: any,
+    private stormGlassService: IStormGlassService,
     private userRepository: IUserRepository,
     private beachRepository: IBeachRepository,
     private loggerProvider: ILoggerProvider,
   ) {}
 
   public async execute(input: IGetBeachForecastInput): Promise<GetUserBeachesForecastResponse> {
-    const { page, pageSize, userId } = input;
+    const { userId, page, pageSize } = input;
     const user = await this.userRepository.findById(userId);
 
     if (!user) {
@@ -61,16 +62,12 @@ export class GetUserBeachesForecastUseCase implements IGetUserBeachesForecast {
       const forecastWeatherPointResponse = await this.stormGlassService.execute({
         lat: userBeach.lat,
         lng: userBeach.lng,
-        userId,
         page,
         pageSize,
+        userId,
       });
 
-      if (forecastWeatherPointResponse.isLeft()) {
-        return left(forecastWeatherPointResponse.value);
-      }
-
-      const beachForecastWithRating = forecastWeatherPointResponse.value.map(
+      const beachForecastWithRating = forecastWeatherPointResponse.map(
         (weatherPointForecast: BeachForecastPointDetails): BeachForecastWithRating => {
           const rating = calculateBeachForecastOverallRating(weatherPointForecast, userBeach);
 
