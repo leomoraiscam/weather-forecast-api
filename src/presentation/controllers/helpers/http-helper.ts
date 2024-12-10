@@ -37,5 +37,5 @@ export const unprocessableEntity = (error: Error): IHttpResponse<Error> => ({
 
 export const serverError = (error: Error): IHttpResponse<Error> => ({
   statusCode: 500,
-  body: error,
+  body: { message: error.message } as unknown as Error,
 });
