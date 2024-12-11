@@ -1,0 +1,74 @@
+{
+  "hours": [
+    {
+      "time": "2024-12-10T00:00:00+00:00",
+      "swellDirection": { "noaa": 101 },
+      "swellHeight": null,
+      "swellPeriod": { "noaa": 10 },
+      "waveDirection": { "noaa": 150 },
+      "waveHeight": { "noaa": 2.5 },
+      "windDirection": { "noaa": 200 },
+      "windSpeed": { "noaa": 15 }
+    },
+    {
+      "time": "2024-12-10T01:00:00+00:00",
+      "swellDirection": { "noaa": 101 },
+      "swellHeight": { "noaa": 1.2 },
+      "swellPeriod": { "noaa": 10 },
+      "waveDirection": null,
+      "waveHeight": { "noaa": 2.5 },
+      "windDirection": { "noaa": 200 },
+      "windSpeed": { "noaa": 15 }
+    },
+    {
+      "time": "2024-12-10T01:00:00+00:00",
+      "swellDirection": { "noaa": 101 },
+      "swellHeight": { "noaa": 1.2 },
+      "swellPeriod": null,
+      "waveDirection": { "noaa": 2.5 },
+      "waveHeight": null,
+      "windDirection": { "noaa": 200 },
+      "windSpeed": { "noaa": 15 }
+    },
+    {
+      "time": "2024-12-10T01:00:00+00:00",
+      "swellDirection": { "noaa": 101 },
+      "swellHeight": { "noaa": 1.2 },
+      "swellPeriod": null,
+      "waveDirection": null,
+      "waveHeight": { "noaa": 1.8 },
+      "windDirection": null,
+      "windSpeed": null
+    },
+    {
+      "time": "2024-12-10T01:00:00+00:00",
+      "swellDirection": { "noaa": 101 },
+      "swellHeight": { "noaa": 1.2 },
+      "swellPeriod": { "noaa": 10 },
+      "waveDirection": { "noaa": 2.5 },
+      "waveHeight": null,
+      "windDirection": { "noaa": 200 },
+      "windSpeed": { "noaa": 15 }
+    },
+    {
+      "time": "2024-12-10T01:00:00+00:00",
+      "swellDirection": { "noaa": 101 },
+      "swellHeight": { "noaa": 1.2 },
+      "swellPeriod": { "noaa": 10 },
+      "waveDirection": { "noaa": 2.5 },
+      "waveHeight": { "noaa": 200 },
+      "windDirection": null,
+      "windSpeed": { "noaa": 15 }
+    },
+    {
+      "time": "2024-12-10T01:00:00+00:00",
+      "swellDirection": { "noaa": 101 },
+      "swellHeight": { "noaa": 1.2 },
+      "swellPeriod": { "noaa": 10 },
+      "waveDirection": { "noaa": 2.5 },
+      "waveHeight": { "noaa": 200 },
+      "windDirection": { "noaa": 15 },
+      "windSpeed": null
+    }
+  ]
+}
