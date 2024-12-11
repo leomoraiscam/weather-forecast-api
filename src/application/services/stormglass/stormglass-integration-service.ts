@@ -2,6 +2,7 @@ import { IHttpProvider } from '@src/application/contracts/providers/http-provide
 import { IStormGlassAPIIntegrationResponse } from '@src/application/contracts/services/stormglass/dtos/stormglass-api-integration-response';
 import { IStormGlassIntegrationRequest } from '@src/application/contracts/services/stormglass/dtos/stormglass-integration-request';
 import { IStormGlassIntegrationsService } from '@src/application/contracts/services/stormglass/stormglass-integration-interface';
+import { StormGlassResponseError } from '@src/application/usecases/beaches/errors/stormglass-response-error';
 
 export class StormGlassIntegrationService implements IStormGlassIntegrationsService {
   constructor(private requestProvider: IHttpProvider) {}
@@ -25,7 +26,7 @@ export class StormGlassIntegrationService implements IStormGlassIntegrationsServ
 
       return response.data;
     } catch (error) {
-      throw new Error(`StormGlass API request failed`);
+      throw new StormGlassResponseError();
     }
   }
 }

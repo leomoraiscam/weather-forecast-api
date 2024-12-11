@@ -1,4 +1,4 @@
-import { StormGlassResponseError } from '@src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
+import { StormGlassResponseError } from '@src/application/usecases/beaches/errors/stormglass-response-error';
 import { Either } from '@src/shared/logic/either';
 
 import { IGetBeachForecastInput } from '../../dtos/get-beach-forecast-input';
