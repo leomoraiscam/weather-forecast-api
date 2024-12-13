@@ -3,13 +3,15 @@ import * as fs from 'fs';
 import request from 'supertest';
 
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
-import { UserRepository } from '@src/external/database/mongodb/implementations/user-repository';
+import { AuthenticateUserUseCase } from '@src/application/usecases/users/authenticate-user/authenticate-user-use-case';
+import { mongoHelper } from '@src/infrastructure/database/mongo/helpers/mongo-helper';
+import { UserRepository } from '@src/infrastructure/database/mongo/repositories/users/user-repository';
+import { JWTTokenManagerProvider } from '@src/infrastructure/providers/token-manager/jwt-token-manager-provider';
 import { app } from '@src/main/config/app';
-import { AuthenticateUserUseCase } from '@src/modules/accounts/usecases/authenticate-user/authenticate-user-use-case';
 import { createUser } from '@test/factories/user-factory';
 
 let userRepository: UserRepository;
+let jWTTokenManagerProvider;
 let authenticateUserUseCase: AuthenticateUserUseCase;
 let accessToken: string;
 
@@ -17,7 +19,8 @@ async function createSampleAuthenticateUser(): Promise<{
   accessToken: string;
 }> {
   userRepository = new UserRepository();
-  authenticateUserUseCase = new AuthenticateUserUseCase(userRepository);
+  jWTTokenManagerProvider = new JWTTokenManagerProvider();
+  authenticateUserUseCase = new AuthenticateUserUseCase(userRepository, jWTTokenManagerProvider);
 
   const parameters = {
     email: 'gon@hoklabew.ga',

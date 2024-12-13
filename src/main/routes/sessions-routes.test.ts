@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import request from 'supertest';
 
-import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
+import { mongoHelper } from '@src/infrastructure/database/mongo/helpers/mongo-helper';
 import { app } from '@src/main/config/app';
 
 describe('Sessions router', () => {
