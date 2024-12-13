@@ -1,4 +1,4 @@
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
 import { JWTPayload } from '@src/application/contracts/providers/token-manager/dtos/token-data';
 import { ITokenManagerProvider } from '@src/application/contracts/providers/token-manager/token-manager-provider';
@@ -8,5 +8,9 @@ export class JWTTokenManagerProvider implements ITokenManagerProvider {
     return sign(payload, process.env.JWT_SECRET_TOKEN, {
       expiresIn: expiresIn || process.env.JWT_EXPIRES_IN,
     });
+  }
+
+  async verify(token: string): Promise<JWTPayload> {
+    return verify(token, process.env.JWT_SECRET_TOKEN) as JWTPayload;
   }
 }
