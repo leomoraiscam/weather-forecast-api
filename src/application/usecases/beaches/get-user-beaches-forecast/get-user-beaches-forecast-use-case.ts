@@ -1,5 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { TypesLogger } from '@config/constants/types-logger-enum';
+import { TypesLogger } from '@src/application/contracts/providers/logger-provider/enums/types-logger-enum';
 import { ILoggerProvider } from '@src/application/contracts/providers/logger-provider/logger-provider';
 import { IBeachRepository } from '@src/application/contracts/repositories/beaches/beach-repository';
 import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';

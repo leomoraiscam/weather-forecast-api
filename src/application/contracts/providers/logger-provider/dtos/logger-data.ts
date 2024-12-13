@@ -1,4 +1,4 @@
-import { TypesLogger } from '@config/constants/types-logger-enum';
+import { TypesLogger } from '../enums/types-logger-enum';
 
 export interface ILoggerData {
   level: TypesLogger;

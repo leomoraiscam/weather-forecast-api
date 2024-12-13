@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import { TypesLogger } from '@config/constants/types-logger-enum';
+import { TypesLogger } from '@src/application/contracts/providers/logger-provider/enums/types-logger-enum';
 import { ICacheService } from '@src/external/providers/cache-service/ports/cache-service';
 import { IRequestService } from '@src/external/providers/http-service/ports/request-service';
 import { ILoggerService } from '@src/external/providers/logger-service/ports/logger-service';

@@ -1,6 +1,6 @@
 import Redis, { Redis as RedisClient } from 'ioredis';
 
-import { TypesLogger } from '@config/constants/types-logger-enum';
+import { TypesLogger } from '@src/application/contracts/providers/logger-provider/enums/types-logger-enum';
 import { PinoLoggerProvider } from '@src/infrastructure/providers/logger-provider/pino-logger-service';
 
 import { cacheConfig } from './config';
