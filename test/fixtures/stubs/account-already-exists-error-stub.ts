@@ -1,14 +1,14 @@
-import { IUseCase } from '@src/main/adapters/ports/use-case';
-import { IRegisterUserDTO } from '@src/modules/accounts/dtos/register-user';
-import { AccountAlreadyExistsError } from '@src/modules/accounts/usecases/register-user/errors/account-already-exists-error';
-import { RegisterUserResponse } from '@src/modules/accounts/usecases/register-user/register-user-response';
+import { RegisterUserInput } from '@src/application/usecases/users/dtos/register-user-input';
+import { AccountAlreadyExistsError } from '@src/application/usecases/users/errors/account-already-exists-error';
+import {
+  IRegisterUser,
+  RegisterUserResponse,
+} from '@src/application/usecases/users/register-user/contracts/register-user-interface';
 import { left } from '@src/shared/logic/either';
 
-export class ErrorThrowingConflictUseCaseStub
-  implements IUseCase<IRegisterUserDTO, RegisterUserResponse>
-{
-  async execute(_: IRegisterUserDTO): Promise<RegisterUserResponse> {
-    const error = new AccountAlreadyExistsError('any_email@email.com');
+export class ErrorThrowingConflictUseCaseStub implements IRegisterUser {
+  async execute(_: RegisterUserInput): Promise<RegisterUserResponse> {
+    const error = new AccountAlreadyExistsError();
 
     return left(error);
   }

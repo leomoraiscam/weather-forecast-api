@@ -1,9 +1,9 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { RegisterBeachInput } from '@src/application/usecases/beaches/dtos/register-beach-input';
 import { RegisterBeachUseCase } from '@src/application/usecases/beaches/register-beach/register-beach-use-case';
-import { InMemoryCacheService } from '@src/external/providers/cache-service/in-memory/in-memory-cache-service';
 import { RegisterBeachController } from '@src/presentation/controllers/register-beach-controller';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
+import { InMemoryCacheProvider } from '@test/doubles/providers/cache-provider/in-memory-cache-provider';
 import { InMemoryBeachRepository } from '@test/doubles/repositories/in-memory-beach-repository';
 import { InMemoryUserRepository } from '@test/doubles/repositories/in-memory-user-repository';
 import { createUser } from '@test/factories/user-factory';
@@ -12,7 +12,7 @@ import { ErrorThrowingConflictUseCaseStub } from '@test/fixtures/stubs/beach-alr
 describe('RegisterBeachWebController', () => {
   let inMemoryBeachRepository: InMemoryBeachRepository;
   let inMemoryUserRepository: InMemoryUserRepository;
-  let inMemoryCacheProvider: InMemoryCacheService;
+  let inMemoryCacheProvider: InMemoryCacheProvider;
   let registerBeachUseCase: RegisterBeachUseCase;
   let registerBeachController: RegisterBeachController;
   let userId: string;
@@ -20,7 +20,7 @@ describe('RegisterBeachWebController', () => {
   beforeEach(async () => {
     inMemoryBeachRepository = new InMemoryBeachRepository();
     inMemoryUserRepository = new InMemoryUserRepository();
-    inMemoryCacheProvider = new InMemoryCacheService();
+    inMemoryCacheProvider = new InMemoryCacheProvider();
     registerBeachUseCase = new RegisterBeachUseCase(
       inMemoryBeachRepository,
       inMemoryUserRepository,

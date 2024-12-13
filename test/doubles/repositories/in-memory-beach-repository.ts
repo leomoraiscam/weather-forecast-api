@@ -1,7 +1,7 @@
 import { IBeachRepository } from '@src/application/contracts/repositories/beaches/beach-repository';
+import { IBeachCoordinatesDTO } from '@src/application/contracts/repositories/beaches/dtos/beach-coordinates';
 import { Beach } from '@src/entities/beach/beach';
-import { IBeachCoordinatesDTO } from '@src/modules/forecast/dtos/beach-coordinates';
-import { BeachMapper } from '@src/modules/forecast/mapper/beach-mapper';
+import { BeachMapper } from '@src/infrastructure/database/mongo/repositories/beaches/mappers/beach-mapper';
 
 export class InMemoryBeachRepository implements IBeachRepository {
   beaches: Beach[] = [];
@@ -26,7 +26,7 @@ export class InMemoryBeachRepository implements IBeachRepository {
       userId: beach.userId,
     }));
 
-    return BeachMapper.toDomain(serializerBeach) as any;
+    return BeachMapper.toDomain(serializerBeach);
   }
 
   async create(beach: Beach): Promise<Beach> {

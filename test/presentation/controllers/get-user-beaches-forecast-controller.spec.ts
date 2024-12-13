@@ -1,8 +1,8 @@
 import { IGetBeachForecastInput } from '@src/application/usecases/beaches/dtos/get-beach-forecast-input';
 import { GetUserBeachesForecastUseCase } from '@src/application/usecases/beaches/get-user-beaches-forecast/get-user-beaches-forecast-use-case';
-import { InMemoryLoggerService } from '@src/external/providers/logger-service/in-memory/in-memory-logger-service';
 import { GetUserBeachesForecastController } from '@src/presentation/controllers/get-user-beaches-forecast-controller';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
+import { InMemoryLoggerProvider } from '@test/doubles/providers/logger-provider/in-memory-logger-service';
 import { InMemoryBeachRepository } from '@test/doubles/repositories/in-memory-beach-repository';
 import { InMemoryUserRepository } from '@test/doubles/repositories/in-memory-user-repository';
 import { createBeach } from '@test/factories/beach-factory';
@@ -12,7 +12,7 @@ import { StormGlassServiceMock } from '@test/fixtures/mocks/storm-glass-service-
 describe('GetUserBeachesForecastWebController', () => {
   let inMemoryBeachRepository: InMemoryBeachRepository;
   let inMemoryUserRepository: InMemoryUserRepository;
-  let inMemoryLoggerService: InMemoryLoggerService;
+  let inMemoryLoggerService: InMemoryLoggerProvider;
   let stormGlassServiceMock: StormGlassServiceMock;
   let getUserBeachesForecastController: GetUserBeachesForecastController;
   let getUserBeachesForecastUseCase: GetUserBeachesForecastUseCase;
@@ -21,7 +21,7 @@ describe('GetUserBeachesForecastWebController', () => {
   beforeEach(async () => {
     inMemoryBeachRepository = new InMemoryBeachRepository();
     inMemoryUserRepository = new InMemoryUserRepository();
-    inMemoryLoggerService = new InMemoryLoggerService();
+    inMemoryLoggerService = new InMemoryLoggerProvider();
     stormGlassServiceMock = new StormGlassServiceMock();
     getUserBeachesForecastUseCase = new GetUserBeachesForecastUseCase(
       stormGlassServiceMock,

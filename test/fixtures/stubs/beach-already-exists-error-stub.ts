@@ -1,13 +1,13 @@
-import { IUseCase } from '@src/main/adapters/ports/use-case';
-import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';
-import { BeachAlreadyExistsError } from '@src/modules/forecast/usecases/register-beach/errors/beach-already-exists-error';
-import { RegisterBeachResponse } from '@src/modules/forecast/usecases/register-beach/register-beach-response';
+import { RegisterBeachInput } from '@src/application/usecases/beaches/dtos/register-beach-input';
+import { BeachAlreadyExistsError } from '@src/application/usecases/beaches/errors/beach-already-exists-error';
+import {
+  IRegisterBeach,
+  RegisterBeachResponse,
+} from '@src/application/usecases/beaches/register-beach/contracts/register-beach-interface';
 import { left } from '@src/shared/logic/either';
 
-export class ErrorThrowingConflictUseCaseStub
-  implements IUseCase<IRegisterBeachDTO, RegisterBeachResponse>
-{
-  async execute(_: IRegisterBeachDTO): Promise<RegisterBeachResponse> {
+export class ErrorThrowingConflictUseCaseStub implements IRegisterBeach {
+  async execute(_: RegisterBeachInput): Promise<RegisterBeachResponse> {
     const error = new BeachAlreadyExistsError('any name');
 
     return left(error);

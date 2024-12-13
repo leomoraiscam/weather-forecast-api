@@ -1,7 +1,7 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
 import { TimeGroupedBeachForecast } from '@src/application/usecases/beaches/dtos/timed-grouped-beach-forecast';
+import { StormGlassResponseError } from '@src/application/usecases/beaches/errors/stormglass-response-error';
 import { GetUserBeachesForecastUseCase } from '@src/application/usecases/beaches/get-user-beaches-forecast/get-user-beaches-forecast-use-case';
-import { StormGlassResponseError } from '@src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
 import { InMemoryLoggerProvider } from '@test/doubles/providers/logger-provider/in-memory-logger-service';
 import { InMemoryBeachRepository } from '@test/doubles/repositories/in-memory-beach-repository';
 import { InMemoryUserRepository } from '@test/doubles/repositories/in-memory-user-repository';
@@ -76,14 +76,14 @@ describe('GetUserBeachesForecastUseCase', () => {
       inMemoryBeachRepository,
       inMemoryLoggerProvider,
     );
-    const response = await userBeachForecastProcessingUseCase.execute({
-      userId: 'fake-user-id',
-      page: 1,
-      pageSize: 5,
-    });
 
-    expect(response.isLeft()).toBeTruthy();
-    expect(response.value).toBeInstanceOf(StormGlassResponseError);
+    await expect(
+      userBeachForecastProcessingUseCase.execute({
+        userId: 'fake-user-id',
+        page: 1,
+        pageSize: 5,
+      }),
+    ).rejects.toBeInstanceOf(StormGlassResponseError);
   });
 
   it('should be able to return the forecast beaches in the same hour with different ratings', async () => {

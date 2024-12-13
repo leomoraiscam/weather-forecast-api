@@ -1,13 +1,10 @@
-import { IFetchPointCoordinate } from '@src/external/providers/stormglass-service/dtos/fetch-point-coordinate';
-import { IFetchPointNormalize } from '@src/external/providers/stormglass-service/dtos/fetch-point-normalize';
-import { IStormGlassService } from '@src/external/providers/stormglass-service/ports/stormglass-service';
-import { StormGlassResponseError } from '@src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
-import { Either, left } from '@src/shared/logic/either';
+import { IStormGlassIntegrationResponse } from '@src/application/contracts/services/stormglass/dtos/stormglass-integration-response';
+import { IStormGlassServiceInput } from '@src/application/contracts/services/stormglass/dtos/stormglass-service-input';
+import { IStormGlassService } from '@src/application/contracts/services/stormglass/stormglass-service-interface';
+import { StormGlassResponseError } from '@src/application/usecases/beaches/errors/stormglass-response-error';
 
 export class StormGlassServicerErrorStub implements IStormGlassService {
-  public async execute(
-    _: IFetchPointCoordinate,
-  ): Promise<Either<StormGlassResponseError, IFetchPointNormalize[]>> {
-    return left(new StormGlassResponseError());
+  async execute(_: IStormGlassServiceInput): Promise<IStormGlassIntegrationResponse[]> {
+    throw new StormGlassResponseError();
   }
 }

@@ -1,9 +1,9 @@
 import { StormGlassIntegrationService } from '@src/application/services/stormglass/stormglass-integration-service';
 import { StormGlassService } from '@src/application/services/stormglass/stormglass-service';
 import { StormGlassResponseError } from '@src/application/usecases/beaches/errors/stormglass-response-error';
-import { InMemoryLoggerService } from '@src/external/providers/logger-service/in-memory/in-memory-logger-service';
 import { AxiosProvider } from '@src/infrastructure/providers/http-provider/axios-provider';
 import { InMemoryCacheProvider } from '@test/doubles/providers/cache-provider/in-memory-cache-provider';
+import { InMemoryLoggerProvider } from '@test/doubles/providers/logger-provider/in-memory-logger-service';
 import fetchPointsNormalizedResponse from '@test/fixtures/data/fetch-points-normalized-response.json';
 import stormGlassIncompleteResponse from '@test/fixtures/data/storm-glass-incomplete-response.json';
 import stormGlassResponseGenericError from '@test/fixtures/data/storm-glass-response-generic-error.json';
@@ -17,7 +17,7 @@ describe('StormGlass Service', () => {
   let lng: number;
   let inMemoryCacheProvider: InMemoryCacheProvider;
   const mockedRequest = new AxiosProvider(
-    new InMemoryLoggerService(),
+    new InMemoryLoggerProvider(),
   ) as jest.Mocked<AxiosProvider>;
 
   beforeEach(() => {
@@ -108,7 +108,6 @@ describe('StormGlass Service', () => {
       inMemoryCacheProvider,
       stormGlassIntegrationService,
     );
-
     const response = await fetchPointService.execute({
       lat,
       lng,
