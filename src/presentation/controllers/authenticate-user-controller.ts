@@ -3,9 +3,9 @@ import { AuthenticateUserInput } from '@src/application/usecases/users/dtos/auth
 import { AuthenticateUserOutput } from '@src/application/usecases/users/dtos/authenticate-user-output';
 import { InvalidEmailOrPasswordError } from '@src/application/usecases/users/errors/invalid-email-or-password-error';
 
-import { IHttpRequest } from './contracts/http-request';
-import { IHttpResponse } from './contracts/http-response';
-import { badRequest, ok, serverError, unauthorized } from './helpers/http-helper';
+import { IHttpRequest } from '../contracts/http-request';
+import { IHttpResponse } from '../contracts/http-response';
+import { badRequest, ok, serverError, unauthorized } from '../helpers/http-helper';
 
 export class AuthenticateUserController {
   public readonly requiredParams = ['email', 'password'];

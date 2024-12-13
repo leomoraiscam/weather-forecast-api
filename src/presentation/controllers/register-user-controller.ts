@@ -3,9 +3,9 @@ import { AccountAlreadyExistsError } from '@src/application/usecases/users/error
 import { IRegisterUser } from '@src/application/usecases/users/register-user/contracts/register-user-interface';
 import { IControllerOperation } from '@src/presentation/controllers/contracts/controller-operation';
 
-import { IHttpRequest } from './contracts/http-request';
-import { IHttpResponse } from './contracts/http-response';
-import { conflict, badRequest, created, serverError } from './helpers/http-helper';
+import { IHttpRequest } from '../contracts/http-request';
+import { IHttpResponse } from '../contracts/http-response';
+import { conflict, badRequest, created, serverError } from '../helpers/http-helper';
 
 export class RegisterUserController implements IControllerOperation {
   public readonly requiredParams: string[] = ['name', 'email', 'password'];

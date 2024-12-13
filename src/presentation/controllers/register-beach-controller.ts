@@ -4,8 +4,8 @@ import { UserNotFoundError } from '@src/application/usecases/beaches/errors/user
 import { IRegisterBeach } from '@src/application/usecases/beaches/register-beach/contracts/register-beach-interface';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
 
-import { IHttpResponse } from './contracts/http-response';
-import { badRequest, conflict, created, serverError, notFound } from './helpers/http-helper';
+import { IHttpResponse } from '../contracts/http-response';
+import { badRequest, conflict, created, serverError, notFound } from '../helpers/http-helper';
 
 export class RegisterBeachController {
   constructor(private readonly registerBeachUseCase: IRegisterBeach) {}

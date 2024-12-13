@@ -8,10 +8,10 @@ import {
   notFound,
   unprocessableEntity,
   serverError,
-} from '@src/presentation/controllers/helpers/http-helper';
+} from '@src/presentation/helpers/http-helper';
 
-import { IHttpRequest } from './contracts/http-request';
-import { IHttpResponse } from './contracts/http-response';
+import { IHttpRequest } from '../contracts/http-request';
+import { IHttpResponse } from '../contracts/http-response';
 
 export class GetUserBeachesForecastController {
   constructor(private getUserBeachesForecastUseCase: IGetUserBeachesForecast) {}
