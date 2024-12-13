@@ -1,8 +1,9 @@
 import { IBeachRepository } from '@src/application/contracts/repositories/beaches/beach-repository';
 import { IBeachCoordinatesDTO } from '@src/application/contracts/repositories/beaches/dtos/beach-coordinates';
 import { Beach } from '@src/entities/beach/beach';
-import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
 import { BeachMapper } from '@src/infrastructure/database/mongo/repositories/beaches/mappers/beach-mapper';
+
+import { mongoHelper } from '../../helpers/mongo-helper';
 
 export class BeachRepository implements IBeachRepository {
   async findByGeolocation(data: IBeachCoordinatesDTO): Promise<Beach> {

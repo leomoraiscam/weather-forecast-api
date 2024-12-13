@@ -1,7 +1,8 @@
 import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';
 import { User } from '@src/entities/user/user';
-import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
 import { UserMapper } from '@src/infrastructure/database/mongo/repositories/users/mappers/user-mapper';
+
+import { mongoHelper } from '../../helpers/mongo-helper';
 
 export class UserRepository implements IUserRepository {
   async findById(id: string): Promise<User | undefined> {

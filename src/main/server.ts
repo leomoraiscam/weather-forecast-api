@@ -1,7 +1,7 @@
 import '@src/main/config/module-alias';
 import * as dotenv from 'dotenv';
 
-import { mongoHelper } from '@src/external/database/mongodb/helpers/mongo-helper';
+import { mongoHelper } from '@src/infrastructure/database/mongo/helpers/mongo-helper';
 
 dotenv.config();
 
