@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import * as fs from 'fs';
 import request from 'supertest';
 
-import { BeachPosition } from '@config/constants/beach-position-enum';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { AuthenticateUserUseCase } from '@src/application/usecases/users/authenticate-user/authenticate-user-use-case';
 import { mongoHelper } from '@src/infrastructure/database/mongo/helpers/mongo-helper';
 import { UserRepository } from '@src/infrastructure/database/mongo/repositories/users/user-repository';

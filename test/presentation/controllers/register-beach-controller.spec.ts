@@ -1,4 +1,4 @@
-import { BeachPosition } from '@config/constants/beach-position-enum';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { RegisterBeachInput } from '@src/application/usecases/beaches/dtos/register-beach-input';
 import { RegisterBeachUseCase } from '@src/application/usecases/beaches/register-beach/register-beach-use-case';
 import { RegisterBeachController } from '@src/presentation/controllers/register-beach-controller';

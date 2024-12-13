@@ -1,4 +1,4 @@
-import { BeachPosition } from '@config/constants/beach-position-enum';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 
 export function getPositionFromLocation(coordinates: number): BeachPosition {
   if (coordinates < 50) return BeachPosition.N;

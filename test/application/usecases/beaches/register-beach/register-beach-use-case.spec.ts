@@ -1,4 +1,4 @@
-import { BeachPosition } from '@config/constants/beach-position-enum';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { RegisterBeachInput } from '@src/application/usecases/beaches/dtos/register-beach-input';
 import { RegisterBeachUseCase } from '@src/application/usecases/beaches/register-beach/register-beach-use-case';
 import { InvalidLatitudeError } from '@src/entities/beach/errors/invalid-latitude-error';

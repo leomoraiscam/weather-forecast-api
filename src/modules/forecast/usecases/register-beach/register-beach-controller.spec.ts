@@ -1,4 +1,4 @@
-import { BeachPosition } from '@config/constants/beach-position-enum';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { InMemoryCacheService } from '@src/external/providers/cache-service/in-memory/in-memory-cache-service';
 import { InMemoryUserRepository } from '@src/modules/accounts/repositories/in-memory/in-memory-user-repository';
 import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';

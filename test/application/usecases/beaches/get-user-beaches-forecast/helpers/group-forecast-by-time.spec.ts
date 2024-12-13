@@ -1,4 +1,4 @@
-import { BeachPosition } from '@config/constants/beach-position-enum';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { BeachForecastWithRating } from '@src/application/usecases/beaches/dtos/beach-forecast-with-rating';
 import { TimeGroupedBeachForecast } from '@src/application/usecases/beaches/dtos/timed-grouped-beach-forecast';
 import { groupForecastByTime } from '@src/application/usecases/beaches/get-user-beaches-forecast/helpers/group-forecast-by-time';

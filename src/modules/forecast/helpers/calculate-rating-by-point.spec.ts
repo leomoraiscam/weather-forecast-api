@@ -1,4 +1,4 @@
-import { BeachPosition } from '@config/constants/beach-position-enum';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { IFetchPointNormalize } from '@src/external/providers/stormglass-service/dtos/fetch-point-normalize';
 
 import { IRegisterBeachDTO } from '../dtos/register-beach';

@@ -1,4 +1,4 @@
-import { BeachPosition } from '@config/constants/beach-position-enum';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { RegisterBeachInput } from '@src/application/usecases/beaches/dtos/register-beach-input';
 import { getRatingWindAndWave } from '@src/application/usecases/beaches/get-user-beaches-forecast/helpers/get-rating-wind-and-wave';
 

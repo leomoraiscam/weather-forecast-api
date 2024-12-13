@@ -1,4 +1,4 @@
-import { BeachPosition } from '@config/constants/beach-position-enum';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { getDirectionPosition } from '@src/application/usecases/beaches/get-user-beaches-forecast/helpers/get-direction-position';
 
 describe('Get position from location helper', () => {

@@ -1,4 +1,4 @@
-import { BeachPosition } from '@config/constants/beach-position-enum';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { TypesLogger } from '@src/application/contracts/providers/logger-provider/enums/types-logger-enum';
 import { ILoggerService } from '@src/external/providers/logger-service/ports/logger-service';
 import { IFetchPointCoordinate } from '@src/external/providers/stormglass-service/dtos/fetch-point-coordinate';
