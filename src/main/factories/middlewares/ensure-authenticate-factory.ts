@@ -1,8 +1,10 @@
+import { JWTTokenManagerProvider } from '@src/infrastructure/providers/token-manager/jwt-token-manager-provider';
 import { IMiddleware } from '@src/main/adapters/ports/middleware';
-import { EnsureAuthenticateMiddleware } from '@src/shared/http/middlewares/ensure-authenticate-middleware';
+import { AuthenticateMiddleware } from '@src/presentation/middlewares/authenticate-middleware';
 
-export function makeEnsureAuthenticateMiddleware(): IMiddleware {
-  const ensureAuthenticatedMiddleware = new EnsureAuthenticateMiddleware();
+export function makeAuthenticateMiddleware(): IMiddleware {
+  const jWTTokenManagerProvider = new JWTTokenManagerProvider();
+  const authenticateMiddleware = new AuthenticateMiddleware(jWTTokenManagerProvider);
 
-  return ensureAuthenticatedMiddleware;
+  return authenticateMiddleware;
 }

@@ -5,19 +5,19 @@ import { makeUserBeachForecastProcessingController } from '@src/main/factories/c
 
 import { adaptMiddleware } from '../adapters/express-middleware-adapter';
 import { adaptRoute } from '../adapters/express-route-adapter';
-import { makeEnsureAuthenticateMiddleware } from '../factories/middlewares/ensure-authenticate-factory';
+import { makeAuthenticateMiddleware } from '../factories/middlewares/ensure-authenticate-factory';
 import { makeRateLimiterMiddleware } from '../factories/middlewares/rate-limiter-factory';
 
 export default (router: Router): void => {
   router.post(
     '/beaches',
-    adaptMiddleware(makeEnsureAuthenticateMiddleware()),
+    adaptMiddleware(makeAuthenticateMiddleware()),
     adaptRoute(makeRegisterBeachController()),
   );
 
   router.get(
     '/user-beach-forecast',
-    adaptMiddleware(makeEnsureAuthenticateMiddleware()),
+    adaptMiddleware(makeAuthenticateMiddleware()),
     adaptMiddleware(makeRateLimiterMiddleware()),
     adaptRoute(makeUserBeachForecastProcessingController()),
   );

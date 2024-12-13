@@ -1,8 +1,10 @@
+import { RateLimiterFlexible } from '@src/infrastructure/providers/rate-limiter-provider/rate-limiter-flexible-provider';
 import { IMiddleware } from '@src/main/adapters/ports/middleware';
-import { RateLimiterMiddleware } from '@src/shared/http/middlewares/rate-limiter-middleware';
+import { RateLimiterMiddleware } from '@src/presentation/middlewares/rate-limiter-middleware';
 
 export function makeRateLimiterMiddleware(): IMiddleware {
-  const rateLimiterMiddleware = new RateLimiterMiddleware();
+  const rateLimiterFlexibleProvider = new RateLimiterFlexible();
+  const rateLimiterMiddleware = new RateLimiterMiddleware(rateLimiterFlexibleProvider);
 
   return rateLimiterMiddleware;
 }
