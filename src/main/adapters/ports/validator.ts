@@ -1,4 +1,4 @@
-import { Either } from '@src/shared/logic/either';
+import { Either } from '@src/shared/core/either';
 import { ValidatableData } from '@src/shared/validators/required-fields-validator';
 
 export interface IValidator<T> {

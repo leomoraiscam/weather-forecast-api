@@ -7,7 +7,7 @@ import { Latitude } from '@src/entities/beach/latitude';
 import { Longitude } from '@src/entities/beach/longitude';
 import { Name } from '@src/entities/beach/name';
 import { Position } from '@src/entities/beach/position';
-import { left, right } from '@src/shared/logic/either';
+import { left, right } from '@src/shared/core/either';
 
 import { BeachAlreadyExistsError } from '../errors/beach-already-exists-error';
 import { UserNotFoundError } from '../errors/user-not-found-error';

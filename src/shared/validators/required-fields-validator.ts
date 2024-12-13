@@ -1,6 +1,6 @@
 import { IValidator } from '@src/main/adapters/ports/validator';
 
-import { Either, left, right } from '../logic/either';
+import { Either, left, right } from '../core/either';
 import { MissingParamError } from './errors/missing-param-error';
 
 export type ValidatableData<T> = {

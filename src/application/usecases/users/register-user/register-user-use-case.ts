@@ -3,7 +3,7 @@ import { Email } from '@src/entities/user/email';
 import { Name } from '@src/entities/user/name';
 import { Password } from '@src/entities/user/password';
 import { User } from '@src/entities/user/user';
-import { left, right } from '@src/shared/logic/either';
+import { left, right } from '@src/shared/core/either';
 
 import { RegisterUserInput } from '../dtos/register-user-input';
 import { AccountAlreadyExistsError } from '../errors/account-already-exists-error';

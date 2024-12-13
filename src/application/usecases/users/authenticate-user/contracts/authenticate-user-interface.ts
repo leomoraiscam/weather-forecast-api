@@ -1,4 +1,4 @@
-import { Either } from '@src/shared/logic/either';
+import { Either } from '@src/shared/core/either';
 
 import { AuthenticateUserInput } from '../../dtos/authenticate-user-input';
 import { AuthenticateUserOutput } from '../../dtos/authenticate-user-output';

@@ -1,5 +1,5 @@
 import { BeachPosition } from '@config/constants/beach-position-enum';
-import { Either, left, right } from '@src/shared/logic/either';
+import { Either, left, right } from '@src/shared/core/either';
 
 import { InvalidPositionError } from './errors/invalid-position-error';
 

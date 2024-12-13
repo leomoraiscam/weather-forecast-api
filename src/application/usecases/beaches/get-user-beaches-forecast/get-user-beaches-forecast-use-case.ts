@@ -4,7 +4,7 @@ import { ILoggerProvider } from '@src/application/contracts/providers/logger-pro
 import { IBeachRepository } from '@src/application/contracts/repositories/beaches/beach-repository';
 import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';
 import { IStormGlassService } from '@src/application/contracts/services/stormglass/stormglass-service-interface';
-import { left, right } from '@src/shared/logic/either';
+import { left, right } from '@src/shared/core/either';
 
 import { BeachForecastPointDetails } from '../dtos/beach-forecast-point-details';
 import { BeachForecastWithRating } from '../dtos/beach-forecast-with-rating';

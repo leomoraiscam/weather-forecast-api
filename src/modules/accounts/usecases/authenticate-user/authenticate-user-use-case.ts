@@ -2,7 +2,7 @@ import { IUseCase } from '@src/main/adapters/ports/use-case';
 import { JWT } from '@src/modules/accounts/domain/user/jwt';
 import { IAuthenticateUserDTO } from '@src/modules/accounts/dtos/authenticate-user';
 import { IUserRepository } from '@src/modules/accounts/repositories/ports/user-repository';
-import { left, right } from '@src/shared/logic/either';
+import { left, right } from '@src/shared/core/either';
 
 import { AuthenticateUserResponse } from './authenticate-user-response';
 import { InvalidEmailOrPasswordError } from './errors/invalid-email-or-password-error';

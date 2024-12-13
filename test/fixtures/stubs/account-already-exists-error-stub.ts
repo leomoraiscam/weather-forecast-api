@@ -4,7 +4,7 @@ import {
   IRegisterUser,
   RegisterUserResponse,
 } from '@src/application/usecases/users/register-user/contracts/register-user-interface';
-import { left } from '@src/shared/logic/either';
+import { left } from '@src/shared/core/either';
 
 export class ErrorThrowingConflictUseCaseStub implements IRegisterUser {
   async execute(_: RegisterUserInput): Promise<RegisterUserResponse> {

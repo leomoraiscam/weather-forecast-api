@@ -2,7 +2,7 @@ import { AuthenticateUserUseCase } from '@src/application/usecases/users/authent
 import { AuthenticateUserInput } from '@src/application/usecases/users/dtos/authenticate-user-input';
 import { AuthenticateUserController } from '@src/presentation/controllers/authenticate-user-controller';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
-import { left } from '@src/shared/logic/either';
+import { left } from '@src/shared/core/either';
 import { InMemoryTokenManagerProvider } from '@test/doubles/providers/token-manager/in-memory-token-manager-provider';
 import { InMemoryUserRepository } from '@test/doubles/repositories/in-memory-user-repository';
 import { createUser } from '@test/factories/user-factory';

@@ -1,6 +1,6 @@
 import { v4 as uuidV4 } from 'uuid';
 
-import { Either, right } from '@src/shared/logic/either';
+import { Either, right } from '@src/shared/core/either';
 
 import { IBeachPropsDTO } from './dtos/beach-props';
 import { InvalidLatitudeError } from './errors/invalid-latitude-error';

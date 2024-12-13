@@ -8,7 +8,7 @@ import { Name } from '@src/modules/forecast/domain/beach/name';
 import { Position } from '@src/modules/forecast/domain/beach/position';
 import { IRegisterBeachDTO } from '@src/modules/forecast/dtos/register-beach';
 import { IBeachRepository } from '@src/modules/forecast/repositories/ports/beach-repository';
-import { left, right } from '@src/shared/logic/either';
+import { left, right } from '@src/shared/core/either';
 
 import { UserNotFoundError } from '../user-beach-forecast-processing/errors/user-not-found-error';
 import { BeachAlreadyExistsError } from './errors/beach-already-exists-error';

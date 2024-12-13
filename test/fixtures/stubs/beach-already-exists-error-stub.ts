@@ -4,7 +4,7 @@ import {
   IRegisterBeach,
   RegisterBeachResponse,
 } from '@src/application/usecases/beaches/register-beach/contracts/register-beach-interface';
-import { left } from '@src/shared/logic/either';
+import { left } from '@src/shared/core/either';
 
 export class ErrorThrowingConflictUseCaseStub implements IRegisterBeach {
   async execute(_: RegisterBeachInput): Promise<RegisterBeachResponse> {

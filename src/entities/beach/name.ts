@@ -1,4 +1,4 @@
-import { Either, left, right } from '@src/shared/logic/either';
+import { Either, left, right } from '@src/shared/core/either';
 
 import { InvalidNameError } from './errors/invalid-name-error';
 

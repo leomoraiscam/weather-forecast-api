@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 
-import { Either, left, right } from '@src/shared/logic/either';
+import { Either, left, right } from '@src/shared/core/either';
 
 import { InvalidPasswordLengthError } from './errors/invalid-password-length-error';
 

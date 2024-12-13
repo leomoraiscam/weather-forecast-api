@@ -10,7 +10,7 @@ import { IBeachRatingForecastDTO } from '@src/modules/forecast/dtos/beach-rating
 import { calculateRatingByPoint } from '@src/modules/forecast/helpers/calculate-rating-by-point';
 import { normalizeForecastByTime } from '@src/modules/forecast/helpers/normalize-forecast-by-time';
 import { IBeachRepository } from '@src/modules/forecast/repositories/ports/beach-repository';
-import { left, right } from '@src/shared/logic/either';
+import { left, right } from '@src/shared/core/either';
 
 import { IFindTimeBeachRatingForecastDTO } from '../../dtos/find-time-beaches-rating-forecast';
 import { BeachesNotFoundError } from './errors/beaches-not-found-error';

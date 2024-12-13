@@ -4,7 +4,7 @@ import { ICacheService } from '@src/external/providers/cache-service/ports/cache
 import { IRequestService } from '@src/external/providers/http-service/ports/request-service';
 import { ILoggerService } from '@src/external/providers/logger-service/ports/logger-service';
 import { StormGlassResponseError } from '@src/modules/forecast/usecases/user-beach-forecast-processing/errors/stormglass-response-error';
-import { left, right } from '@src/shared/logic/either';
+import { left, right } from '@src/shared/core/either';
 
 import { IFetchPointCoordinate } from '../dtos/fetch-point-coordinate';
 import { IFetchPointNormalize } from '../dtos/fetch-point-normalize';

@@ -1,6 +1,6 @@
 import { v4 as uuidV4 } from 'uuid';
 
-import { Either, right } from '@src/shared/logic/either';
+import { Either, right } from '@src/shared/core/either';
 
 import { IUserPropsDTO } from './dtos/user-props';
 import { InvalidEmailError } from './errors/invalid-email-error';

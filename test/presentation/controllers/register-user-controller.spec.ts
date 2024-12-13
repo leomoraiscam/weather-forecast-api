@@ -3,7 +3,7 @@ import { AccountAlreadyExistsError } from '@src/application/usecases/users/error
 import { RegisterUserUseCase } from '@src/application/usecases/users/register-user/register-user-use-case';
 import { RegisterUserController } from '@src/presentation/controllers/register-user-controller';
 import { IHttpRequest } from '@src/shared/http/dtos/http-request';
-import { left } from '@src/shared/logic/either';
+import { left } from '@src/shared/core/either';
 import { InMemoryUserRepository } from '@test/doubles/repositories/in-memory-user-repository';
 
 describe('RegisterUserWebController', () => {

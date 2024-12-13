@@ -1,6 +1,6 @@
 import { ITokenManagerProvider } from '@src/application/contracts/providers/token-manager/token-manager-provider';
 import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';
-import { left, right } from '@src/shared/logic/either';
+import { left, right } from '@src/shared/core/either';
 
 import { AuthenticateUserInput } from '../dtos/authenticate-user-input';
 import { InvalidEmailOrPasswordError } from '../errors/invalid-email-or-password-error';
