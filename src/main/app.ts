@@ -3,13 +3,13 @@ import swaggerUi from 'swagger-ui-express';
 
 import swaggerFile from '@src/shared/swagger.json';
 
-import setupMiddleware from './middleware';
-import setupRoute from './routes';
+import { setupMiddlewares } from './config/middleware';
+import { setupRoutes } from './config/routes';
 
 const app = express();
 
-setupMiddleware(app);
-setupRoute(app);
+setupMiddlewares(app);
+setupRoutes(app);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 export { app };
