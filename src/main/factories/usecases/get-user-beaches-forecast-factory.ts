@@ -1,15 +1,14 @@
 import { StormGlassIntegrationService } from '@src/application/services/stormglass/stormglass-integration-service';
 import { StormGlassService } from '@src/application/services/stormglass/stormglass-service';
+import { IGetUserBeachesForecast } from '@src/application/usecases/beaches/get-user-beaches-forecast/contracts/get-user-beaches-interface';
 import { GetUserBeachesForecastUseCase } from '@src/application/usecases/beaches/get-user-beaches-forecast/get-user-beaches-forecast-use-case';
 import { BeachRepository } from '@src/infrastructure/database/mongo/repositories/beaches/beach-repository';
 import { UserRepository } from '@src/infrastructure/database/mongo/repositories/users/user-repository';
 import { RedisCacheProvider } from '@src/infrastructure/providers/cache-provider/redis-cache-provider';
 import { AxiosProvider } from '@src/infrastructure/providers/http-provider/axios-provider';
-import { PinoLoggerProvider } from '@src/infrastructure/providers/logger-provider/pino-logger-service';
-import { IController } from '@src/main/adapters/ports/controller';
-import { GetUserBeachesForecastController } from '@src/presentation/controllers/get-user-beaches-forecast-controller';
+import { PinoLoggerProvider } from '@src/infrastructure/providers/logger-provider/pino-logger-provider';
 
-export const makeUserBeachForecastProcessingController = (): IController => {
+export const makeGetUserBeachesForecastUseCase = (): IGetUserBeachesForecast => {
   const cacheProvider = new RedisCacheProvider();
   const loggerProvider = new PinoLoggerProvider();
   const axiosProvider = new AxiosProvider(loggerProvider);
@@ -23,9 +22,6 @@ export const makeUserBeachForecastProcessingController = (): IController => {
     beachesRepository,
     loggerProvider,
   );
-  const getUserBeachesForecastController = new GetUserBeachesForecastController(
-    getUserBeachesForecastUseCase,
-  );
 
-  return getUserBeachesForecastController;
+  return getUserBeachesForecastUseCase;
 };

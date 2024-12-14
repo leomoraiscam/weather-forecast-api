@@ -1,4 +1,4 @@
-import { ITokenManagerProvider } from '@src/application/contracts/providers/token-manager/token-manager-provider';
+import { ITokenManagerProvider } from '@src/application/contracts/providers/token-manager-provider/token-manager-provider';
 import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';
 import { left, right } from '@src/shared/core/either';
 

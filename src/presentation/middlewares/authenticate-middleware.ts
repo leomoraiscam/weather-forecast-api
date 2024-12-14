@@ -1,4 +1,4 @@
-import { ITokenManagerProvider } from '@src/application/contracts/providers/token-manager/token-manager-provider';
+import { ITokenManagerProvider } from '@src/application/contracts/providers/token-manager-provider/token-manager-provider';
 
 import { IHttpResponse } from '../contracts/http-response';
 import { IMiddleware } from '../contracts/middleware';

@@ -6,7 +6,7 @@ import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { AuthenticateUserUseCase } from '@src/application/usecases/users/authenticate-user/authenticate-user-use-case';
 import { mongoHelper } from '@src/infrastructure/database/mongo/helpers/mongo-helper';
 import { UserRepository } from '@src/infrastructure/database/mongo/repositories/users/user-repository';
-import { JWTTokenManagerProvider } from '@src/infrastructure/providers/token-manager/jwt-token-manager-provider';
+import { JWTTokenManagerProvider } from '@src/infrastructure/providers/token-manager-provider/jwt-token-manager-provider';
 import { app } from '@src/main/config/app';
 import { createUser } from '@test/factories/user-factory';
 

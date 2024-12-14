@@ -1,9 +1,9 @@
 import { RateLimiterRedis } from 'rate-limiter-flexible';
 
-import { IRateLimiter } from '@src/application/contracts/providers/rate-limiter/rate-limiter-provider';
+import { IRateLimiterProvider } from '@src/application/contracts/providers/rate-limiter-provider/rate-limiter-provider';
 import { RedisConnection } from '@src/infrastructure/database/redis/connection';
 
-export class RateLimiterFlexible implements IRateLimiter {
+export class RateLimiterFlexibleProvider implements IRateLimiterProvider {
   private limiter: RateLimiterRedis;
 
   constructor() {

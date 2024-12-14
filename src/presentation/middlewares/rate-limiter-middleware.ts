@@ -1,4 +1,4 @@
-import { IRateLimiter } from '@src/application/contracts/providers/rate-limiter/rate-limiter-provider';
+import { IRateLimiter } from '@src/application/contracts/providers/rate-limiter-provider/rate-limiter-provider';
 
 import { IHttpResponse } from '../contracts/http-response';
 import { IMiddleware } from '../contracts/middleware';

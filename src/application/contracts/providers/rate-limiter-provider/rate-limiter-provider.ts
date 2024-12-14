@@ -1,3 +1,3 @@
-export interface IRateLimiter {
+export interface IRateLimiterProvider {
   consume(key: string): Promise<void>;
 }
