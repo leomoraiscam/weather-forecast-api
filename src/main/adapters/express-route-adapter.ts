@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { IController } from './ports/controller';
+import { IController } from '@src/presentation/contracts/controller';
 
 export const adaptRoute = (controller: IController) => {
   return async (request: Request, response: Response): Promise<void> => {

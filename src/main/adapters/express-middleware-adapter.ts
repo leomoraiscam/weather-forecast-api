@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { IMiddleware } from './ports/middleware';
+import { IMiddleware } from '@src/presentation/contracts/middleware';
 
 export const adaptMiddleware = (middleware: IMiddleware) => {
   return async (request: Request, response: Response, next: NextFunction) => {
