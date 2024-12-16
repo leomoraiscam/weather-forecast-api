@@ -1,4 +1,4 @@
-import { IController } from '@src/main/adapters/ports/controller';
+import { IController } from '@src/presentation/contracts/controller';
 import { RegisterUserController } from '@src/presentation/controllers/register-user-controller';
 
 import { makeRegisterUserUseCase } from '../usecases/register-user-factory';

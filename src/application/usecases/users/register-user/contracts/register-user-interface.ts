@@ -11,6 +11,6 @@ export type RegisterUserResponse = Either<
   AccountAlreadyExistsError | InvalidNameError | InvalidEmailError | InvalidPasswordLengthError,
   RegisterUserOutput
 >;
-export interface IRegisterUser {
+export interface IRegisterUserUseCase {
   execute: (registerUserInput: RegisterUserInput) => Promise<RegisterUserResponse>;
 }

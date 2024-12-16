@@ -1,4 +1,4 @@
-import { StormGlassIntegrationService } from '@src/application/services/stormglass/stormglass-integration-service';
+import { StormGlassAPIClient } from '@src/application/services/stormglass/stormglass-api-client';
 import { StormGlassService } from '@src/application/services/stormglass/stormglass-service';
 import { IGetUserBeachesForecast } from '@src/application/usecases/beaches/get-user-beaches-forecast/contracts/get-user-beaches-interface';
 import { GetUserBeachesForecastUseCase } from '@src/application/usecases/beaches/get-user-beaches-forecast/get-user-beaches-forecast-use-case';
@@ -12,8 +12,8 @@ export const makeGetUserBeachesForecastUseCase = (): IGetUserBeachesForecast => 
   const cacheProvider = new RedisCacheProvider();
   const loggerProvider = new PinoLoggerProvider();
   const axiosProvider = new AxiosProvider(loggerProvider);
-  const stormGlassIntegrationService = new StormGlassIntegrationService(axiosProvider);
-  const stormGlassService = new StormGlassService(cacheProvider, stormGlassIntegrationService);
+  const stormGlassAPIClient = new StormGlassAPIClient(axiosProvider);
+  const stormGlassService = new StormGlassService(cacheProvider, stormGlassAPIClient);
   const usersRepository = new UserRepository();
   const beachesRepository = new BeachRepository();
   const getUserBeachesForecastUseCase = new GetUserBeachesForecastUseCase(

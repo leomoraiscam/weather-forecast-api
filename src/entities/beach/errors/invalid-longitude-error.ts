@@ -1,4 +1,4 @@
-import { IDomainError } from '@src/shared/errors/ports/domain-error';
+import { IDomainError } from '@src/shared/errors/domain-error';
 
 export class InvalidLongitudeError extends Error implements IDomainError {
   constructor(lng: number) {

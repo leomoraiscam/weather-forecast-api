@@ -1,4 +1,4 @@
-import { IController } from '@src/main/adapters/ports/controller';
+import { IController } from '@src/presentation/contracts/controller';
 import { AuthenticateUserController } from '@src/presentation/controllers/authenticate-user-controller';
 
 import { makeAuthenticateUserUseCase } from '../usecases/authenticate-user-factory';

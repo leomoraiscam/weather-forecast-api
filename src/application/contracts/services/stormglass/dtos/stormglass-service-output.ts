@@ -1,4 +1,4 @@
-export interface IStormGlassIntegrationResponse {
+export interface IStormGlassServiceOutput {
   swellDirection: number;
   swellHeight: number;
   swellPeriod: number;

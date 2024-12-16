@@ -1,29 +1,26 @@
 import { ICacheProvider } from '@src/application/contracts/providers/cache-provider/cache-provider';
-import { IStormGlassAPIIntegrationResponse } from '@src/application/contracts/services/stormglass/dtos/stormglass-api-integration-response';
-import { IStormGlassIntegrationResponse } from '@src/application/contracts/services/stormglass/dtos/stormglass-integration-response';
+import { IStormGlassAPIResponse } from '@src/application/contracts/services/stormglass/dtos/stormglass-api-response';
 import { IStormGlassServiceInput } from '@src/application/contracts/services/stormglass/dtos/stormglass-service-input';
-import { IStormGlassIntegrationsService } from '@src/application/contracts/services/stormglass/stormglass-integration-interface';
+import { IStormGlassServiceOutput } from '@src/application/contracts/services/stormglass/dtos/stormglass-service-output';
+import { IStormGlassAPIClient } from '@src/application/contracts/services/stormglass/stormglass-api-client-interface';
 import { IStormGlassService } from '@src/application/contracts/services/stormglass/stormglass-service-interface';
 
 export class StormGlassService implements IStormGlassService {
   constructor(
     private cacheService: ICacheProvider,
-    private stormGlassIntegration: IStormGlassIntegrationsService,
+    private stormGlassAPIClient: IStormGlassAPIClient,
   ) {}
 
-  async execute(input: IStormGlassServiceInput): Promise<IStormGlassIntegrationResponse[]> {
+  async execute(input: IStormGlassServiceInput): Promise<IStormGlassServiceOutput[]> {
     const { userId, lat, lng, page, pageSize } = input;
     const cacheKey = `forecast-point:${lat}:${lng}:${userId}:${page}-${pageSize}`;
-    const wavesPoints = await this.cacheService.recover<IStormGlassIntegrationResponse[]>(cacheKey);
+    const wavesPoints = await this.cacheService.recover<IStormGlassServiceOutput[]>(cacheKey);
 
     if (!wavesPoints) {
-      const response = await this.stormGlassIntegration.execute({ lat, lng });
+      const response = await this.stormGlassAPIClient.execute({ lat, lng });
       const normalizeStormGlassData = this.toNormalize(response);
 
-      await this.cacheService.save<IStormGlassIntegrationResponse[]>(
-        cacheKey,
-        normalizeStormGlassData,
-      );
+      await this.cacheService.save<IStormGlassServiceOutput[]>(cacheKey, normalizeStormGlassData);
 
       return normalizeStormGlassData;
     }
@@ -31,7 +28,7 @@ export class StormGlassService implements IStormGlassService {
     return wavesPoints;
   }
 
-  private toNormalize(data: IStormGlassAPIIntegrationResponse): IStormGlassIntegrationResponse[] {
+  private toNormalize(data: IStormGlassAPIResponse): IStormGlassServiceOutput[] {
     return data.hours
       .filter(
         (point) =>

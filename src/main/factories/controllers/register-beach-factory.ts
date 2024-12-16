@@ -1,4 +1,4 @@
-import { IController } from '@src/main/adapters/ports/controller';
+import { IController } from '@src/presentation/contracts/controller';
 import { RegisterBeachController } from '@src/presentation/controllers/register-beach-controller';
 
 import { makeRegisterBeachUseCase } from '../usecases/register-beach-factory';

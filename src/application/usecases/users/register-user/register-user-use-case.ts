@@ -7,9 +7,9 @@ import { left, right } from '@src/shared/core/either';
 
 import { RegisterUserInput } from '../dtos/register-user-input';
 import { AccountAlreadyExistsError } from '../errors/account-already-exists-error';
-import { IRegisterUser, RegisterUserResponse } from './contracts/register-user-interface';
+import { IRegisterUserUseCase, RegisterUserResponse } from './contracts/register-user-interface';
 
-export class RegisterUserUseCase implements IRegisterUser {
+export class RegisterUserUseCase implements IRegisterUserUseCase {
   constructor(private userRepository: IUserRepository) {}
 
   async execute(input: RegisterUserInput): Promise<RegisterUserResponse> {

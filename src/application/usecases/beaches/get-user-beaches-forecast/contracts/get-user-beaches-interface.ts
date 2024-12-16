@@ -8,7 +8,7 @@ export type GetUserBeachesForecastResponse = Either<
   StormGlassResponseError,
   TimeGroupedBeachForecast[]
 >;
-export interface IGetUserBeachesForecast {
+export interface IGetUserBeachesForecastUseCase {
   execute: (
     getBeachForecastInput: IGetBeachForecastInput,
   ) => Promise<GetUserBeachesForecastResponse>;

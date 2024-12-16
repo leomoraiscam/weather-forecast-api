@@ -1,4 +1,4 @@
-import { IController } from '@src/main/adapters/ports/controller';
+import { IController } from '@src/presentation/contracts/controller';
 import { GetUserBeachesForecastController } from '@src/presentation/controllers/get-user-beaches-forecast-controller';
 
 import { makeGetUserBeachesForecastUseCase } from '../usecases/get-user-beaches-forecast-factory';

@@ -5,11 +5,11 @@ import { left, right } from '@src/shared/core/either';
 import { AuthenticateUserInput } from '../dtos/authenticate-user-input';
 import { InvalidEmailOrPasswordError } from '../errors/invalid-email-or-password-error';
 import {
-  IAuthenticateUser,
+  IAuthenticateUserUseCase,
   AuthenticateUserResponse,
 } from './contracts/authenticate-user-interface';
 
-export class AuthenticateUserUseCase implements IAuthenticateUser {
+export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
   constructor(
     private userRepository: IUserRepository,
     private tokenManagerProvider: ITokenManagerProvider,

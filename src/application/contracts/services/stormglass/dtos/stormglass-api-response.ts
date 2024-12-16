@@ -2,7 +2,7 @@ interface KeyPair {
   noaa: number;
 }
 
-interface IStormGlassAPIWeatherPointTimeResponse {
+interface IWeatherPointTimeResponse {
   swellDirection: KeyPair;
   swellHeight: KeyPair;
   swellPeriod: KeyPair;
@@ -13,6 +13,6 @@ interface IStormGlassAPIWeatherPointTimeResponse {
   time: string;
 }
 
-export interface IStormGlassAPIIntegrationResponse {
-  hours: IStormGlassAPIWeatherPointTimeResponse[];
+export interface IStormGlassAPIResponse {
+  hours: IWeatherPointTimeResponse[];
 }

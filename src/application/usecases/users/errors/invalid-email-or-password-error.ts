@@ -1,4 +1,4 @@
-import { IUseCaseError } from '@src/shared/errors/ports/use-case-error';
+import { IUseCaseError } from '@src/shared/errors/use-case-error';
 
 export class InvalidEmailOrPasswordError extends Error implements IUseCaseError {
   constructor() {

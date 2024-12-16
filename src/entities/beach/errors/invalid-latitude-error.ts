@@ -1,4 +1,4 @@
-import { IDomainError } from '@src/shared/errors/ports/domain-error';
+import { IDomainError } from '@src/shared/errors/domain-error';
 
 export class InvalidLatitudeError extends Error implements IDomainError {
   constructor(lat: number) {

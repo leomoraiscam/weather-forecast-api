@@ -1,4 +1,4 @@
-import { IRateLimiter } from '@src/application/contracts/providers/rate-limiter-provider/rate-limiter-provider';
+import { IRateLimiterProvider } from '@src/application/contracts/providers/rate-limiter-provider/rate-limiter-provider';
 
 import { IHttpResponse } from '../contracts/http-response';
 import { IMiddleware } from '../contracts/middleware';
@@ -10,13 +10,13 @@ type RateLimiterMiddlewareRequest = {
 };
 
 export class RateLimiterMiddleware implements IMiddleware {
-  constructor(private rateLimiter: IRateLimiter) {}
+  constructor(private rateLimiterProvider: IRateLimiterProvider) {}
 
   async handle(request: RateLimiterMiddlewareRequest): Promise<IHttpResponse> {
     try {
       const { ip } = request;
 
-      await this.rateLimiter.consume(ip);
+      await this.rateLimiterProvider.consume(ip);
 
       return ok({ success: true });
     } catch (error) {

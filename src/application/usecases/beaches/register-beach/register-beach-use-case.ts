@@ -11,9 +11,9 @@ import { left, right } from '@src/shared/core/either';
 
 import { BeachAlreadyExistsError } from '../errors/beach-already-exists-error';
 import { UserNotFoundError } from '../errors/user-not-found-error';
-import { RegisterBeachResponse, IRegisterBeach } from './contracts/register-beach-interface';
+import { RegisterBeachResponse, IRegisterBeachUseCase } from './contracts/register-beach-interface';
 
-export class RegisterBeachUseCase implements IRegisterBeach {
+export class RegisterBeachUseCase implements IRegisterBeachUseCase {
   constructor(
     private beachRepository: IBeachRepository,
     private userRepository: IUserRepository,

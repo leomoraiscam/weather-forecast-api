@@ -1,10 +1,10 @@
-import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { TypesLogger } from '@src/application/contracts/providers/logger-provider/enums/types-logger-enum';
 import { ILoggerProvider } from '@src/application/contracts/providers/logger-provider/logger-provider';
 import { IBeachRepository } from '@src/application/contracts/repositories/beaches/beach-repository';
 import { IUserRepository } from '@src/application/contracts/repositories/users/user-repository';
 import { IStormGlassService } from '@src/application/contracts/services/stormglass/stormglass-service-interface';
 import { left, right } from '@src/shared/core/either';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 
 import { BeachForecastPointDetails } from '../dtos/beach-forecast-point-details';
 import { BeachForecastWithRating } from '../dtos/beach-forecast-with-rating';
@@ -12,13 +12,13 @@ import { IGetBeachForecastInput } from '../dtos/get-beach-forecast-input';
 import { BeachNotFoundError } from '../errors/beach-not-found-error';
 import { UserNotFoundError } from '../errors/user-not-found-error';
 import {
-  IGetUserBeachesForecast,
+  IGetUserBeachesForecastUseCase,
   GetUserBeachesForecastResponse,
 } from './contracts/get-user-beaches-interface';
 import { calculateBeachForecastOverallRating } from './helpers/calculate-beach-forecast-overall-rating';
 import { groupForecastByTime } from './helpers/group-forecast-by-time';
 
-export class GetUserBeachesForecastUseCase implements IGetUserBeachesForecast {
+export class GetUserBeachesForecastUseCase implements IGetUserBeachesForecastUseCase {
   constructor(
     private stormGlassService: IStormGlassService,
     private userRepository: IUserRepository,

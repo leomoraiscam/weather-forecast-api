@@ -5,6 +5,6 @@ import { AuthenticateUserOutput } from '../../dtos/authenticate-user-output';
 import { InvalidEmailOrPasswordError } from '../../errors/invalid-email-or-password-error';
 
 export type AuthenticateUserResponse = Either<InvalidEmailOrPasswordError, AuthenticateUserOutput>;
-export interface IAuthenticateUser {
+export interface IAuthenticateUserUseCase {
   execute: (authenticateUserInput: AuthenticateUserInput) => Promise<AuthenticateUserResponse>;
 }

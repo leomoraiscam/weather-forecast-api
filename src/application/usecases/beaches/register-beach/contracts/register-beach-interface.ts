@@ -18,6 +18,6 @@ export type RegisterBeachResponse = Either<
   | UserNotFoundError,
   RegisterBeachOutput
 >;
-export interface IRegisterBeach {
+export interface IRegisterBeachUseCase {
   execute: (registerBeachInput: RegisterBeachInput) => Promise<RegisterBeachResponse>;
 }

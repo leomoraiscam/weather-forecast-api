@@ -1,6 +1,6 @@
-import { IStormGlassIntegrationRequest } from './stormglass-integration-request';
+import { IStormGlassAPIRequest } from './stormglass-api-request';
 
-export interface IStormGlassServiceInput extends IStormGlassIntegrationRequest {
+export interface IStormGlassServiceInput extends IStormGlassAPIRequest {
   userId: string;
   page: number;
   pageSize: number;
