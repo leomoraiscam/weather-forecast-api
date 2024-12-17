@@ -1,8 +1,10 @@
-import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { RegisterBeachInput } from '@src/application/usecases/beaches/dtos/register-beach-input';
 import { RegisterBeachUseCase } from '@src/application/usecases/beaches/register-beach/register-beach-use-case';
+import { IController } from '@src/presentation/contracts/controller';
+import { IHttpRequest } from '@src/presentation/contracts/http-request';
 import { RegisterBeachController } from '@src/presentation/controllers/register-beach-controller';
-import { IHttpRequest } from '@src/shared/http/dtos/http-request';
+import { WebController } from '@src/presentation/controllers/web-controller';
+import { BeachPosition } from '@src/shared/enums/beach-position-enum';
 import { InMemoryCacheProvider } from '@test/doubles/providers/cache-provider/in-memory-cache-provider';
 import { InMemoryBeachRepository } from '@test/doubles/repositories/in-memory-beach-repository';
 import { InMemoryUserRepository } from '@test/doubles/repositories/in-memory-user-repository';
@@ -14,7 +16,7 @@ describe('RegisterBeachWebController', () => {
   let inMemoryUserRepository: InMemoryUserRepository;
   let inMemoryCacheProvider: InMemoryCacheProvider;
   let registerBeachUseCase: RegisterBeachUseCase;
-  let registerBeachController: RegisterBeachController;
+  let registerBeachController: IController;
   let userId: string;
 
   beforeEach(async () => {
@@ -26,7 +28,7 @@ describe('RegisterBeachWebController', () => {
       inMemoryUserRepository,
       inMemoryCacheProvider,
     );
-    registerBeachController = new RegisterBeachController(registerBeachUseCase);
+    registerBeachController = new WebController(new RegisterBeachController(registerBeachUseCase));
 
     const user = createUser();
     await inMemoryUserRepository.create(user);
@@ -48,6 +50,20 @@ describe('RegisterBeachWebController', () => {
 
     expect(response.statusCode).toEqual(201);
     expect(response.body).toHaveProperty('id');
+  });
+
+  it('should be able to return status code 400 when request has missing field', async () => {
+    const requestWithOutPositionProperty: IHttpRequest<RegisterBeachInput> = {
+      body: {
+        name: 'D',
+        lat: -33.750919,
+        lng: 151.299059,
+      } as unknown as RegisterBeachInput,
+      userId,
+    };
+    const response = await registerBeachController.handle(requestWithOutPositionProperty);
+
+    expect(response.statusCode).toEqual(400);
   });
 
   it('should be able to return status code 400 when request contains invalid user name', async () => {
@@ -94,7 +110,7 @@ describe('RegisterBeachWebController', () => {
     expect(response.statusCode).toEqual(404);
   });
 
-  it.skip('should be able to return status code 409 when beach already exist', async () => {
+  it('should be able to return status code 409 when beach already exist', async () => {
     const errorThrowingConflictUseCaseStub = new ErrorThrowingConflictUseCaseStub();
     const request: IHttpRequest<RegisterBeachInput> = {
       body: {
@@ -105,8 +121,8 @@ describe('RegisterBeachWebController', () => {
       },
       userId,
     };
-    const controller: RegisterBeachController = new RegisterBeachController(
-      errorThrowingConflictUseCaseStub,
+    const controller = new WebController(
+      new RegisterBeachController(errorThrowingConflictUseCaseStub),
     );
 
     const response = await controller.handle(request);
@@ -127,7 +143,7 @@ describe('RegisterBeachWebController', () => {
       },
       userId,
     };
-    const controller: RegisterBeachController = new RegisterBeachController(registerBeachUseCase);
+    const controller = new WebController(new RegisterBeachController(registerBeachUseCase));
     const response = await controller.handle(request);
 
     expect(response.statusCode).toEqual(500);

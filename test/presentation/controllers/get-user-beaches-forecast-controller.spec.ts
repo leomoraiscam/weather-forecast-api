@@ -1,7 +1,9 @@
 import { IGetBeachForecastInput } from '@src/application/usecases/beaches/dtos/get-beach-forecast-input';
 import { GetUserBeachesForecastUseCase } from '@src/application/usecases/beaches/get-user-beaches-forecast/get-user-beaches-forecast-use-case';
+import { IController } from '@src/presentation/contracts/controller';
+import { IHttpRequest } from '@src/presentation/contracts/http-request';
 import { GetUserBeachesForecastController } from '@src/presentation/controllers/get-user-beaches-forecast-controller';
-import { IHttpRequest } from '@src/shared/http/dtos/http-request';
+import { WebController } from '@src/presentation/controllers/web-controller';
 import { InMemoryLoggerProvider } from '@test/doubles/providers/logger-provider/in-memory-logger-service';
 import { InMemoryBeachRepository } from '@test/doubles/repositories/in-memory-beach-repository';
 import { InMemoryUserRepository } from '@test/doubles/repositories/in-memory-user-repository';
@@ -14,7 +16,7 @@ describe('GetUserBeachesForecastWebController', () => {
   let inMemoryUserRepository: InMemoryUserRepository;
   let inMemoryLoggerService: InMemoryLoggerProvider;
   let stormGlassServiceMock: StormGlassServiceMock;
-  let getUserBeachesForecastController: GetUserBeachesForecastController;
+  let getUserBeachesForecastController: IController;
   let getUserBeachesForecastUseCase: GetUserBeachesForecastUseCase;
   let userId: string;
 
@@ -29,8 +31,8 @@ describe('GetUserBeachesForecastWebController', () => {
       inMemoryBeachRepository,
       inMemoryLoggerService,
     );
-    getUserBeachesForecastController = new GetUserBeachesForecastController(
-      getUserBeachesForecastUseCase,
+    getUserBeachesForecastController = new WebController(
+      new GetUserBeachesForecastController(getUserBeachesForecastUseCase),
     );
 
     const user = createUser();
@@ -101,7 +103,9 @@ describe('GetUserBeachesForecastWebController', () => {
         pageSize: 5,
       },
     };
-    const controller = new GetUserBeachesForecastController(getUserBeachesForecastUseCase);
+    const controller = new WebController(
+      new GetUserBeachesForecastController(getUserBeachesForecastUseCase),
+    );
     const response = await controller.handle(request);
 
     expect(response.statusCode).toEqual(500);

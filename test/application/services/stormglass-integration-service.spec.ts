@@ -1,5 +1,5 @@
-import { IStormGlassIntegrationsService } from '@src/application/contracts/services/stormglass/stormglass-integration-interface';
-import { StormGlassIntegrationService } from '@src/application/services/stormglass/stormglass-integration-service';
+import { IStormGlassAPIClient } from '@src/application/contracts/services/stormglass/stormglass-api-client-interface';
+import { StormGlassAPIClient } from '@src/application/services/stormglass/stormglass-api-client';
 import { StormGlassResponseError } from '@src/application/usecases/beaches/errors/stormglass-response-error';
 import { AxiosProvider } from '@src/infrastructure/providers/http-provider/axios-provider';
 import { InMemoryLoggerProvider } from '@test/doubles/providers/logger-provider/in-memory-logger-service';
@@ -9,19 +9,19 @@ import stormGlassWeather3HoursResponse from '@test/fixtures/data/storm-glass-res
 
 jest.mock('@src/infrastructure/providers/http-provider/axios-provider');
 
-describe('StormGlassIntegrationService', () => {
+describe('StormGlassAPIClient', () => {
   let lat: number;
   let lng: number;
   const mockedRequest = new AxiosProvider(
     new InMemoryLoggerProvider(),
   ) as jest.Mocked<AxiosProvider>;
-  let stormGlassIntegrationService: IStormGlassIntegrationsService;
+  let stormGlassIntegrationService: IStormGlassAPIClient;
 
   beforeEach(() => {
     lat = -33.792726;
     lng = 151.289824;
 
-    stormGlassIntegrationService = new StormGlassIntegrationService(mockedRequest);
+    stormGlassIntegrationService = new StormGlassAPIClient(mockedRequest);
   });
 
   it('should be able to return the forecast data from the stormGlassService when received correct data', async () => {

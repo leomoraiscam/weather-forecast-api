@@ -1,4 +1,4 @@
-import { StormGlassIntegrationService } from '@src/application/services/stormglass/stormglass-integration-service';
+import { StormGlassAPIClient } from '@src/application/services/stormglass/stormglass-api-client';
 import { StormGlassService } from '@src/application/services/stormglass/stormglass-service';
 import { StormGlassResponseError } from '@src/application/usecases/beaches/errors/stormglass-response-error';
 import { AxiosProvider } from '@src/infrastructure/providers/http-provider/axios-provider';
@@ -27,11 +27,8 @@ describe('StormGlass Service', () => {
   it('should be able to return the normalize forecast when receive correct parameters', async () => {
     mockedRequest.get.mockResolvedValue({ data: stormGlassWeather3HoursResponse, status: 200 });
 
-    const stormGlassIntegrationService = new StormGlassIntegrationService(mockedRequest);
-    const fetchPointService = new StormGlassService(
-      inMemoryCacheProvider,
-      stormGlassIntegrationService,
-    );
+    const stormGlassAPIClient = new StormGlassAPIClient(mockedRequest);
+    const fetchPointService = new StormGlassService(inMemoryCacheProvider, stormGlassAPIClient);
     const response = await fetchPointService.execute({
       lat,
       lng,
@@ -46,11 +43,8 @@ describe('StormGlass Service', () => {
   it('should be able to exclude incomplete data points when received incorrect response from storm glass integration', async () => {
     mockedRequest.get.mockResolvedValue({ data: stormGlassIncompleteResponse, status: 200 });
 
-    const stormGlassIntegrationService = new StormGlassIntegrationService(mockedRequest);
-    const fetchPointService = new StormGlassService(
-      inMemoryCacheProvider,
-      stormGlassIntegrationService,
-    );
+    const stormGlassAPIClient = new StormGlassAPIClient(mockedRequest);
+    const fetchPointService = new StormGlassService(inMemoryCacheProvider, stormGlassAPIClient);
 
     const response = await fetchPointService.execute({
       lat,
@@ -65,11 +59,8 @@ describe('StormGlass Service', () => {
   it('should be able to return an error when the storm glass integration fails', async () => {
     mockedRequest.get.mockRejectedValue(stormGlassResponseGenericError);
 
-    const stormGlassIntegrationService = new StormGlassIntegrationService(mockedRequest);
-    const fetchPointService = new StormGlassService(
-      inMemoryCacheProvider,
-      stormGlassIntegrationService,
-    );
+    const stormGlassAPIClient = new StormGlassAPIClient(mockedRequest);
+    const fetchPointService = new StormGlassService(inMemoryCacheProvider, stormGlassAPIClient);
 
     await expect(
       fetchPointService.execute({ lat, lng, page: 1, pageSize: 10, userId: 'fake' }),
@@ -80,11 +71,8 @@ describe('StormGlass Service', () => {
     const cacheKey = `forecast-point:${lat}:${lng}:user123:1-5`;
     await inMemoryCacheProvider.save(cacheKey, fetchPointsNormalizedResponse);
 
-    const stormGlassIntegrationService = new StormGlassIntegrationService(mockedRequest);
-    const fetchPointService = new StormGlassService(
-      inMemoryCacheProvider,
-      stormGlassIntegrationService,
-    );
+    const stormGlassAPIClient = new StormGlassAPIClient(mockedRequest);
+    const fetchPointService = new StormGlassService(inMemoryCacheProvider, stormGlassAPIClient);
     const response = await fetchPointService.execute({
       lat,
       lng,
@@ -103,11 +91,8 @@ describe('StormGlass Service', () => {
       status: 200,
     });
 
-    const stormGlassIntegrationService = new StormGlassIntegrationService(mockedRequest);
-    const fetchPointService = new StormGlassService(
-      inMemoryCacheProvider,
-      stormGlassIntegrationService,
-    );
+    const stormGlassAPIClient = new StormGlassAPIClient(mockedRequest);
+    const fetchPointService = new StormGlassService(inMemoryCacheProvider, stormGlassAPIClient);
     const response = await fetchPointService.execute({
       lat,
       lng,

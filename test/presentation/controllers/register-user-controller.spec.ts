@@ -1,20 +1,22 @@
 import { RegisterUserInput } from '@src/application/usecases/users/dtos/register-user-input';
 import { AccountAlreadyExistsError } from '@src/application/usecases/users/errors/account-already-exists-error';
 import { RegisterUserUseCase } from '@src/application/usecases/users/register-user/register-user-use-case';
+import { IController } from '@src/presentation/contracts/controller';
+import { IHttpRequest } from '@src/presentation/contracts/http-request';
 import { RegisterUserController } from '@src/presentation/controllers/register-user-controller';
-import { IHttpRequest } from '@src/shared/http/dtos/http-request';
+import { WebController } from '@src/presentation/controllers/web-controller';
 import { left } from '@src/shared/core/either';
 import { InMemoryUserRepository } from '@test/doubles/repositories/in-memory-user-repository';
 
 describe('RegisterUserWebController', () => {
   let inMemoryUserRepository: InMemoryUserRepository;
   let registerUserUseCase: RegisterUserUseCase;
-  let registerUserController: RegisterUserController;
+  let registerUserController: IController;
 
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository();
     registerUserUseCase = new RegisterUserUseCase(inMemoryUserRepository);
-    registerUserController = new RegisterUserController(registerUserUseCase);
+    registerUserController = new WebController(new RegisterUserController(registerUserUseCase));
   });
 
   it('should be able to return status code 201 when request contains valid user data', async () => {
@@ -93,7 +95,7 @@ describe('RegisterUserWebController', () => {
         password: '123456789',
       },
     };
-    const controller: RegisterUserController = new RegisterUserController(registerUserUseCase);
+    const controller = new WebController(new RegisterUserController(registerUserUseCase));
     const response = await controller.handle(request);
 
     expect(response.statusCode).toEqual(500);

@@ -1,7 +1,9 @@
 import { AuthenticateUserUseCase } from '@src/application/usecases/users/authenticate-user/authenticate-user-use-case';
 import { AuthenticateUserInput } from '@src/application/usecases/users/dtos/authenticate-user-input';
+import { IController } from '@src/presentation/contracts/controller';
+import { IHttpRequest } from '@src/presentation/contracts/http-request';
 import { AuthenticateUserController } from '@src/presentation/controllers/authenticate-user-controller';
-import { IHttpRequest } from '@src/shared/http/dtos/http-request';
+import { WebController } from '@src/presentation/controllers/web-controller';
 import { left } from '@src/shared/core/either';
 import { InMemoryTokenManagerProvider } from '@test/doubles/providers/token-manager/in-memory-token-manager-provider';
 import { InMemoryUserRepository } from '@test/doubles/repositories/in-memory-user-repository';
@@ -11,7 +13,7 @@ describe('AuthenticateUserWebController', () => {
   let inMemoryUserRepository: InMemoryUserRepository;
   let inMemoryTokenManagerProvider: InMemoryTokenManagerProvider;
   let authenticateUserUseCase: AuthenticateUserUseCase;
-  let authenticateUserController: AuthenticateUserController;
+  let authenticateUserController: IController;
 
   beforeEach(() => {
     inMemoryUserRepository = new InMemoryUserRepository();
@@ -20,7 +22,9 @@ describe('AuthenticateUserWebController', () => {
       inMemoryUserRepository,
       inMemoryTokenManagerProvider,
     );
-    authenticateUserController = new AuthenticateUserController(authenticateUserUseCase);
+    authenticateUserController = new WebController(
+      new AuthenticateUserController(authenticateUserUseCase),
+    );
   });
 
   it('should be able to return status code 200 when request contains valid user data', async () => {
@@ -122,9 +126,7 @@ describe('AuthenticateUserWebController', () => {
         password: '123456',
       },
     };
-    const controller: AuthenticateUserController = new AuthenticateUserController(
-      authenticateUserUseCase,
-    );
+    const controller = new WebController(new AuthenticateUserController(authenticateUserUseCase));
     const response = await controller.handle(request);
 
     expect(response.statusCode).toEqual(500);
