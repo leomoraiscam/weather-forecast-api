@@ -1,5 +1,5 @@
-import { IStormGlassIntegrationResponse } from '@src/application/contracts/services/stormglass/dtos/stormglass-integration-response';
 import { IStormGlassServiceInput } from '@src/application/contracts/services/stormglass/dtos/stormglass-service-input';
+import { IStormGlassServiceOutput } from '@src/application/contracts/services/stormglass/dtos/stormglass-service-output';
 import { IStormGlassService } from '@src/application/contracts/services/stormglass/stormglass-service-interface';
 
 import fetchPointsNormalizedResponse from '../data/fetch-points-normalized-response.json';
@@ -7,7 +7,7 @@ import fetchPointsNormalizedResponse from '../data/fetch-points-normalized-respo
 export class StormGlassServiceMock implements IStormGlassService {
   public timesSendWasCalled = 0;
 
-  async execute(_: IStormGlassServiceInput): Promise<IStormGlassIntegrationResponse[]> {
+  async execute(_: IStormGlassServiceInput): Promise<IStormGlassServiceOutput[]> {
     return fetchPointsNormalizedResponse;
   }
 }
