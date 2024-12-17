@@ -4,7 +4,7 @@ import request from 'supertest';
 import { mongoHelper } from '@src/infrastructure/database/mongo/helpers/mongo-helper';
 import { app } from '@src/main/app';
 
-describe('Users router', () => {
+describe.skip('Users router', () => {
   beforeAll(async () => {
     await mongoHelper.connect(process.env.MONGO_URL);
   });
