@@ -6,7 +6,7 @@ import { InvalidEmailOrPasswordError } from '@src/application/usecases/users/err
 import { IController } from '../contracts/controller';
 import { IHttpRequest } from '../contracts/http-request';
 import { IHttpResponse } from '../contracts/http-response';
-import { badRequest, ok, serverError, unauthorized } from '../helpers/http-helper';
+import { badRequest, ok, unauthorized } from '../helpers/http-helper';
 
 export class AuthenticateUserController implements IController {
   public readonly requiredParams = ['email', 'password'];
@@ -15,23 +15,19 @@ export class AuthenticateUserController implements IController {
   async handle(request: IHttpRequest<AuthenticateUserInput>): Promise<IHttpResponse> {
     const { body: authenticateUserRequest } = request;
 
-    try {
-      const response = await this.authenticateUserUseCase.execute(authenticateUserRequest);
+    const response = await this.authenticateUserUseCase.execute(authenticateUserRequest);
 
-      if (response.isLeft()) {
-        const error = response.value;
+    if (response.isLeft()) {
+      const error = response.value;
 
-        switch (error.constructor) {
-          case InvalidEmailOrPasswordError:
-            return unauthorized(error);
-          default:
-            return badRequest(error);
-        }
+      switch (error.constructor) {
+        case InvalidEmailOrPasswordError:
+          return unauthorized(error);
+        default:
+          return badRequest(error);
       }
-
-      return ok<AuthenticateUserOutput>(response.value);
-    } catch (error) {
-      return serverError(error);
     }
+
+    return ok<AuthenticateUserOutput>(response.value);
   }
 }
